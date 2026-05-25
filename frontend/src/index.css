@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: #060612;
+    color: #e2e8f0;
+    line-height: 1.6;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #0a0a1a;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #3a3a7e;
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6366f1;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-xl border border-white/10 rounded-2xl;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-500 to-accent-purple text-white font-semibold px-6 py-3 rounded-xl
+           hover:from-primary-600 hover:to-purple-700 active:scale-95 transition-all duration-200
+           shadow-lg shadow-primary-500/25 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-ghost {
+    @apply border border-white/20 text-slate-300 font-medium px-6 py-3 rounded-xl
+           hover:bg-white/10 hover:text-white active:scale-95 transition-all duration-200;
+  }
+  
+  .input-field {
+    @apply w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-slate-100
+           placeholder-slate-500 outline-none transition-all duration-200
+           focus:border-primary-500/60 focus:bg-white/8 focus:ring-2 focus:ring-primary-500/20;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 via-accent-purple to-accent-cyan bg-clip-text text-transparent;
+  }
+  
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  .bg-white\/8 { background-color: rgba(255,255,255,0.08); }
+  .from-white\/8 { --tw-gradient-from: rgba(255,255,255,0.08); }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .glow-primary {
+    box-shadow: 0 0 30px rgba(99,102,241,0.3), 0 0 60px rgba(99,102,241,0.1);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 30px rgba(99,102,241,0.8);
+  }
+}
+
+/* Particle animations */
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+  33% { transform: translateY(-30px) rotate(120deg); opacity: 1; }
+  66% { transform: translateY(-15px) rotate(240deg); opacity: 0.8; }
+}
+
+/* Shimmer loading effect */
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Score ring animation */
+@keyframes ring-fill {
+  from { stroke-dashoffset: 251; }
+  to { stroke-dashoffset: var(--target-offset); }
+}
+
+.ring-animate {
+  animation: ring-fill 1.5s ease-out forwards;
+}
+
+/* Page transition */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
