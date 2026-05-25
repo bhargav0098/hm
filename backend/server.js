@@ -17,7 +17,8 @@ app.use(cors({
     process.env.FRONTEND_URL || 'http://localhost:5173',
     'http://localhost:5174',
     'https://career-intelligence.vercel.app',
-    'https://testf-one.vercel.app'
+    'https://testf-one.vercel.app',
+    'https://testf-one.vercel.app/'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
