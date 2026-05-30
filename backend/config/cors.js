@@ -23,6 +23,11 @@ function getAllowedOrigins() {
     process.env.ALLOWED_ORIGINS.split(',').forEach((entry) => add(entry));
   }
 
+  // Production defaults (override via FRONTEND_URL / ALLOWED_ORIGINS on Vercel)
+  if (process.env.NODE_ENV === 'production') {
+    add('https://hm-azure-ten.vercel.app');
+  }
+
   if (process.env.NODE_ENV !== 'production') {
     add('http://localhost:5173');
     add('http://localhost:5174');
