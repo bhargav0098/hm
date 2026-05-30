@@ -3,6 +3,10 @@ const User = require('../models/User');
 
 // Protect routes - verify JWT
 const protect = async (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
+
   try {
     let token;
     
@@ -57,6 +61,10 @@ const adminOnly = (req, res, next) => {
 
 // Optional auth (doesn't fail if no token)
 const optionalAuth = async (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
+
   try {
     let token;
     if (req.headers.authorization?.startsWith('Bearer ')) {

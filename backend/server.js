@@ -7,25 +7,23 @@ const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/database');
+const { corsOptions, getAllowedOrigins } = require('./config/cors');
 
 const app = express();
 connectDB();
 
-app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
-app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL || 'http://localhost:5173',
-    'http://localhost:5174',
-    'https://career-intelligence.vercel.app',
-    'https://testf-one.vercel.app',
-    'https://testf-one.vercel.app/'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
+// CORS must run before auth and rate limiting so preflight OPTIONS succeed
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
-const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { success: false, message: 'Too many requests.' } });
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  message: { success: false, message: 'Too many requests.' },
+  skip: (req) => req.method === 'OPTIONS',
+});
 app.use('/api/', limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -58,6 +56,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`🚀 AI Employment Assistance Platform API running on port ${PORT}`);
     console.log(`📡 Environment: ${process.env.NODE_ENV}`);
+    console.log(`🌐 CORS allowed origins: ${getAllowedOrigins().join(', ')}`);
   });
 }
 
