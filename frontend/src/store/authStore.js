@@ -56,26 +56,6 @@ const useAuthStore = create(
         }
       },
 
-      demoLogin: async () => {
-        set({ isLoading: true });
-        try {
-          const { data } = await api.post('/auth/demo');
-          set({
-            user: data.user,
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-            isAuthenticated: true,
-            isLoading: false
-          });
-          localStorage.setItem('accessToken', data.accessToken);
-          localStorage.setItem('refreshToken', data.refreshToken);
-          toast.success('Demo mode activated! 🚀');
-          return { success: true };
-        } catch (err) {
-          set({ isLoading: false });
-          return { success: false, message: err.response?.data?.message || 'Demo login failed' };
-        }
-      },
 
       logout: async () => {
         try {

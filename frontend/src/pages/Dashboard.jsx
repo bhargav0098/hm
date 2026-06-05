@@ -104,12 +104,7 @@ export default function Dashboard() {
               {stats?.targetRole !== 'Not set' ? `Working towards: ${stats?.targetRole}` : 'Complete your profile to get personalized guidance'}
             </p>
           </div>
-          {user?.isDemo && (
-            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-yellow/10 border border-accent-yellow/30">
-              <Zap className="w-4 h-4 text-accent-yellow" />
-              <span className="text-accent-yellow text-sm font-medium">Demo Mode — Read Only</span>
-            </div>
-          )}
+
         </motion.div>
 
         {/* Career Readiness Bar */}

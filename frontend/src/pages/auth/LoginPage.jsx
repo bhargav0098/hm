@@ -37,7 +37,7 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPass, setShowPass] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const { login, demoLogin, isLoading } = useAuthStore();
+  const { login, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
   const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
@@ -49,12 +49,6 @@ export default function LoginPage() {
       return;
     }
     const result = await login(form.email, form.password, rememberMe);
-    if (result.success) navigate('/dashboard');
-    else toast.error(result.message);
-  };
-
-  const handleDemo = async () => {
-    const result = await demoLogin();
     if (result.success) navigate('/dashboard');
     else toast.error(result.message);
   };
@@ -163,25 +157,7 @@ export default function LoginPage() {
             </div>
             
             {/* Demo Banner */}
-            <motion.button
-              onClick={handleDemo}
-              disabled={isLoading}
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
-              className="w-full mb-6 p-3 rounded-xl bg-gradient-to-r from-accent-yellow/15 to-accent-green/10 border border-accent-yellow/30 flex items-center gap-3 hover:border-accent-yellow/50 transition-all"
-            >
-              <Zap className="w-5 h-5 text-accent-yellow flex-shrink-0" />
-              <div className="text-left">
-                <p className="text-accent-yellow font-semibold text-sm">Try Demo Account</p>
-                <p className="text-slate-400 text-xs">Explore with sample startup data — no signup needed</p>
-              </div>
-            </motion.button>
-            
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex-1 h-px bg-white/10" />
-              <span className="text-slate-500 text-xs">or sign in with email</span>
-              <div className="flex-1 h-px bg-white/10" />
-            </div>
+
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

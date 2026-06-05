@@ -222,27 +222,21 @@ export default function ProfilePage() {
                   <label className="text-sm text-slate-400 mb-1.5 block">{field.label}</label>
                   <input type={field.type} value={profile[field.key]}
                     onChange={e => setProfile(p => ({ ...p, [field.key]: e.target.value }))}
-                    className="input-field" disabled={user?.isDemo} />
+                    className="input-field" />
                 </div>
               ))}
               <div className="sm:col-span-2">
                 <label className="text-sm text-slate-400 mb-1.5 block">Bio</label>
                 <textarea value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))}
                   placeholder="Tell us about yourself, your goals, and experience..." rows={3}
-                  className="input-field resize-none w-full" disabled={user?.isDemo} />
+                  className="input-field resize-none w-full" />
               </div>
             </div>
-            {user?.isDemo ? (
-              <p className="text-accent-yellow text-sm flex items-center gap-2">
-                <AlertCircle className="w-4 h-4" /> Demo accounts cannot edit profile
-              </p>
-            ) : (
-              <motion.button onClick={handleProfileSave} disabled={saving}
-                whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                className="btn-primary flex items-center gap-2">
-                <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Changes'}
-              </motion.button>
-            )}
+            <motion.button onClick={handleProfileSave} disabled={saving}
+              whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
+              className="btn-primary flex items-center gap-2">
+              <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Changes'}
+            </motion.button>
           </motion.div>
         )}
 
@@ -250,35 +244,28 @@ export default function ProfilePage() {
         {tab === 'password' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6 space-y-4">
             <h2 className="text-white font-bold">Change Password</h2>
-            {user?.isDemo ? (
-              <p className="text-accent-yellow flex items-center gap-2">
-                <AlertCircle className="w-4 h-4" /> Demo accounts cannot change password
-              </p>
-            ) : (
-              <>
-                {[
-                  { key: 'currentPassword', label: 'Current Password' },
-                  { key: 'newPassword', label: 'New Password' },
-                  { key: 'confirmPassword', label: 'Confirm New Password' }
-                ].map(field => (
-                  <div key={field.key}>
-                    <label className="text-sm text-slate-400 mb-1.5 block">{field.label}</label>
-                    <input type="password" value={passwords[field.key]}
-                      onChange={e => setPasswords(p => ({ ...p, [field.key]: e.target.value }))}
-                      className="input-field" />
-                  </div>
-                ))}
-                <motion.button onClick={handlePasswordChange} disabled={saving}
-                  whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                  className="btn-primary flex items-center gap-2">
-                  <Lock className="w-4 h-4" /> {saving ? 'Updating...' : 'Update Password'}
-                </motion.button>
-              </>
-            )}
+            <>
+              {[
+                { key: 'currentPassword', label: 'Current Password' },
+                { key: 'newPassword', label: 'New Password' },
+                { key: 'confirmPassword', label: 'Confirm New Password' }
+              ].map(field => (
+                <div key={field.key}>
+                  <label className="text-sm text-slate-400 mb-1.5 block">{field.label}</label>
+                  <input type="password" value={passwords[field.key]}
+                    onChange={e => setPasswords(p => ({ ...p, [field.key]: e.target.value }))}
+                    className="input-field" />
+                </div>
+              ))}
+              <motion.button onClick={handlePasswordChange} disabled={saving}
+                whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
+                className="btn-primary flex items-center gap-2">
+                <Lock className="w-4 h-4" /> {saving ? 'Updating...' : 'Update Password'}
+              </motion.button>
+            </>
 
             {/* Danger Zone */}
-            {!user?.isDemo && (
-              <div className="mt-8 pt-6 border-t border-red-500/20">
+            <div className="mt-8 pt-6 border-t border-red-500/20">
                 <h3 className="text-red-400 font-bold mb-2">Danger Zone</h3>
                 <p className="text-slate-400 text-sm mb-4">Permanently delete your account and all data. This cannot be undone.</p>
                 {!showDelete ? (
@@ -300,8 +287,7 @@ export default function ProfilePage() {
                     </div>
                   </div>
                 )}
-              </div>
-            )}
+            </div>
           </motion.div>
         )}
 

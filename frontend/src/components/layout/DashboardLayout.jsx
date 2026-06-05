@@ -65,15 +65,7 @@ export default function DashboardLayout({ children }) {
         </Link>
       </div>
 
-      {/* Demo Badge */}
-      {user?.isDemo && (
-        <div className="mx-4 mt-4 p-2.5 rounded-xl bg-accent-yellow/10 border border-accent-yellow/25">
-          <div className="flex items-center gap-2">
-            <Zap className="w-3.5 h-3.5 text-accent-yellow" />
-            <p className="text-accent-yellow text-xs font-semibold">Demo Mode — Read Only</p>
-          </div>
-        </div>
-      )}
+
 
       {/* Main Nav */}
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">

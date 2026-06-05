@@ -125,12 +125,6 @@ export default function LandingPage() {
                 Start for Free <ArrowRight className="w-5 h-5" />
               </motion.button>
             </Link>
-            <Link to="/login">
-              <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                className="btn-ghost flex items-center gap-2 text-lg px-8 py-4">
-                <Zap className="w-5 h-5" /> Try Demo
-              </motion.button>
-            </Link>
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
             className="flex items-center justify-center gap-6 mt-8 text-slate-500 text-sm">
@@ -253,12 +247,6 @@ export default function LandingPage() {
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                   className="btn-primary flex items-center gap-2 text-lg px-8 py-4">
                   Create Free Account <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </Link>
-              <Link to="/login">
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                  className="btn-ghost flex items-center gap-2 text-lg px-8 py-4">
-                  <Zap className="w-5 h-5" /> Try Demo First
                 </motion.button>
               </Link>
             </div>
