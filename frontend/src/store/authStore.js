@@ -35,10 +35,10 @@ const useAuthStore = create(
         }
       },
 
-      register: async (fullName, email, password) => {
+      register: async (fullName, email, password, gender) => {
         set({ isLoading: true });
         try {
-          const { data } = await api.post('/auth/register', { fullName, email, password });
+          const { data } = await api.post('/auth/register', { fullName, email, password, gender });
           set({
             user: data.user,
             accessToken: data.accessToken,

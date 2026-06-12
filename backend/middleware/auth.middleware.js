@@ -26,8 +26,8 @@ const protect = async (req, res, next) => {
     
     // Get user from DB
     const user = await User.findById(decoded.id).select('+refreshTokens');
-    if (!user || !user.isActive) {
-      return res.status(401).json({ success: false, message: 'User not found or deactivated.' });
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'User not found.' });
     }
     
     req.user = user;

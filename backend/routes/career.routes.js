@@ -8,8 +8,16 @@ const aiLimiter = rateLimit({ windowMs: 60 * 1000, max: 15, message: { success: 
 
 router.use(protect);
 
-// Dashboard
+// Dashboard & Intelligence
 router.get('/dashboard', c.getDashboardStats);
+router.get('/twin', c.getCareerTwin);
+router.get('/weekly-report', c.getWeeklyReport);
+router.get('/daily-tasks', c.getDailyTasks);
+router.post('/tasks/:id/complete', c.completeTask);
+router.post('/tasks/:id/skip', c.skipTask);
+
+// Career Plan
+router.get('/career-plan', c.getCareerPlan);
 
 // Skill Agent
 router.post('/skills/analyze', aiLimiter, c.analyzeSkills);
@@ -35,6 +43,7 @@ router.get('/interview/history', c.getInterviewHistory);
 
 // Roadmap & Opportunities
 router.post('/roadmap', aiLimiter, c.generateRoadmap);
+router.post('/roadmap/save', c.saveRoadmap);
 router.post('/opportunities', aiLimiter, c.findOpportunities);
 
 // Progress

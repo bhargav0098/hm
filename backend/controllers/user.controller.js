@@ -8,11 +8,11 @@ const updateProfile = async (req, res, next) => {
       return res.status(403).json({ success: false, message: 'Demo accounts cannot edit profile.' });
     }
     
-    const { fullName, company, bio, website, location, phone, avatar, preferences } = req.body;
+    const { fullName, company, bio, website, location, phone, avatar, preferences, gender } = req.body;
     
     const updated = await User.findByIdAndUpdate(
       req.user._id,
-      { fullName, company, bio, website, location, phone, avatar, preferences },
+      { fullName, company, bio, website, location, phone, avatar, preferences, gender },
       { new: true, runValidators: true }
     );
     

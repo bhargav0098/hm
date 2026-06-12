@@ -4,9 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Brain, LayoutDashboard, Briefcase, Mic, BookOpen,
   Target, MapPin, Settings, User, LogOut, Menu, X,
-  ChevronRight, Zap
+  ChevronRight, Zap, Users, FileText
 } from 'lucide-react';
 import useAuthStore from '../../store/authStore';
+import FloatingAIChatbot from '../dashboard/FloatingAIChatbot';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
@@ -16,6 +17,11 @@ const navItems = [
   { icon: Mic, label: 'Interview Prep', path: '/interview' },
   { icon: Target, label: 'Career Roadmap', path: '/roadmap' },
   { icon: MapPin, label: 'Local Jobs', path: '/opportunities' },
+];
+
+const intelligenceItems = [
+  { icon: Users, label: 'Career Twin', path: '/career-twin' },
+  { icon: FileText, label: 'Weekly Report', path: '/weekly-report' },
 ];
 
 const bottomItems = [
@@ -71,6 +77,13 @@ export default function DashboardLayout({ children }) {
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider px-3 mb-2">AI Agents</p>
         {navItems.map(item => (
+          <NavLink key={item.path} item={item} onClick={onClose} />
+        ))}
+
+        <div className="pt-4 pb-1">
+          <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider px-3 mb-2">Intelligence</p>
+        </div>
+        {intelligenceItems.map(item => (
           <NavLink key={item.path} item={item} onClick={onClose} />
         ))}
 
@@ -148,6 +161,7 @@ export default function DashboardLayout({ children }) {
           {children}
         </main>
       </div>
+      <FloatingAIChatbot />
     </div>
   );
 }

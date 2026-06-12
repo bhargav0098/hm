@@ -165,6 +165,7 @@ export default function SkillsPage() {
     if (!result) return;
     const role = getEffectiveRole();
     const printWindow = window.open('', '_blank');
+    const sorted = [...(result.analyzedSkills || [])].sort((a, b) => (a.learningOrder || 99) - (b.learningOrder || 99));
     printWindow.document.write(`<!DOCTYPE html><html><head>
       <title>Skill Analysis Report</title>
       <style>
@@ -173,48 +174,51 @@ export default function SkillsPage() {
         h2{color:#4f46e5;font-size:16px;margin:24px 0 8px;border-bottom:2px solid #e0e7ff;padding-bottom:6px}
         p,li{color:#4b5563;font-size:13px;line-height:1.7}
         .meta{color:#6b7280;font-size:12px;margin-bottom:20px}
-        .score{font-size:36px;font-weight:800;color:#6366f1}
-        .summary{background:#f5f3ff;border-left:4px solid #6366f1;padding:12px 16px;border-radius:4px;margin:8px 0}
-        .strength{background:#f0fdf4;border-left:4px solid #10b981;padding:8px 14px;border-radius:4px;margin:4px 0;font-size:13px;color:#065f46}
-        .gap{padding:10px 14px;border-radius:6px;margin:6px 0;border:1px solid #e5e7eb}
-        .gap.high{background:#fef2f2;border-color:#fca5a5}
-        .gap.medium{background:#fffbeb;border-color:#fcd34d}
-        .gap.low{background:#f0fdf4;border-color:#86efac}
-        .gap-title{font-weight:700;font-size:13px;color:#111}
-        .gap-reason{font-size:12px;color:#6b7280;margin-top:2px}
-        .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;margin-left:8px}
-        .badge.high{background:#fee2e2;color:#dc2626}
-        .badge.medium{background:#fef3c7;color:#d97706}
-        .badge.low{background:#dcfce7;color:#16a34a}
-        .path{background:#eff6ff;border:1px solid #bfdbfe;padding:10px 14px;border-radius:6px;margin:6px 0}
-        .step{display:flex;gap:10px;padding:8px;background:#f9fafb;border-radius:6px;margin:5px 0;align-items:flex-start}
-        .step-num{background:#6366f1;color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-        .course{background:#faf5ff;border:1px solid #e9d5ff;padding:8px 12px;border-radius:6px;margin:4px 0;font-size:12px}
-        .next-step{padding:6px 12px;background:#f0fdf4;border-left:3px solid #10b981;border-radius:4px;margin:4px 0;font-size:13px;color:#065f46}
-        ul{padding-left:20px}
+        .skill-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;align-items:center;padding:10px 12px;border-radius:8px;margin:5px 0;font-size:12px;border:1px solid #e5e7eb}
+        .skill-row.critical{background:#fef2f2;border-color:#fca5a5}
+        .skill-row.high{background:#fffbeb;border-color:#fcd34d}
+        .skill-row.medium{background:#f0fdf4;border-color:#86efac}
+        .skill-row.low{background:#eff6ff;border-color:#bfdbfe}
+        .skill-name{font-weight:700;color:#111;font-size:13px}
+        .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;text-transform:capitalize}
+        .badge.critical{background:#fee2e2;color:#dc2626}
+        .badge.high{background:#fef3c7;color:#d97706}
+        .badge.medium{background:#dcfce7;color:#16a34a}
+        .badge.low{background:#dbeafe;color:#2563eb}
+        .gap-text{color:#6b7280;font-size:11px;margin-top:4px;grid-column:1/-1;font-style:italic}
+        .recommendation{padding:8px 14px;background:#f0fdf4;border-left:3px solid #10b981;border-radius:4px;margin:5px 0;font-size:13px;color:#065f46}
+        .header-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:8px 12px;background:#6366f1;color:#fff;border-radius:8px;font-size:11px;font-weight:700;margin-bottom:8px}
         @media print{body{padding:16px}}
       </style></head><body>
-      <h1>🧠 Skill Analysis Report</h1>
+      <h1>🧠 Advanced Skill Gap Analysis</h1>
       <div class="meta">
-        <strong>Skills:</strong> ${skills.join(', ')} | <strong>Target Role:</strong> ${role || 'Not specified'} |
-        <strong>Experience:</strong> ${experienceLevel} | <strong>Generated:</strong> ${new Date().toLocaleDateString()}
+        <strong>Target Role:</strong> ${role || 'Not specified'} |
+        <strong>Skills Analyzed:</strong> ${sorted.length} |
+        <strong>Generated:</strong> ${new Date().toLocaleDateString()}
       </div>
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">
-        <div class="score">${result.overallReadiness}%</div>
-        <div>
-          <div style="font-weight:700;font-size:16px;color:#111">Overall Career Readiness</div>
-          <div style="color:#6b7280;font-size:13px">for ${role || 'your target role'}</div>
-          ${result.estimatedTimeToJob ? `<div style="color:#6366f1;font-size:12px;margin-top:4px">⏱ ${result.estimatedTimeToJob}</div>` : ''}
+      
+      <h2>📊 Skill Gap Matrix (Sorted by Learning Priority)</h2>
+      <div class="header-grid">
+        <span>Skill</span>
+        <span>Your Level → Required</span>
+        <span>Priority</span>
+        <span>Order</span>
+      </div>
+      ${sorted.map(s => `
+        <div class="skill-row ${s.priority || 'medium'}">
+          <div class="skill-name">${s.skill}</div>
+          <div style="font-size:11px;color:#374151">${s.currentLevel === 'none' ? 'Not Started' : s.currentLevel} → <strong style="color:#059669">${s.requiredLevel}</strong></div>
+          <div><span class="badge ${s.priority || 'medium'}">${s.priority || 'medium'}</span></div>
+          <div style="font-weight:700;color:#6366f1">#${s.learningOrder || '-'}</div>
+          <div class="gap-text">${s.gap}</div>
         </div>
-      </div>
-      <div class="summary">${result.summary}</div>
-      ${result.marketOutlook ? `<div style="background:#f0fdf4;border-left:4px solid #10b981;padding:10px 14px;border-radius:4px;margin:8px 0;font-size:13px;color:#065f46">📈 ${result.marketOutlook}</div>` : ''}
-      ${result.strengths?.length ? `<h2>✅ Your Strengths</h2>${result.strengths.map(s => `<div class="strength">✓ ${s}</div>`).join('')}` : ''}
-      ${result.careerPaths?.length ? `<h2>🚀 Recommended Career Paths</h2>${result.careerPaths.map(p => `<div class="path"><strong>${p.role}</strong> — <span style="color:#059669;font-weight:700">${p.matchScore}% match</span><br><span style="font-size:12px;color:#4b5563">${p.description}</span><br><span style="font-size:12px;color:#6366f1">💰 ${p.avgSalary}</span></div>`).join('')}` : ''}
-      ${result.skillGaps?.length ? `<h2>🎯 Skill Gaps to Fill</h2>${result.skillGaps.map(g => `<div class="gap ${g.priority}"><div class="gap-title">${g.skill}<span class="badge ${g.priority}">${g.priority}</span></div><div class="gap-reason">${g.reason}</div><div style="font-size:11px;color:#9ca3af;margin-top:2px">⏱ ~${g.estimatedWeeks} weeks${g.currentDemand ? ` | Demand: ${g.currentDemand}` : ''}</div></div>`).join('')}` : ''}
-      ${result.learningRoadmap?.length ? `<h2>📚 Learning Roadmap</h2>${result.learningRoadmap.map((step, i) => `<div class="step"><div class="step-num">${step.step || i+1}</div><div><div style="font-weight:600;font-size:13px;color:#111">${step.skill}</div><div style="font-size:11px;color:#9ca3af">⏱ ${step.weeks} weeks | Resources: ${step.resources?.join(', ')}</div></div></div>`).join('')}` : ''}
-      ${result.suggestedCourses?.length ? `<h2>🎓 Suggested Courses</h2>${result.suggestedCourses.map(c => `<div class="course"><strong>${c.name}</strong><br><span style="color:#9ca3af">${c.platform} · ${c.duration} · ${c.free ? 'Free' : 'Paid'}</span></div>`).join('')}` : ''}
-      ${result.nextSteps?.length ? `<h2>⚡ Your Next Steps</h2>${result.nextSteps.map((s, i) => `<div class="next-step">${i+1}. ${s}</div>`).join('')}` : ''}
+      `).join('')}
+      
+      <h2>⚡ AI Recommendations</h2>
+      ${(result.recommendations || []).map((r, i) => `
+        <div class="recommendation">${i + 1}. ${r}</div>
+      `).join('')}
+      
       <p style="margin-top:32px;color:#9ca3af;font-size:11px;text-align:center">Generated by CareerIQ AI Platform</p>
     </body></html>`);
     printWindow.document.close();
@@ -386,290 +390,70 @@ export default function SkillsPage() {
                 </button>
               </div>
 
-              {/* Summary Card with metrics */}
-              <div className="glass-card p-6 border-l-4 border-primary-500">
-                <div className="flex items-start justify-between mb-4 flex-wrap gap-3">
-                  <div className="flex items-center gap-3">
+              {/* Analyzed Skills - Full Gap Analysis Table */}
+              {result.analyzedSkills?.length > 0 && (
+                <div className="glass-card p-6 border-l-4 border-primary-500">
+                  <div className="flex items-center gap-3 mb-5">
                     <Brain className="w-6 h-6 text-primary-400" />
-                    <h2 className="text-white font-bold text-lg">AI Analysis Summary</h2>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-center">
-                      <div className="text-3xl font-black text-primary-400">{result.overallReadiness}%</div>
-                      <div className="text-xs text-slate-500">Career Readiness</div>
-                    </div>
-                    {result.confidenceScore && (
-                      <div className="text-center">
-                        <div className="text-3xl font-black text-accent-green">{result.confidenceScore}%</div>
-                        <div className="text-xs text-slate-500">Confidence</div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="text-slate-300 leading-relaxed mb-4">{result.summary}</p>
-
-                {/* Key metrics */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
-                  {result.estimatedTimeToJob && (
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/8 text-center">
-                      <Clock className="w-4 h-4 text-accent-cyan mx-auto mb-1" />
-                      <p className="text-white text-xs font-semibold">{result.estimatedTimeToJob}</p>
-                      <p className="text-slate-500 text-xs">Time to Job</p>
-                    </div>
-                  )}
-                  {result.marketOutlook && (
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/8 text-center sm:col-span-2">
-                      <TrendingUp className="w-4 h-4 text-accent-green mx-auto mb-1" />
-                      <p className="text-accent-green text-xs font-semibold">{result.marketOutlook}</p>
-                      <p className="text-slate-500 text-xs">Market Outlook</p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {result.strengths?.map(s => (
-                    <span key={s} className="flex items-center gap-1 text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-1 rounded-lg">
-                      <CheckCircle className="w-3 h-3" /> {s}
+                    <h2 className="text-white font-bold text-lg">Advanced Skill Gap Analysis</h2>
+                    <span className="text-xs bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded-full border border-primary-500/30">
+                      {result.analyzedSkills.length} skills analyzed
                     </span>
-                  ))}
-                </div>
-                {result.weaknesses?.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {result.weaknesses.map(w => (
-                      <span key={w} className="flex items-center gap-1 text-xs text-yellow-400 bg-yellow-500/10 border border-yellow-500/20 px-2 py-1 rounded-lg">
-                        <AlertTriangle className="w-3 h-3" /> {w}
-                      </span>
-                    ))}
                   </div>
-                )}
-              </div>
 
-              {/* Career Paths */}
-              {result.careerPaths?.length > 0 && (
-                <div className="glass-card p-6">
-                  <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-accent-green" /> Recommended Career Paths
-                  </h2>
+                  {/* Sort by learningOrder */}
                   <div className="space-y-3">
-                    {result.careerPaths.map(path => (
-                      <div key={path.role} className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1 flex-wrap gap-2">
-                            <span className="text-white font-semibold">{path.role}</span>
-                            <div className="flex items-center gap-2">
-                              <span className="text-accent-green text-sm font-bold">{path.matchScore}% match</span>
-                              {path.demandLevel && (
-                                <span className={`text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 ${demandColors[path.demandLevel] || 'text-slate-400'}`}>
-                                  {path.demandLevel} demand
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <p className="text-slate-400 text-xs mb-2">{path.description}</p>
-                          <div className="flex flex-wrap gap-3 text-xs">
-                            <span className="text-primary-400 font-medium">💰 {path.avgSalary}</span>
-                            {path.timeToReady && <span className="text-slate-500">⏱ {path.timeToReady}</span>}
-                          </div>
-                          {path.missingSkills?.length > 0 && (
-                            <div className="flex flex-wrap gap-1 mt-2">
-                              {path.missingSkills.map(ms => (
-                                <span key={ms} className="text-xs px-1.5 py-0.5 rounded bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
-                                  Missing: {ms}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        <div className="w-16 h-16 flex-shrink-0">
-                          <svg viewBox="0 0 40 40" className="w-full h-full -rotate-90">
-                            <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="4" />
-                            <circle cx="20" cy="20" r="16" fill="none" stroke="#10b981" strokeWidth="4"
-                              strokeDasharray={`${path.matchScore} 100`} strokeLinecap="round" />
-                          </svg>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Skill Gaps with enhanced info */}
-              {result.skillGaps?.length > 0 && (
-                <div className="glass-card p-6">
-                  <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <Target className="w-5 h-5 text-accent-yellow" /> Skill Gaps to Fill
-                  </h2>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {result.skillGaps.map(gap => (
-                      <div key={gap.skill} className={`p-4 rounded-xl border ${priorityColors[gap.priority] || priorityColors.medium}`}>
-                        <div className="flex items-center justify-between mb-2 flex-wrap gap-1">
-                          <span className="font-semibold text-white">{gap.skill}</span>
-                          <div className="flex items-center gap-2">
-                            <span className={`text-xs capitalize px-2 py-0.5 rounded-full border ${priorityColors[gap.priority]}`}>
-                              {gap.priority}
+                    {[...result.analyzedSkills]
+                      .sort((a, b) => (a.learningOrder || 99) - (b.learningOrder || 99))
+                      .map((s, i) => (
+                      <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
+                        className={`p-4 rounded-xl border ${priorityColors[s.priority] || priorityColors.medium}`}>
+                        <div className="flex items-start justify-between gap-3 mb-3 flex-wrap">
+                          <div className="flex items-center gap-3">
+                            <span className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-xs font-black text-white flex-shrink-0">
+                              {s.learningOrder || i + 1}
                             </span>
+                            <span className="font-bold text-white">{s.skill}</span>
+                          </div>
+                          <span className={`text-xs capitalize px-2 py-0.5 rounded-full border font-medium ${priorityColors[s.priority]}`}>
+                            {s.priority}
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-2 mb-3">
+                          <div className="bg-black/20 rounded-lg p-2 text-center">
+                            <p className="text-xs text-slate-500 mb-0.5">Your Level</p>
+                            <p className={`text-xs font-bold capitalize ${
+                              s.currentLevel === 'none' ? 'text-red-400' :
+                              s.currentLevel === 'beginner' ? 'text-yellow-400' :
+                              s.currentLevel === 'intermediate' ? 'text-blue-400' : 'text-green-400'
+                            }`}>{s.currentLevel === 'none' ? 'Not Started' : s.currentLevel}</p>
+                          </div>
+                          <div className="bg-black/20 rounded-lg p-2 text-center">
+                            <p className="text-xs text-slate-500 mb-0.5">Required</p>
+                            <p className="text-xs font-bold text-accent-green capitalize">{s.requiredLevel}</p>
+                          </div>
+                          <div className="bg-black/20 rounded-lg p-2 text-center">
+                            <p className="text-xs text-slate-500 mb-0.5">Learn Order</p>
+                            <p className="text-xs font-bold text-primary-400">#{s.learningOrder || i + 1}</p>
                           </div>
                         </div>
-                        <p className="text-slate-400 text-xs mb-2">{gap.reason}</p>
-                        <div className="flex flex-wrap gap-2 text-xs mb-2">
-                          <span className="text-slate-500">⏱ ~{gap.estimatedWeeks} weeks</span>
-                          {gap.currentDemand && (
-                            <span className={`font-medium ${demandColors[gap.currentDemand] || 'text-slate-400'}`}>
-                              📊 {gap.currentDemand} demand
-                            </span>
-                          )}
-                          {gap.salaryImpact && (
-                            <span className="text-accent-green font-medium">💰 {gap.salaryImpact}</span>
-                          )}
-                        </div>
-                        {gap.courses?.length > 0 && (
-                          <div className="mt-2 pt-2 border-t border-white/10">
-                            <p className="text-xs text-slate-500 mb-1 flex items-center gap-1">
-                              <GraduationCap className="w-3 h-3" /> Suggested Courses:
-                            </p>
-                            <div className="space-y-1">
-                              {gap.courses.slice(0, 2).map((c, ci) => (
-                                <a key={ci} href={c.url || '#'} target="_blank" rel="noopener noreferrer"
-                                  className="flex items-center gap-1 text-xs text-primary-400 hover:text-primary-300 transition-colors">
-                                  <ExternalLink className="w-3 h-3 flex-shrink-0" />
-                                  <span className="truncate">{c.name || c}</span>
-                                  {c.free !== undefined && (
-                                    <span className={`ml-auto flex-shrink-0 px-1 rounded text-xs ${c.free ? 'text-green-400' : 'text-yellow-400'}`}>
-                                      {c.free ? 'Free' : 'Paid'}
-                                    </span>
-                                  )}
-                                </a>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
+
+                        <p className="text-slate-400 text-xs leading-relaxed">{s.gap}</p>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Skill Mastery Levels */}
-              {result.skillMasteryLevels?.length > 0 && (
-                <div className="glass-card p-6">
-                  <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5 text-accent-blue" /> Current Skill Mastery
-                  </h2>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {result.skillMasteryLevels.map((item) => (
-                      <div key={item.skill} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/8">
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-white text-sm font-medium">{item.skill}</span>
-                            <span className="text-xs text-primary-400">{item.targetLevel}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <span>Current: <span className="text-yellow-400">{item.currentLevel}</span></span>
-                            <span>→ Target: <span className="text-accent-green">{item.targetLevel}</span></span>
-                          </div>
-                        </div>
-                        <div className={`text-xs px-2 py-1 rounded-lg font-medium ${
-                          item.gapSize === 'Small' ? 'bg-green-500/10 text-green-400' :
-                          item.gapSize === 'Medium' ? 'bg-yellow-500/10 text-yellow-400' :
-                          'bg-red-500/10 text-red-400'
-                        }`}>
-                          {item.gapSize || 'Gap'}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Suggested Courses */}
-              {result.suggestedCourses?.length > 0 && (
-                <div className="glass-card p-6">
-                  <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <GraduationCap className="w-5 h-5 text-accent-purple" /> Recommended Courses
-                  </h2>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {result.suggestedCourses.map((course, i) => (
-                      <a key={i} href={course.url || '#'} target="_blank" rel="noopener noreferrer"
-                        className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/8 hover:border-primary-500/30 transition-all group">
-                        <div className="w-10 h-10 rounded-xl bg-accent-purple/20 flex items-center justify-center flex-shrink-0">
-                          <GraduationCap className="w-5 h-5 text-accent-purple" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white font-semibold text-sm group-hover:text-primary-300 transition-colors">{course.name}</p>
-                          <p className="text-slate-500 text-xs">{course.platform}</p>
-                          <div className="flex flex-wrap items-center gap-2 mt-1">
-                            {course.duration && <span className="text-slate-600 text-xs">⏱ {course.duration}</span>}
-                            {course.rating && <span className="text-yellow-400 text-xs">⭐ {course.rating}</span>}
-                            {course.free !== undefined && (
-                              <span className={`text-xs px-1.5 py-0.5 rounded ${course.free ? 'bg-green-500/10 text-green-400' : 'bg-yellow-500/10 text-yellow-400'}`}>
-                                {course.free ? 'Free' : 'Paid'}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <ExternalLink className="w-4 h-4 text-slate-600 group-hover:text-primary-400 flex-shrink-0 mt-0.5 transition-colors" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Learning Roadmap */}
-              {result.learningRoadmap?.length > 0 && (
-                <div className="glass-card p-6">
-                  <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-accent-cyan" /> Learning Roadmap
-                  </h2>
-                  <div className="space-y-3">
-                    {result.learningRoadmap.map((step, i) => (
-                      <div key={i} className={`flex gap-4 p-4 rounded-xl border transition-all ${completedSteps.includes(i) ? 'bg-green-500/10 border-green-500/30' : 'bg-white/5 border-white/10'}`}>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm
-                          ${completedSteps.includes(i) ? 'bg-green-500 text-white' : 'bg-primary-500/30 text-primary-400'}`}>
-                          {completedSteps.includes(i) ? <CheckCircle className="w-4 h-4" /> : (step.step || i + 1)}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between flex-wrap gap-2">
-                            <span className={`font-semibold ${completedSteps.includes(i) ? 'text-green-400 line-through' : 'text-white'}`}>{step.skill}</span>
-                            <div className="flex items-center gap-2 text-xs">
-                              <span className="text-slate-500">{step.weeks}w</span>
-                              {step.marketDemand && (
-                                <span className={`px-1.5 py-0.5 rounded bg-white/5 ${demandColors[step.marketDemand] || 'text-slate-400'}`}>
-                                  {step.marketDemand}
-                                </span>
-                              )}
-                              {step.priority && (
-                                <span className={`px-1.5 py-0.5 rounded border capitalize text-xs ${priorityColors[step.priority]}`}>
-                                  {step.priority}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex flex-wrap gap-1 mt-1">
-                            {step.resources?.map(r => (
-                              <span key={r} className="text-xs bg-white/5 text-slate-400 px-2 py-0.5 rounded">{r}</span>
-                            ))}
-                          </div>
-                        </div>
-                        {!completedSteps.includes(i) && (
-                          <button onClick={() => markComplete(i)}
-                            className="text-xs text-slate-500 hover:text-green-400 transition-colors flex-shrink-0 border border-white/10 hover:border-green-500/40 px-2 py-1 rounded-lg">
-                            Done
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Next Steps */}
-              {result.nextSteps?.length > 0 && (
+              {/* Recommendations */}
+              {result.recommendations?.length > 0 && (
                 <div className="glass-card p-6 border border-accent-green/20">
                   <h2 className="text-white font-bold mb-3 flex items-center gap-2">
-                    <Lightbulb className="w-5 h-5 text-accent-yellow" /> Your Next Steps
+                    <Lightbulb className="w-5 h-5 text-accent-yellow" /> AI Recommendations
                   </h2>
                   <div className="space-y-2">
-                    {result.nextSteps.map((step, i) => (
+                    {result.recommendations.map((step, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
                         <span className="w-6 h-6 rounded-full bg-accent-green/20 text-accent-green text-xs flex items-center justify-center font-bold flex-shrink-0">{i + 1}</span>
                         <span className="text-slate-300 text-sm">{step}</span>
@@ -679,10 +463,19 @@ export default function SkillsPage() {
                 </div>
               )}
 
-              {/* Download PDF */}
-              <button onClick={downloadPDF} className="btn-primary w-full flex items-center justify-center gap-2">
-                <Download className="w-4 h-4" /> Download Full Analysis PDF
-              </button>
+              {/* Actions */}
+              <div className="flex gap-3">
+                <button onClick={async () => {
+                  toast.success('Skill Plan added to Dashboard! 🚀');
+                  setTimeout(() => window.location.href = '/dashboard', 1000);
+                }}
+                  className="btn-primary flex-[1.5] flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white shadow-lg shadow-green-500/20">
+                  <CheckCircle className="w-5 h-5" /> Add Skill Plan to Dashboard
+                </button>
+                <button onClick={downloadPDF} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  <Download className="w-4 h-4" /> Download Full Analysis PDF
+                </button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

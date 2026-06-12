@@ -12,7 +12,7 @@ const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString()
 // @route   POST /api/auth/register
 const register = async (req, res, next) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullName, email, password, gender } = req.body;
     
     // Check existing user
     const existing = await User.findOne({ email });
@@ -25,6 +25,7 @@ const register = async (req, res, next) => {
       fullName,
       email,
       password,
+      gender: gender || 'other',
       avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
       isVerified: false
     });
@@ -82,9 +83,7 @@ const login = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'Invalid credentials.' });
     }
     
-    if (!user.isActive) {
-      return res.status(403).json({ success: false, message: 'Account deactivated. Contact support.' });
-    }
+
     
     // Update activity
     user.lastLogin = new Date();

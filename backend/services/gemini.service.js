@@ -86,11 +86,11 @@ const callLLM = async (prompt, configOrKey) => {
         if (provider === 'gemini') {
           response = await axios.post(
             `${GEMINI_BASE}/${model}:generateContent?key=${apiKey}`,
-            { 
-              contents: [{ parts: [{ text: prompt }] }], 
-              generationConfig: { temperature: 0.7, maxOutputTokens: 2000 } 
+            {
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { temperature: 0.7, maxOutputTokens: 8192 }
             },
-            { timeout: 30000 }
+            { timeout: 60000 }
           );
           return response.data.candidates?.[0]?.content?.parts?.[0]?.text || '';
         } else if (provider === 'openai') {
@@ -100,14 +100,11 @@ const callLLM = async (prompt, configOrKey) => {
               model: model || 'gpt-4o-mini',
               messages: [{ role: 'user', content: prompt }],
               temperature: 0.7,
-              max_tokens: 2000
+              max_tokens: 8192
             },
             {
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-              },
-              timeout: 30000
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+              timeout: 60000
             }
           );
           return response.data.choices?.[0]?.message?.content || '';
@@ -117,7 +114,7 @@ const callLLM = async (prompt, configOrKey) => {
             {
               model: model || 'claude-3-5-haiku-20241022',
               messages: [{ role: 'user', content: prompt }],
-              max_tokens: 2000,
+              max_tokens: 8192,
               temperature: 0.7
             },
             {
@@ -126,7 +123,7 @@ const callLLM = async (prompt, configOrKey) => {
                 'x-api-key': apiKey,
                 'anthropic-version': '2023-06-01'
               },
-              timeout: 30000
+              timeout: 60000
             }
           );
           return response.data.content?.[0]?.text || '';
@@ -157,14 +154,11 @@ const callLLM = async (prompt, configOrKey) => {
               model: model || 'llama-3.1-70b-versatile',
               messages: [{ role: 'user', content: prompt }],
               temperature: 0.7,
-              max_tokens: 2000
+              max_tokens: 8192
             },
             {
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-              },
-              timeout: 30000
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+              timeout: 60000
             }
           );
           return response.data.choices?.[0]?.message?.content || '';
@@ -221,262 +215,55 @@ const parseJSON = (raw) => {
   throw new Error('Failed to parse AI response');
 };
 
-// ─── HIGH-QUALITY MOCK FALLBACKS ───────────────────────────────────────────
-
-const mockSkillResult = (skills, targetRole) => ({
-  skillGaps: [
-    { skill: "Advanced React.js & State Management", priority: "high", reason: `Crucial for clean code structures in ${targetRole || 'Developer'} applications.`, estimatedWeeks: 3, courses: [
-      { name: "React - The Complete Guide", platform: "Udemy", url: "https://udemy.com/course/react-the-complete-guide-incl-redux", duration: "48 hours", free: false },
-      { name: "React Official Docs", platform: "React.dev", url: "https://react.dev/learn", duration: "Self-paced", free: true }
-    ]},
-    { skill: "API Performance & Security", priority: "medium", reason: "Required to build scale-resilient backends.", estimatedWeeks: 2, courses: [
-      { name: "Node.js API Masterclass", platform: "Udemy", url: "https://udemy.com", duration: "18 hours", free: false },
-      { name: "Web Security Fundamentals", platform: "OWASP", url: "https://owasp.org", duration: "Self-paced", free: true }
-    ]}
-  ],
-  careerPaths: [
-    { role: targetRole || "Frontend Developer", matchScore: 78, description: `Develop modular user interfaces utilizing ${skills[0] || 'core web stack'}.`, avgSalary: "4-10 LPA" },
-    { role: "Fullstack Architect", matchScore: 65, description: "Lead end-to-end feature implementations across backends and frontends.", avgSalary: "6-15 LPA" }
-  ],
-  learningRoadmap: [
-    { step: 1, skill: "Advanced Hooks & Custom Stores", resources: ["Official Docs", "FreeCodeCamp tutorial"], weeks: 2, priority: "high" },
-    { step: 2, skill: "Secure Systems Architectures", resources: ["OWASP guides", "Web security crash courses"], weeks: 2, priority: "medium" }
-  ],
-  strengths: [
-    skills[0] || "JavaScript foundation",
-    skills[1] || "Responsive layout designs",
-    "Self-driven approach to technical excellence"
-  ],
-  summary: `Based on your profile with ${skills.join(', ')}, you show solid fundamental competencies. Strengthening component lifecycle control and backend integration will quickly align you with senior requirements.`,
-  nextSteps: [
-    "Refactor portfolio apps to utilize state optimization strategies",
-    "Build a project demonstrating secure, authenticated routing",
-    "Conduct timed mock challenges around algorithms"
-  ],
-  overallReadiness: 72,
-  suggestedCourses: [
-    { name: "The Complete Web Developer Bootcamp", platform: "Udemy", url: "https://udemy.com/course/the-complete-web-development-bootcamp", duration: "65 hours", free: false },
-    { name: "freeCodeCamp Full Stack Certification", platform: "freeCodeCamp", url: "https://freecodecamp.org/learn", duration: "300 hours", free: true },
-    { name: "CS50 Web Programming with Python & JS", platform: "edX / Harvard", url: "https://cs50.harvard.edu/web", duration: "12 weeks", free: true },
-    { name: "JavaScript Algorithms & Data Structures", platform: "freeCodeCamp", url: "https://freecodecamp.org/learn/javascript-algorithms-and-data-structures", duration: "300 hours", free: true },
-    { name: "Full Stack Open", platform: "University of Helsinki", url: "https://fullstackopen.com", duration: "Self-paced", free: true },
-    { name: "The Odin Project", platform: "The Odin Project", url: "https://theodinproject.com", duration: "Self-paced", free: true }
-  ]
-});
-
-const mockResumeResult = (resumeData, targetRole) => ({
-  improvedSummary: `Results-oriented professional with hands-on expertise in developing responsive web platforms. Proficient in integrating secure REST APIs and designing performance-optimized modular frontends. Passionate about applying problem-solving skills to technical challenges in a ${targetRole || 'Developer'} role.`,
-  atsScore: 82,
-  keywordSuggestions: [targetRole || "Software Developer", "Responsive Web Design", "RESTful Services", "State Management", "Git Version Control"],
-  suggestions: [
-    "Include specific performance metrics (e.g., 'Enhanced user retention by 15%')",
-    "Synthesize educational and project descriptions using action verbs",
-    "Highlight specific framework and styling tools utilized in core projects"
-  ],
-  improvedBullets: {
-    experience: "Orchestrated front-end redesigns, reducing load latency by 28% and ensuring fully responsive, modular cross-device layout structures.",
-    projects: "Designed a secure collaborative interface using encrypted token storage and asynchronous API endpoints."
-  },
-  missingSections: ["Professional Development Certifications", "Open Source Collaborations"],
-  overallFeedback: "Your current resume reflects strong capability. Emphasizing quantified accomplishments and restructuring to clear ATS layouts will dramatically raise recruiter callbacks.",
-  strengthAreas: ["Clean format structure", "Comprehensive technology stack outline"]
-});
-
-const mockJobMatchResult = (skills, targetRole, location) => ({
-  jobMatches: [
-    {
-      title: `Associate ${targetRole || 'Software Engineer'}`,
-      company: "Apex Tech solutions",
-      location: `${location || 'Remote / Bangalore'}`,
-      type: "full-time",
-      matchScore: 89,
-      salaryRange: "5-8 LPA",
-      requiredSkills: [skills[0] || "JavaScript", "React", "REST APIs"],
-      missingSkills: ["React"],
-      description: "Join our agile engineering squad to construct and refine responsive, high-performance user experiences.",
-      applyUrl: "https://linkedin.com/jobs",
-      source: "LinkedIn"
-    },
-    {
-      title: `Junior ${targetRole || 'Developer'}`,
-      company: "OmniCorp Labs",
-      location: `${location || 'Hybrid / Bangalore'}`,
-      type: "full-time",
-      matchScore: 82,
-      salaryRange: "4-6 LPA",
-      requiredSkills: [skills[0] || "JavaScript", "HTML/CSS"],
-      missingSkills: [],
-      description: "Seeking a motivated developer to join our team, focusing on UI refinement, modular design and API communication.",
-      applyUrl: "https://naukri.com",
-      source: "Naukri"
-    }
-  ],
-  internships: [
-    {
-      title: "Technical Intern (Web Development)",
-      company: "Velocity Ventures",
-      duration: "6 months",
-      stipend: "15000/month",
-      matchScore: 94,
-      location: "Remote",
-      skills: [skills[0] || "JavaScript", "HTML/CSS"]
-    }
-  ],
-  freelanceOpportunities: [
-    { platform: "Upwork", skill: "Full Stack UI Integration", avgEarning: "$22-48/hour", demandLevel: "High" }
-  ],
-  summary: "Excellent roles matching your exact baseline are widely distributed. Immediate applications for internship or associate positions are recommended."
-});
-
-const mockInterviewResult = (role, type, skills) => ({
-  questions: [
-    { id: 1, category: "hr", question: "Describe your professional goals for the next three years.", hint: "Demonstrate a structured self-learning roadmap and growth mindset.", modelAnswer: "I aim to solidify my expertise in client systems architecture, take on mentoring responsibilities, and lead technical designs.", difficulty: "easy", timeLimit: 120 },
-    { id: 2, category: "technical", question: "How do you optimize render lifecycles in client-side applications?", hint: "Discuss techniques like memoization, lazy loading, and avoiding unnecessary state changes.", modelAnswer: "We employ lazy routes, optimize parent-child state propagation, and use component memoization where appropriate.", difficulty: "medium", timeLimit: 180 },
-    { id: 3, category: "behavioral", question: "Describe a situation where you had to collaborate under a tight timeline.", hint: "Utilize the STAR framework (Situation, Task, Action, Result).", modelAnswer: "Faced with a sudden release deadline, I paired with backend devs, structured mock API models, and completed the features on time.", difficulty: "medium", timeLimit: 180 },
-    { id: 4, category: "technical", question: "What are the primary differences between SQL and NoSQL databases?", hint: "Focus on transaction guarantees (ACID) versus dynamic schemas and horizontal scalability.", modelAnswer: "SQL guarantees rigid relations and transactions, while NoSQL offers horizontal scalability with flexible schemas.", difficulty: "hard", timeLimit: 240 }
-  ],
-  tips: ["Articulate your technical design decisions before coding", "Keep behavioral examples clear and concise using STAR", "Pace yourself and frame responses analytically"],
-  commonMistakes: ["Failing to mention specific modular design patterns", "Providing answers lacking structural logic", "Overcomplicating simple algorithmic scenarios"],
-  preparationPlan: ["Refine answers around network cycle speeds", "Study common architectural modular guidelines", "Run timed technical simulations"]
-});
-
-const mockEvaluateAnswerResult = (question, userAnswer, role) => {
-  const trimmed = userAnswer?.trim() || '';
-  const wordCount = trimmed.split(/\s+/).filter(Boolean).length;
-  // Accurate scoring based on answer quality
-  let score;
-  if (wordCount < 5) score = 2;
-  else if (wordCount < 15) score = 4;
-  else if (wordCount < 30) score = 5;
-  else if (wordCount < 60) score = 6;
-  else if (wordCount < 100) score = 7;
-  else score = 8;
-
-  const feedbacks = {
-    2: "Your answer is too brief to evaluate properly. Please provide a complete response.",
-    4: "Your answer is very short and lacks the depth expected for this role. Expand with specific examples.",
-    5: "Your answer covers the basics but needs more detail and concrete examples to stand out.",
-    6: "Decent answer but missing specific examples or metrics. Use the STAR method for behavioral questions.",
-    7: "Good answer with reasonable coverage. Adding quantified results would strengthen it further.",
-    8: "Strong answer with good structure. Minor improvements could make it excellent."
-  };
-
-  return {
-    score,
-    feedback: feedbacks[score] || feedbacks[7],
-    strengths: wordCount > 20 ? ["Attempted to address the question", "Shows basic understanding"] : ["Made an attempt"],
-    improvements: ["Add specific examples from your experience", "Use the STAR method (Situation, Task, Action, Result)", "Include quantified achievements"],
-    betterAnswer: `For a ${role || 'Developer'} role, a strong answer would: clearly state the situation/context, describe specific actions you took, quantify the results achieved, and connect it to the skills required for this role.`
-  };
-};
-
-const mockRoadmapResult = (profile) => ({
-  roadmap: {
-    week1_2: { focus: "Clean Architecture & State Foundations", tasks: ["Master asynchronous patterns", "Refactor core portfolio projects"], goal: "Establish a robust modular coding baseline" },
-    week3_4: { focus: "Systems Integration & API Flow", tasks: ["Build REST end-points", "Ensure database query optimization"], goal: "Deliver fully connected full-stack interfaces" },
-    month2: { focus: "System Performance & Testing", tasks: ["Implement comprehensive unit test suits", "Apply browser memo strategies"], goal: "Achieve 80%+ coverage with streamlined performance" },
-    month3: { focus: "Active Networking & Job Outreach", tasks: ["Apply to 15 targeted companies weekly", "Engage in live technical mocks"], goal: "Secure multiple technical screen rounds" }
-  },
-  dailyRoutine: ["45 min learning advanced state control", "1.5 hours hands-on project building", "30 min portfolio optimization"],
-  motivationalTip: "Consistency beats speed. Commit to small daily progress on your roadmap, and cumulative results will arrive.",
-  milestones: [
-    { day: 7, milestone: "All portfolio repos restructured on GitHub", achieved: false },
-    { day: 30, milestone: "First complete modular full-stack application live", achieved: false },
-    { day: 60, milestone: "First timed mock review passed", achieved: false },
-    { day: 90, milestone: "Official job offer accepted", achieved: false }
-  ]
-});
-
-const mockOpportunitiesResult = (location, skills) => ({
-  walkInDrives: [
-    { company: "PrimeTech Global", role: "Associate Developer", location: `${location || 'Metro Hub'}`, date: "Every Friday", contact: "careers@primetech.com" },
-    { company: "Quantum Solutions", role: "Junior Support Engineer", location: `${location || 'Business Complex'}`, date: "Second Monday of the Month", contact: "onboarding@quantum.com" }
-  ],
-  governmentJobs: [
-    { portal: "National Career Hub", type: "Technical IT Consultant", eligibility: "B.Tech / BCA / MCA / Computer Science baseline", lastDate: "Rolling Openings", link: "https://www.ncs.gov.in" }
-  ],
-  skillCenters: [
-    { name: "Digital Innovation Hub", location: "District Technology Center", courses: ["Advanced Modular Web Architectures", "Full Stack API Integrations"], fee: "Subsidized / Sponsored" }
-  ],
-  onlineOpportunities: [
-    { platform: "Internshala", type: "Virtual Internship", roles: ["Junior React Developer"], link: "https://internshala.com" },
-    { platform: "LinkedIn Jobs", type: "Full-Time", roles: ["Junior Analyst UI"], link: "https://linkedin.com/jobs" }
-  ],
-  tip: "Make sure you carry physical, clean copies of your ATS resume, keep your professional profiles active, and set local walk-in notifications."
-});
+// ─── DYNAMIC MOCK FALLBACKS ───────────────────────────────────────────
+const {
+  mockSkillResult,
+  mockResumeResult,
+  mockJobMatchResult,
+  mockInterviewResult,
+  mockEvaluateAnswerResult,
+  mockRoadmapResult,
+  mockOpportunitiesResult,
+  generateCareerTwinReport: mockCareerTwinReport,
+  generateWeeklyReport: mockWeeklyReport,
+  generateDailyTasks: mockDailyTasks
+} = require('./mockFallbacks');
 
 // ─── AGENT EXECUTIONS WITH GRACEFUL MOCK FALLBACKS ──────────────────────────
 
-const runSkillAgent = async (skills, targetRole, experienceLevel, apiKey) => {
+const runSkillAgent = async (skills, targetRole, experienceLevel, llmConfig) => {
   try {
-    const prompt = `You are a world-class career counselor, AI career coach, and skill gap analyst with 20 years of experience across tech, business, data science, AI/ML, design, and non-tech careers.
+    const prompt = `You are an elite Career Intelligence AI. Your task is to perform a deep, personalized skill gap analysis for a professional.
 
-TASK: Perform a deep, personalized career analysis for this user.
+User Profile:
+- Skills: ${skills.join(', ')}
+- Target Role: ${targetRole || 'Not specified'}
+- Experience: ${experienceLevel || 'fresher'}
 
-User Skills: ${skills.join(', ')}
-Target Role: ${targetRole || 'Not specified'}
-Experience Level: ${experienceLevel || 'fresher'}
+RULES:
+1. STRICTLY analyze for the exact Target Role provided. Do NOT default to generic web development.
+2. If Target Role is AI/ML, focus on models, math, data engineering. If Frontend, focus on UI/UX, frameworks.
+3. Be brutally honest about the industry expectations for this role in 2024-2025.
 
-IMPORTANT RULES:
-- Be HIGHLY specific to their exact skills and target role
-- Provide REAL, working course URLs (Coursera, Udemy, edX, freeCodeCamp, YouTube, official docs)
-- For Data Science / AI / ML roles: include Python, pandas, scikit-learn, TensorFlow, deep learning resources
-- For non-tech roles: include domain-specific skills and platforms
-- Give ACCURATE salary data based on Indian market (LPA) or global if role is remote
-- Market demand should reflect 2024-2025 job market reality
-- Confidence score should be honest and realistic
-
-Return ONLY valid JSON (no markdown, no code blocks):
+Return ONLY valid JSON matching this exact structure:
 {
-  "skillGaps": [
+  "analyzedSkills": [
     {
-      "skill": "React.js",
-      "priority": "high",
-      "reason": "Essential for Frontend Developer roles - 87% of job postings require it",
-      "estimatedWeeks": 4,
-      "currentDemand": "Very High",
-      "salaryImpact": "+2-3 LPA",
-      "courses": [
-        {"name": "React - The Complete Guide 2024", "platform": "Udemy", "url": "https://www.udemy.com/course/react-the-complete-guide-incl-redux/", "duration": "40 hours", "free": false},
-        {"name": "React Official Documentation", "platform": "React.dev", "url": "https://react.dev/learn", "duration": "Self-paced", "free": true}
-      ]
+      "skill": "Name of the skill (either an existing one or a missing one)",
+      "currentLevel": "beginner|intermediate|advanced|none",
+      "requiredLevel": "beginner|intermediate|advanced",
+      "gap": "Description of the gap between current and required level",
+      "priority": "critical|high|medium|low",
+      "learningOrder": 1
     }
   ],
-  "careerPaths": [
-    {
-      "role": "Frontend Developer",
-      "matchScore": 75,
-      "description": "Build user interfaces and web applications using modern frameworks",
-      "avgSalary": "4-12 LPA",
-      "demandLevel": "High",
-      "timeToReady": "3-4 months",
-      "topCompanies": ["Google", "Flipkart", "Swiggy", "Startup ecosystem"],
-      "missingSkills": ["React", "TypeScript"]
-    }
-  ],
-  "learningRoadmap": [
-    {"step": 1, "skill": "React.js Fundamentals", "resources": ["React.dev official docs", "freeCodeCamp React course"], "weeks": 3, "priority": "high", "marketDemand": "Very High"}
-  ],
-  "strengths": ["Specific strength 1 based on their actual skills", "Specific strength 2"],
-  "weaknesses": ["Area that needs improvement 1", "Area that needs improvement 2"],
-  "summary": "2-3 sentence personalized, honest career analysis specific to their skills and target role",
-  "nextSteps": ["Specific actionable step 1", "Specific actionable step 2", "Specific actionable step 3"],
-  "overallReadiness": 65,
-  "confidenceScore": 78,
-  "marketOutlook": "Positive - Frontend developer demand growing 22% YoY in India",
-  "estimatedTimeToJob": "3-4 months with consistent effort",
-  "suggestedCourses": [
-    {"name": "The Complete Web Developer Bootcamp", "platform": "Udemy", "url": "https://www.udemy.com/course/the-complete-web-development-bootcamp/", "duration": "65 hours", "free": false, "rating": 4.7},
-    {"name": "freeCodeCamp Responsive Web Design", "platform": "freeCodeCamp", "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/", "duration": "300 hours", "free": true, "rating": 4.8},
-    {"name": "CS50 Web Programming with Python and JavaScript", "platform": "edX / Harvard", "url": "https://cs50.harvard.edu/web/2020/", "duration": "12 weeks", "free": true, "rating": 4.9},
-    {"name": "JavaScript Algorithms and Data Structures", "platform": "freeCodeCamp", "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/", "duration": "300 hours", "free": true, "rating": 4.7},
-    {"name": "Full Stack Open 2024", "platform": "University of Helsinki", "url": "https://fullstackopen.com/en/", "duration": "Self-paced", "free": true, "rating": 4.9}
-  ],
-  "skillMasteryLevels": [
-    {"skill": "HTML", "currentLevel": "Intermediate", "targetLevel": "Advanced", "gapSize": "Small"}
+  "recommendations": [
+    "Actionable, highly specific recommendation 1",
+    "Actionable, highly specific recommendation 2"
   ]
 }`;
-    const raw = await callLLM(prompt, apiKey);
+
+    const raw = await callLLM(prompt, llmConfig);
     return parseJSON(raw);
   } catch (error) {
     console.warn("[LLM Service] runSkillAgent failed, returning premium mock fallback data:", error.message);
@@ -750,87 +537,100 @@ Return ONLY valid JSON (no markdown):
   }
 };
 
-const generateCareerRoadmap = async (profile, apiKey) => {
+const generateCareerRoadmap = async (profile, llmConfig) => {
   try {
-    const duration = profile.duration || 90;
-    const prompt = `You are a world-class career strategist and coach who has helped 10,000+ professionals get hired at top companies.
+    const rawDuration = profile.duration || 30;
+    const numDuration = parseInt(String(rawDuration).replace(/\D/g, '')) || 30;
+    const role = profile.targetRole || 'Software Developer';
+    const skills = profile.skills?.join(', ') || 'Various';
+    const level = profile.experienceLevel || 'fresher';
 
-Create a detailed, personalized ${duration}-day career action plan for:
-- Skills: ${profile.skills?.join(', ') || 'Various'}
-- Target Role: ${profile.targetRole || 'Software Developer'}
-- Experience Level: ${profile.experienceLevel || 'fresher'}
-- Education: ${JSON.stringify(profile.education || {})}
+    // For large day counts, cap days per AI call to avoid token overflow
+    // We'll generate 30 days at a time and merge for longer durations.
+    const isShort  = numDuration <= 90;   // Day-by-Day
+    const isMedium = numDuration > 90 && numDuration <= 180;  // Week-by-Week
+    // > 180 → Monthly
 
-IMPORTANT: Make this HIGHLY SPECIFIC to their profile. Not generic advice.
-- Week goals must be achievable within the timeframe
-- Resources must be real and accessible
-- Milestones must be measurable
-- Daily routine must be realistic for someone ${profile.experienceLevel === 'fresher' ? 'just starting' : 'with experience'}
+    let schemaInstructions = '';
+    if (isShort) {
+      // Cap to 30 days per request to stay within token limits
+      const daysToGenerate = Math.min(numDuration, 30);
+      schemaInstructions = `Generate a day-by-day plan with EXACTLY ${daysToGenerate} entries in the "days" array.
+IMPORTANT: Generate EXACTLY ${daysToGenerate} day objects — no more, no less.
 
-Return ONLY valid JSON (no markdown):
+Each day object MUST be:
+{"dayNumber":N,"theme":"Short theme","learning":"Specific topic","practice":"Specific drill","build":"What to create","checkpoint":"Verification task"}
+
+RULES:
+1. Topics MUST be SPECIFIC to "${role}". Not generic.
+2. Every 7th day = Project Day (build a complete mini-project).
+3. Progressively build from user's level (${level}) with skills: ${skills}.
+4. By Day ${daysToGenerate} they should have strong foundations.
+
+Return ONLY this JSON (no markdown, no extra text):
 {
-  "roadmap": {
-    "week1_2": {
-      "focus": "Foundation & Setup",
-      "tasks": ["Complete JavaScript fundamentals review", "Set up GitHub profile with 3 repos", "Build first portfolio project"],
-      "goal": "Establish a strong coding foundation and online presence",
-      "successMetric": "GitHub profile visible, 1 project deployed"
-    },
-    "week3_4": {
-      "focus": "Skill Building & Projects",
-      "tasks": ["Learn React.js basics", "Build a CRUD application", "Write 5 blog posts about your learning"],
-      "goal": "Demonstrate practical skill with working projects",
-      "successMetric": "2 completed projects on GitHub"
-    },
-    "month2": {
-      "focus": "Job Search Preparation",
-      "tasks": ["Create ATS-optimized resume", "Apply to 5 jobs per day", "Network on LinkedIn with 50 people in target field"],
-      "goal": "Active job applications with optimized materials",
-      "successMetric": "Resume ready, 50+ applications sent"
-    },
-    "month3": {
-      "focus": "Interviews & Offers",
-      "tasks": ["Mock interview practice daily", "Follow up on applications", "Negotiate offers confidently"],
-      "goal": "Convert applications to offers",
-      "successMetric": "At least 3 interviews, 1 offer received"
-    }
-  },
-  "dailyRoutine": [
-    "1 hour: Learning new skill (morning - peak focus)",
-    "1.5 hours: Coding practice on current project",
-    "30 minutes: Job applications and LinkedIn networking",
-    "20 minutes: Review and reflect on learnings"
-  ],
-  "weeklyGoals": [
-    "Week 1: Complete [specific skill] fundamentals",
-    "Week 2: Build first project using new skill",
-    "Week 3: Apply to 25 targeted companies",
-    "Week 4: Complete 5 mock interviews"
-  ],
-  "monthlyGoals": [
-    "Month 1: Portfolio with 2 complete projects",
-    "Month 2: 100+ job applications sent",
-    "Month 3: Job offer in hand"
-  ],
-  "motivationalTip": "Personalized, specific motivational message based on their background and target role",
-  "milestones": [
-    {"day": 7, "milestone": "First GitHub repository with complete project", "achieved": false, "importance": "Recruiters check GitHub"},
-    {"day": 21, "milestone": "Resume and LinkedIn fully optimized", "achieved": false, "importance": "Required before applying"},
-    {"day": 45, "milestone": "50 job applications submitted", "achieved": false, "importance": "Numbers game - apply broadly"},
-    {"day": ${Math.round(duration * 0.7)}, "milestone": "First technical interview completed", "achieved": false, "importance": "Biggest fear overcome"},
-    {"day": ${duration}, "milestone": "Job offer accepted", "achieved": false, "importance": "Goal achieved"}
-  ],
-  "recommendedResources": [
-    {"name": "LeetCode - Easy Problems", "url": "https://leetcode.com/problemset/", "purpose": "Technical interview prep", "timePerDay": "30 min"},
-    {"name": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/", "purpose": "Professional skills", "timePerDay": "1 hour"}
-  ],
-  "jobReadinessScore": 65,
-  "estimatedHireDate": "${duration} days from today with consistent effort"
+  "duration":"${numDuration} Days",
+  "role":"${role}",
+  "goal":"Precise one-sentence career goal",
+  "days":[{"dayNumber":1,"theme":"...","learning":"...","practice":"...","build":"...","checkpoint":"..."},...],
+  "projects":[{"name":"...","description":"...","skills":["..."],"deliverable":"...","day":7}],
+  "finalOutcome":"What they can do after ${numDuration} days"
 }`;
-    const raw = await callLLM(prompt, apiKey);
-    return parseJSON(raw);
+    } else if (isMedium) {
+      const weeks = Math.ceil(numDuration / 7);
+      schemaInstructions = `Generate a week-by-week plan with EXACTLY ${weeks} entries in the "weeks" array.
+Each week: {"week":"Week N","theme":"...","skillsToLearn":["..."],"dailyTasks":["Mon","Tue","Wed","Thu","Fri"],"weekendProject":"...","checkpoint":"..."}
+
+Return ONLY JSON:
+{
+  "duration":"${numDuration} Days","role":"${role}","goal":"...",
+  "weeks":[...],
+  "projects":[{"name":"...","description":"...","skills":[],"deliverable":"..."}],
+  "finalOutcome":"..."
+}`;
+    } else {
+      const months = Math.ceil(numDuration / 30);
+      schemaInstructions = `Generate a month-by-month plan with EXACTLY ${months} entries in the "months" array.
+Each month: {"month":"Month N","theme":"...","goals":["..."],"skills":["..."],"weeklyFocus":["Wk1:...","Wk2:...","Wk3:...","Wk4:..."],"project":"...","milestone":"..."}
+
+Return ONLY JSON:
+{
+  "duration":"${numDuration} Days","role":"${role}","goal":"...",
+  "months":[...],
+  "projects":[{"name":"...","description":"...","skills":[],"deliverable":"..."}],
+  "finalOutcome":"..."
+}`;
+    }
+
+    const prompt = `You are an expert AI career mentor. Create a highly personalized learning roadmap.
+
+USER: Target Role: ${role} | Skills: ${skills} | Level: ${level} | Duration: ${numDuration} Days
+
+ROLE INTELLIGENCE (apply strictly):
+- ML/AI: Python basics → NumPy/Pandas → Statistics → ML algorithms → Deep Learning → Deployment
+- Frontend: HTML/CSS → JS → React → TypeScript → Testing → Performance
+- Backend: Language → Databases → REST APIs → Auth → Cloud/Docker
+- Data Analyst: SQL → Excel → Python → Statistics → Visualization (Tableau/PowerBI)
+- Other roles: Reason about the exact skills needed and create a logical progression
+
+CRITICAL: Every item must be SPECIFIC to "${role}". Start from skills: ${skills}. NEVER generic content.
+
+${schemaInstructions}`;
+
+    const raw = await callLLM(prompt, llmConfig);
+    if (!raw || raw.trim().length < 50) {
+      throw new Error('Empty or too-short response from LLM');
+    }
+    const result = parseJSON(raw);
+
+    // Validate the response has the expected structure
+    if (!result.days && !result.weeks && !result.months) {
+      throw new Error('LLM response missing required days/weeks/months array');
+    }
+
+    return result;
   } catch (error) {
-    console.warn("[LLM Service] generateCareerRoadmap failed, returning premium mock fallback data:", error.message);
+    console.warn('[LLM Service] generateCareerRoadmap failed, returning mock fallback:', error.message);
     return mockRoadmapResult(profile);
   }
 };
@@ -945,7 +745,111 @@ Return ONLY valid JSON (no markdown):
   }
 };
 
+const generateCareerTwinReport = async (resumeData, skillsData, targetRole, apiKey) => {
+  try {
+    const prompt = `You are a Career Twin Intelligence AI. Compare this user's profile with successful professionals in their target role.
+Target Role: ${targetRole || 'Software Engineer'}
+User Skills: ${JSON.stringify(skillsData)}
+User Resume: ${JSON.stringify(resumeData)}
+
+Return ONLY valid JSON with this exact structure:
+{
+  "similarProfile": "Specific related high-level role (e.g., Senior AI Engineer)",
+  "similarityScore": 75,
+  "hasSkills": ["List 2-3 key skills they have that match the role"],
+  "missingSkills": ["List 2-3 critical missing skills"],
+  "successfulPath": [
+    {"step": 1, "description": "What successful people did first"},
+    {"step": 2, "description": "What they did next"},
+    {"step": 3, "description": "How they landed the job"}
+  ],
+  "nextActions": ["Action 1", "Action 2", "Action 3"]
+}`;
+    const raw = await callLLM(prompt, apiKey);
+    return parseJSON(raw);
+  } catch (error) {
+    console.warn("[LLM Service] generateCareerTwinReport failed:", error.message);
+    return mockCareerTwinReport(resumeData, skillsData, targetRole);
+  }
+};
+
+const generateWeeklyReport = async (context, apiKey) => {
+  try {
+    const {
+      targetRole, weekNumber, currentDay, totalDays,
+      taskRate, xpEarned, completedCount, totalCount,
+      topSkillsPracticed, missedSkills, totalStats, streak
+    } = context;
+
+    const prompt = `You are an AI Career Coach. Generate a personalized Week ${weekNumber} progress report for a user working towards becoming a ${targetRole}.
+
+ACTUAL USER DATA THIS WEEK:
+- Roadmap Progress: Day ${currentDay} of ${totalDays} (${Math.round((currentDay/totalDays)*100)}% complete)
+- Tasks Completed: ${completedCount} out of ${totalCount} (${taskRate}% completion rate)
+- XP Earned: ${xpEarned}
+- Skills Practiced: ${topSkillsPracticed?.join(', ') || 'Not tracked yet'}
+- Skills Missed/Skipped: ${missedSkills?.join(', ') || 'None'}
+- Current Streak: ${streak} days
+- Total Tasks Completed Overall: ${totalStats?.tasksCompleted || 0}
+
+RULES:
+1. The summaryMessage MUST mention "${targetRole}" and be based on REAL numbers above.
+2. completedHighlights must reflect the actual skills practiced this week.
+3. nextWeekPlan must be specific to Week ${weekNumber + 1} of a ${targetRole} learning journey.
+4. If taskRate < 50, tone should be encouraging but honest about catching up.
+5. If taskRate >= 80, celebrate the achievement.
+
+Return ONLY valid JSON:
+{
+  "summaryMessage": "2-sentence personalized coach message mentioning ${targetRole} and real stats",
+  "completedHighlights": ["Specific completed skill or task from this week", "Another real highlight"],
+  "improvementArea": "One specific area to improve with % or concrete metric",
+  "missedGoals": ["Specific missed task or skill if any"],
+  "nextWeekPlan": ["Specific Day ${currentDay + 1}-${Math.min(currentDay + 7, totalDays)} task for ${targetRole}", "Another concrete next step"]
+}`;
+
+    const raw = await callLLM(prompt, apiKey);
+    return parseJSON(raw);
+  } catch (error) {
+    console.warn('[LLM Service] generateWeeklyReport failed:', error.message);
+    return mockWeeklyReport(context);
+  }
+};
+
+const generateDailyTasks = async (targetRole, roadmap, progress, apiKey) => {
+  try {
+    const prompt = `You are an AI Task Generator creating 3 personalized daily tasks for a user.
+Target Role: ${targetRole || 'Developer'}
+Roadmap: ${JSON.stringify(roadmap)}
+Current Progress: ${JSON.stringify(progress)}
+
+IMPORTANT RULES:
+1. Ensure the tasks directly align with the specific "focus" and "skillsToLearn" of their current week in the roadmap.
+2. If the progress indicates a failed interview or missed tasks, adapt and add revision tasks.
+3. Keep the "xpReward" between 50 and 200 based on difficulty.
+
+Return ONLY valid JSON with this exact structure:
+{
+  "tasks": [
+    {
+      "title": "Task title (e.g., Complete [Core Skill] lesson)",
+      "durationStr": "30 minutes",
+      "difficulty": "medium",
+      "xpReward": 100,
+      "skillTarget": "[Core Skill]"
+    }
+  ]
+}`;
+    const raw = await callLLM(prompt, apiKey);
+    return parseJSON(raw);
+  } catch (error) {
+    console.warn("[LLM Service] generateDailyTasks failed:", error.message);
+    return mockDailyTasks(targetRole, roadmap, progress);
+  }
+};
+
 module.exports = {
   callLLM, callGemini, runSkillAgent, runResumeAgent, runJobMatchAgent,
-  runInterviewAgent, evaluateAnswer, generateCareerRoadmap, findLocalOpportunities
+  runInterviewAgent, evaluateAnswer, generateCareerRoadmap, findLocalOpportunities,
+  generateCareerTwinReport, generateWeeklyReport, generateDailyTasks
 };

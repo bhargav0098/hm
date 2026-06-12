@@ -7,7 +7,9 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import DashboardLayout from '../components/layout/DashboardLayout';
+import AIResumeUpload from '../components/dashboard/AIResumeUpload';
 import api from '../services/api';
+import { parseResumeFile } from '../services/resume.service';
 import useAuthStore from '../store/authStore';
 
 const TABS = ['Personal Info', 'Summary', 'Experience', 'Education', 'Skills', 'Projects'];
@@ -362,47 +364,73 @@ export default function ResumePage() {
     } finally { setAnalyzing(false); }
   };
 
-  // Enhanced resume upload - extracts maximum info
-  const handleUploadResume = (e) => {
-    const file = e.target.files?.[0];
+  const [isParsing, setIsParsing] = useState(false);
+  const [parsedData, setParsedData] = useState(null);
+
+  const handleUploadResume = async (file) => {
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const text = ev.target.result;
-      const emailMatch = text.match(/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/);
-      const phoneMatch = text.match(/[\+]?[\d\s\-\(\)]{10,15}/);
-      const linkedinMatch = text.match(/linkedin\.com\/in\/[\w-]+/i);
-      const githubMatch = text.match(/github\.com\/[\w-]+/i);
 
-      // Extract name (first non-empty line that looks like a name)
-      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-      const nameLine = lines.find(l => l.length > 3 && l.length < 50 && !/[@\d]/.test(l) && /^[A-Za-z\s]+$/.test(l));
+    setIsParsing(true);
+    setParsedData(null);
+    const toastId = toast.loading('Parsing resume... This may take a few seconds.');
+    try {
+      const data = await parseResumeFile(file);
+      const parsed = data.data;
 
-      // Extract skills from common skill lines
-      const skillsMatch = text.match(/skills[:\s]+([^\n]+)/i);
-      const extractedSkills = skillsMatch
-        ? skillsMatch[1].split(/[,|·\•]/g).map(s => s.trim()).filter(s => s.length > 1 && s.length < 30)
-        : [];
+      // Extract details correctly mapping the backend structure
+      const parsedExperience = parsed.experience?.map(exp => ({
+        company: exp.company || '',
+        role: exp.role || '',
+        duration: (exp.startDate || '') + (exp.endDate ? ' - ' + exp.endDate : ''),
+        description: exp.description || ''
+      })) || [];
 
-      // Try to extract summary
-      const summaryMatch = text.match(/(?:objective|summary|profile)[:\s]*([^\n]{50,300})/i);
+      const parsedEducation = parsed.education?.map(edu => ({
+        institution: edu.institution || '',
+        degree: edu.degree || '',
+        year: edu.endDate || '',
+        grade: edu.score || ''
+      })) || [];
+      
+      const parsedProjects = parsed.projects?.map(proj => ({
+        name: proj.name || '',
+        description: proj.description || '',
+        link: proj.link || '',
+        tech: proj.technologies || []
+      })) || [];
 
       setResume(prev => ({
         ...prev,
         personalInfo: {
           ...prev.personalInfo,
-          fullName: nameLine || prev.personalInfo.fullName,
-          email: emailMatch?.[0] || prev.personalInfo.email,
-          phone: phoneMatch?.[0]?.trim() || prev.personalInfo.phone,
-          linkedin: linkedinMatch ? `https://${linkedinMatch[0]}` : prev.personalInfo.linkedin,
-          github: githubMatch ? `https://${githubMatch[0]}` : prev.personalInfo.github,
+          fullName: parsed.personalInfo?.fullName || prev.personalInfo.fullName,
+          email: parsed.personalInfo?.email || prev.personalInfo.email,
+          phone: parsed.personalInfo?.phone || prev.personalInfo.phone,
+          linkedin: parsed.personalInfo?.linkedin || prev.personalInfo.linkedin,
+          github: parsed.personalInfo?.github || prev.personalInfo.github,
+          location: parsed.personalInfo?.location || prev.personalInfo.location
         },
-        skills: extractedSkills.length > 0 ? extractedSkills : prev.skills,
-        summary: summaryMatch?.[1]?.trim() || prev.summary,
+        skills: parsed.skills?.length > 0 ? parsed.skills : prev.skills,
+        summary: parsed.summary || prev.summary,
+        experience: parsedExperience.length > 0 ? parsedExperience : prev.experience,
+        education: parsedEducation.length > 0 ? parsedEducation : prev.education,
+        projects: parsedProjects.length > 0 ? parsedProjects : prev.projects
       }));
-      toast.success('Resume parsed! Review extracted details and fill in any gaps.');
-    };
-    reader.readAsText(file);
+
+      setParsedData({
+        name: file.name,
+        skillsExtracted: parsed.skills?.length || 0,
+        experienceParsed: parsedExperience.length,
+        educationParsed: parsedEducation.length
+      });
+
+      toast.success('Resume parsed successfully!', { id: toastId });
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to parse resume automatically. Please fill manually.', { id: toastId });
+    } finally {
+      setIsParsing(false);
+    }
   };
 
   const handleProfilePicUpload = (e) => {
@@ -536,11 +564,6 @@ export default function ResumePage() {
                   <button onClick={() => setProfilePic('')} className="text-xs text-red-400 hover:text-red-300">Remove</button>
                 </div>
               )}
-              <label className="flex items-center gap-2 text-sm text-primary-400 cursor-pointer hover:text-primary-300 transition-colors">
-                <Upload className="w-4 h-4" />
-                Upload Resume
-                <input ref={fileInputRef} type="file" accept=".txt,.pdf" className="hidden" onChange={handleUploadResume} />
-              </label>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-3">
@@ -562,6 +585,13 @@ export default function ResumePage() {
         <div className="grid lg:grid-cols-5 gap-6">
           {/* Form Panel */}
           <div className="lg:col-span-3 space-y-4">
+            <AIResumeUpload 
+              onFileSelect={handleUploadResume}
+              isParsing={isParsing}
+              parsedData={parsedData}
+              resetData={() => setParsedData(null)}
+            />
+            
             <div className="glass-card p-1 flex gap-1 overflow-x-auto">
               {TABS.map((t, i) => (
                 <button key={t} onClick={() => setTab(i)}

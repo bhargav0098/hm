@@ -40,6 +40,8 @@ app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/career', require('./routes/career.routes'));
 app.use('/api/settings', require('./routes/settings.routes'));
 app.use('/api/agents', require('./routes/agent.routes'));
+app.use('/api/resume', require('./routes/resume.routes'));
+app.use('/api/chat', require('./routes/chat.routes'));
 
 app.use('*', (req, res) => res.status(404).json({ success: false, message: 'Route not found' }));
 app.use((err, req, res, next) => {

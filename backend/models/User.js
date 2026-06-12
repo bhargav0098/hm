@@ -9,8 +9,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin', 'demo'], default: 'user' },
   isDemo: { type: Boolean, default: false },
   isVerified: { type: Boolean, default: false },
-  isActive: { type: Boolean, default: true },
-  
+  gender: { type: String, enum: ['male', 'female', 'other'], default: 'other' },
   // OAuth
   googleId: { type: String },
   githubId: { type: String },

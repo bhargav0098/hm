@@ -15,7 +15,7 @@ const passwordRules = [
 
 export default function RegisterPage() {
   const [step, setStep] = useState('register'); // register | verify
-  const [form, setForm] = useState({ fullName: '', email: '', password: '', confirmPassword: '' });
+  const [form, setForm] = useState({ fullName: '', email: '', password: '', confirmPassword: '', gender: 'other' });
   const [otp, setOtp] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -34,7 +34,7 @@ export default function RegisterPage() {
     if (form.password !== form.confirmPassword) return toast.error('Passwords do not match');
     if (!passwordRules.every(r => r.test(form.password))) return toast.error('Password does not meet requirements');
     
-    const result = await register(form.fullName, form.email, form.password);
+    const result = await register(form.fullName, form.email, form.password, form.gender);
     if (result.success) {
       // Show OTP verification step
       setStep('verify');
@@ -140,6 +140,23 @@ export default function RegisterPage() {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <input type="email" name="email" value={form.email} onChange={handleChange}
                   placeholder="you@email.com" className="input-field pl-10" />
+              </div>
+            </div>
+
+            {/* Gender */}
+            <div>
+              <label className="text-sm text-slate-400 mb-1.5 block">Gender</label>
+              <div className="relative">
+                <select 
+                  name="gender" 
+                  value={form.gender} 
+                  onChange={handleChange}
+                  className="input-field w-full pl-3"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
             </div>
             

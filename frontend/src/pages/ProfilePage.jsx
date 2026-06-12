@@ -59,7 +59,8 @@ export default function ProfilePage() {
     website: user?.website || '',
     location: user?.location || '',
     phone: user?.phone || '',
-    avatar: user?.avatar || ''
+    avatar: user?.avatar || '',
+    gender: user?.gender || 'other'
   });
   const [passwords, setPasswords] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
   const [activity, setActivity] = useState([]);
@@ -225,6 +226,18 @@ export default function ProfilePage() {
                     className="input-field" />
                 </div>
               ))}
+              <div className="sm:col-span-2">
+                <label className="text-sm text-slate-400 mb-1.5 block">Gender</label>
+                <select 
+                  value={profile.gender}
+                  onChange={e => setProfile(p => ({ ...p, gender: e.target.value }))}
+                  className="input-field w-full"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
               <div className="sm:col-span-2">
                 <label className="text-sm text-slate-400 mb-1.5 block">Bio</label>
                 <textarea value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))}
