@@ -10,7 +10,6 @@ router.use(protect);
 
 // Dashboard & Intelligence
 router.get('/dashboard', c.getDashboardStats);
-router.get('/twin', c.getCareerTwin);
 router.get('/weekly-report', c.getWeeklyReport);
 router.get('/daily-tasks', c.getDailyTasks);
 router.post('/tasks/:id/complete', c.completeTask);

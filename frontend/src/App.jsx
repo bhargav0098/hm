@@ -17,7 +17,6 @@ const OpportunitiesPage = lazy(() => import('./pages/OpportunitiesPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-const CareerTwinPage = lazy(() => import('./pages/CareerTwinPage'));
 const WeeklyReportPage = lazy(() => import('./pages/WeeklyReportPage'));
 
 const ProtectedRoute = ({ children }) => {
@@ -73,7 +72,6 @@ export default function App() {
           <Route path="/opportunities" element={<ProtectedRoute><OpportunitiesPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-          <Route path="/career-twin" element={<ProtectedRoute><CareerTwinPage /></ProtectedRoute>} />
           <Route path="/weekly-report" element={<ProtectedRoute><WeeklyReportPage /></ProtectedRoute>} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

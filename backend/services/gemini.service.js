@@ -224,7 +224,6 @@ const {
   mockEvaluateAnswerResult,
   mockRoadmapResult,
   mockOpportunitiesResult,
-  generateCareerTwinReport: mockCareerTwinReport,
   generateWeeklyReport: mockWeeklyReport,
   generateDailyTasks: mockDailyTasks
 } = require('./mockFallbacks');
@@ -745,33 +744,6 @@ Return ONLY valid JSON (no markdown):
   }
 };
 
-const generateCareerTwinReport = async (resumeData, skillsData, targetRole, apiKey) => {
-  try {
-    const prompt = `You are a Career Twin Intelligence AI. Compare this user's profile with successful professionals in their target role.
-Target Role: ${targetRole || 'Software Engineer'}
-User Skills: ${JSON.stringify(skillsData)}
-User Resume: ${JSON.stringify(resumeData)}
-
-Return ONLY valid JSON with this exact structure:
-{
-  "similarProfile": "Specific related high-level role (e.g., Senior AI Engineer)",
-  "similarityScore": 75,
-  "hasSkills": ["List 2-3 key skills they have that match the role"],
-  "missingSkills": ["List 2-3 critical missing skills"],
-  "successfulPath": [
-    {"step": 1, "description": "What successful people did first"},
-    {"step": 2, "description": "What they did next"},
-    {"step": 3, "description": "How they landed the job"}
-  ],
-  "nextActions": ["Action 1", "Action 2", "Action 3"]
-}`;
-    const raw = await callLLM(prompt, apiKey);
-    return parseJSON(raw);
-  } catch (error) {
-    console.warn("[LLM Service] generateCareerTwinReport failed:", error.message);
-    return mockCareerTwinReport(resumeData, skillsData, targetRole);
-  }
-};
 
 const generateWeeklyReport = async (context, apiKey) => {
   try {
@@ -851,5 +823,5 @@ Return ONLY valid JSON with this exact structure:
 module.exports = {
   callLLM, callGemini, runSkillAgent, runResumeAgent, runJobMatchAgent,
   runInterviewAgent, evaluateAnswer, generateCareerRoadmap, findLocalOpportunities,
-  generateCareerTwinReport, generateWeeklyReport, generateDailyTasks
+  generateWeeklyReport, generateDailyTasks
 };

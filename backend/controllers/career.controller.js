@@ -3,7 +3,7 @@ const ApiSettings = require('../models/ApiSettings');
 const {
   runSkillAgent, runResumeAgent, runJobMatchAgent,
   runInterviewAgent, evaluateAnswer, generateCareerRoadmap, findLocalOpportunities,
-  generateCareerTwinReport, generateWeeklyReport, generateDailyTasks
+  generateWeeklyReport, generateDailyTasks
 } = require('../services/gemini.service');
 
 // Helper: get user's complete LLM configuration (provider, model, key)
@@ -604,24 +604,6 @@ exports.getDashboardStats = async (req, res, next) => {
 };
 
 // ─── NEW INTELLIGENCE ENDPOINTS ─────────────────────────────────────────
-
-exports.getCareerTwin = async (req, res, next) => {
-  try {
-    const resume = await Resume.findOne({ user: req.user._id, isActive: true });
-    const profile = await SkillProfile.findOne({ user: req.user._id });
-    const llmConfig = await getUserLLMConfig(req.user._id);
-
-    // Call generative service
-    const twinReport = await generateCareerTwinReport(
-      resume || {},
-      profile?.currentSkills || [],
-      profile?.targetRole || 'Software Engineer',
-      llmConfig
-    );
-
-    res.json({ success: true, report: twinReport });
-  } catch (error) { next(error); }
-};
 
 exports.getWeeklyReport = async (req, res, next) => {
   try {

@@ -20,7 +20,6 @@ const navItems = [
 ];
 
 const intelligenceItems = [
-  { icon: Users, label: 'Career Twin', path: '/career-twin' },
   { icon: FileText, label: 'Weekly Report', path: '/weekly-report' },
 ];
 

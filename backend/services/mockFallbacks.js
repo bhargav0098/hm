@@ -244,19 +244,6 @@ const mockOpportunitiesResult = (location, skills) => ({
   tip: "Leverage local networking events and consistently apply on major portals."
 });
 
-const generateCareerTwinReport = (resumeData, skillsData, targetRole) => ({
-  similarProfile: `Senior ${targetRole || 'Engineer'}`,
-  similarityScore: 68,
-  hasSkills: skillsData.slice(0, 2).length ? skillsData.slice(0, 2) : ["Basic Fundamentals"],
-  missingSkills: ["System Design", "Advanced Frameworks"],
-  successfulPath: [
-    { step: 1, description: "Mastered the core programming fundamentals" },
-    { step: 2, description: "Built scalable portfolio projects demonstrating real-world problem solving" },
-    { step: 3, description: "Leveraged LinkedIn networking to land referral interviews" }
-  ],
-  nextActions: ["Focus on building a complex capstone project", "Begin practicing technical interview questions daily"]
-});
-
 const generateWeeklyReport = (context = {}) => {
   const role = context.targetRole || 'Software Developer';
   const week = context.weekNumber || 1;
@@ -321,7 +308,6 @@ module.exports = {
   mockEvaluateAnswerResult,
   mockRoadmapResult,
   mockOpportunitiesResult,
-  generateCareerTwinReport,
   generateWeeklyReport,
   generateDailyTasks
 };

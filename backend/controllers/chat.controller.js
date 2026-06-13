@@ -44,7 +44,7 @@ Guide users to the correct sections of the platform based on their requests:
 - "/roadmap" - To generate or view their step-by-step career learning roadmap
 - "/resume" - To use the AI Resume Builder to parse, grade, and optimize their resume for ATS
 - "/interview" - To practice mock interviews
-- "/dashboard" - To view their AI tasks, Career Twin match, and job readiness score
+- "/dashboard" - To view their AI tasks and job readiness score
 
 USER CONTEXT:
 - Target Role: ${profile?.targetRole || 'Unknown'}
