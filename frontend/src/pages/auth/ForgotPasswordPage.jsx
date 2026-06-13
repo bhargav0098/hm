@@ -146,11 +146,11 @@ export default function ForgotPasswordPage() {
                 <Mail className="w-7 h-7 text-primary-400" />
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">Forgot password?</h2>
-              <p className="text-slate-400 text-sm mb-8">Enter your email and we'll send you a verification code.</p>
+              <p className="text-white/50 text-sm mb-8">Enter your email and we'll send you a verification code.</p>
               
               <form onSubmit={handleSendOTP} className="space-y-4">
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)}
                     placeholder="you@company.com" className="input-field pl-10" autoFocus />
                 </div>
@@ -160,7 +160,7 @@ export default function ForgotPasswordPage() {
                 </motion.button>
               </form>
               
-              <Link to="/login" className="flex items-center gap-2 text-slate-400 hover:text-white text-sm mt-6 transition-colors">
+              <Link to="/login" className="flex items-center gap-2 text-white/50 hover:text-white text-sm mt-6 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Back to login
               </Link>
             </motion.div>
@@ -174,7 +174,7 @@ export default function ForgotPasswordPage() {
                 <Key className="w-7 h-7 text-accent-green" />
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">Enter OTP</h2>
-              <p className="text-slate-400 text-sm mb-2">We sent a 6-digit code to</p>
+              <p className="text-white/50 text-sm mb-2">We sent a 6-digit code to</p>
               <p className="text-primary-400 font-medium text-sm mb-8">{email}</p>
               
               {/* OTP Input */}
@@ -197,7 +197,7 @@ export default function ForgotPasswordPage() {
               
               {/* Timer */}
               <div className="flex items-center justify-between mb-6">
-                <p className="text-slate-500 text-sm">
+                <p className="text-white/50 text-sm">
                   Expires in <span className={`font-mono font-bold ${timer < 60 ? 'text-red-400' : 'text-primary-400'}`}>{formatTime(timer)}</span>
                 </p>
                 {canResend ? (
@@ -206,7 +206,7 @@ export default function ForgotPasswordPage() {
                     <RefreshCw className="w-3 h-3" /> Resend OTP
                   </button>
                 ) : (
-                  <p className="text-slate-500 text-sm">Resend in {resendTimer}s</p>
+                  <p className="text-white/50 text-sm">Resend in {resendTimer}s</p>
                 )}
               </div>
               
@@ -215,7 +215,7 @@ export default function ForgotPasswordPage() {
                 {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Verify OTP'}
               </motion.button>
               
-              <button onClick={() => setStep(STEPS.EMAIL)} className="flex items-center gap-2 text-slate-400 hover:text-white text-sm mt-6 transition-colors">
+              <button onClick={() => setStep(STEPS.EMAIL)} className="flex items-center gap-2 text-white/50 hover:text-white text-sm mt-6 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Change email
               </button>
             </motion.div>
@@ -229,20 +229,20 @@ export default function ForgotPasswordPage() {
                 <Lock className="w-7 h-7 text-accent-purple" />
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">New password</h2>
-              <p className="text-slate-400 text-sm mb-8">Create a new secure password for your account.</p>
+              <p className="text-white/50 text-sm mb-8">Create a new secure password for your account.</p>
               
               <form onSubmit={handleResetPassword} className="space-y-4">
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                   <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
                     placeholder="New password (min 8 chars)" className="input-field pl-10 pr-10" />
                   <button type="button" onClick={() => setShowPass(s => !s)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/50 transition-colors">
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                   <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                     placeholder="Confirm new password" className="input-field pl-10" />
                 </div>
@@ -263,7 +263,7 @@ export default function ForgotPasswordPage() {
                 <CheckCircle className="w-10 h-10 text-accent-green" />
               </motion.div>
               <h2 className="text-2xl font-bold text-white mb-2">Password reset!</h2>
-              <p className="text-slate-400 mb-8">Your password has been reset successfully. You can now sign in with your new password.</p>
+              <p className="text-white/50 mb-8">Your password has been reset successfully. You can now sign in with your new password.</p>
               <Link to="/login">
                 <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="btn-primary w-full">
                   Back to Login

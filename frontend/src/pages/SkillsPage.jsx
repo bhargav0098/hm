@@ -42,14 +42,14 @@ const POPULAR_ROLES = [
 
 const priorityColors = {
   high: 'text-red-400 bg-red-500/10 border-red-500/30',
-  medium: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/30',
+  medium: 'text-pink-neon bg-pink-neon/10 border-pink-neon/30',
   low: 'text-green-400 bg-green-500/10 border-green-500/30'
 };
 
 const demandColors = {
   'Very High': 'text-green-400',
   'High': 'text-emerald-400',
-  'Medium': 'text-yellow-400',
+  'Medium': 'text-pink-neon',
   'Low': 'text-red-400'
 };
 
@@ -238,7 +238,7 @@ export default function SkillsPage() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white">Skill Analysis Agent</h1>
-            <p className="text-slate-400 text-sm">AI-powered career gap analysis and personalized learning roadmap</p>
+            <p className="text-white/50 text-sm">AI-powered career gap analysis and personalized learning roadmap</p>
           </div>
         </motion.div>
 
@@ -246,13 +246,13 @@ export default function SkillsPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="glass-card p-6 space-y-5">
           {/* Skills Input with Auto-suggest */}
           <div>
-            <label className="text-sm text-slate-300 font-medium mb-2 block">
-              Your Current Skills <span className="text-slate-500">(type any skill — not limited to suggestions)</span>
+            <label className="text-sm text-white/50 font-medium mb-2 block">
+              Your Current Skills <span className="text-white/50">(type any skill — not limited to suggestions)</span>
             </label>
             <div ref={suggestRef} className="relative">
               <div className="flex gap-2 mb-3">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                   <input
                     value={inputSkill}
                     onChange={e => handleSkillInput(e.target.value)}
@@ -269,7 +269,7 @@ export default function SkillsPage() {
                       >
                         {suggestions.map(s => (
                           <button key={s} onClick={() => addSkill(s)}
-                            className="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:bg-primary-500/20 hover:text-white transition-colors flex items-center gap-2">
+                            className="w-full text-left px-4 py-2.5 text-sm text-white/50 hover:bg-primary-500/20 hover:text-white transition-colors flex items-center gap-2">
                             <Plus className="w-3 h-3 text-primary-400" /> {s}
                           </button>
                         ))}
@@ -290,7 +290,7 @@ export default function SkillsPage() {
                     className={`text-xs px-2.5 py-1 rounded-lg border transition-all ${
                       activeCategory === cat
                         ? 'bg-primary-500/20 border-primary-500/50 text-primary-300'
-                        : 'bg-white/5 border-white/10 text-slate-400 hover:text-white hover:border-white/20'
+                        : 'bg-white/5 border-white/10 text-white/50 hover:text-white hover:border-white/20'
                     }`}>
                     {cat}
                   </button>
@@ -300,7 +300,7 @@ export default function SkillsPage() {
               {/* Search within category */}
               {activeCategory !== 'All' && (
                 <div className="relative mb-3">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/50" />
                   <input
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
@@ -314,7 +314,7 @@ export default function SkillsPage() {
               <div className="flex flex-wrap gap-1.5 mb-3 max-h-24 overflow-y-auto">
                 {filteredSkillsForBrowse().slice(0, 30).map(s => (
                   <button key={s} onClick={() => addSkill(s)}
-                    className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:border-primary-500/50 hover:bg-primary-500/10 transition-all">
+                    className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-white/50 hover:text-white hover:border-primary-500/50 hover:bg-primary-500/10 transition-all">
                     + {s}
                   </button>
                 ))}
@@ -323,7 +323,7 @@ export default function SkillsPage() {
               {/* Selected skills */}
               {skills.length > 0 && (
                 <div>
-                  <p className="text-xs text-slate-500 mb-2">Selected skills ({skills.length}):</p>
+                  <p className="text-xs text-white/50 mb-2">Selected skills ({skills.length}):</p>
                   <div className="flex flex-wrap gap-2">
                     {skills.map(s => (
                       <span key={s} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-500/20 border border-primary-500/40 text-primary-300 text-sm">
@@ -342,7 +342,7 @@ export default function SkillsPage() {
           {/* Target Role & Experience */}
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-slate-300 font-medium mb-2 block">Target Role</label>
+              <label className="text-sm text-white/50 font-medium mb-2 block">Target Role</label>
               <select value={targetRole} onChange={e => setTargetRole(e.target.value)} className="input-field mb-2">
                 <option value="">Select target role...</option>
                 {POPULAR_ROLES.map(r => <option key={r} value={r}>{r}</option>)}
@@ -358,7 +358,7 @@ export default function SkillsPage() {
               )}
             </div>
             <div>
-              <label className="text-sm text-slate-300 font-medium mb-2 block">Experience Level</label>
+              <label className="text-sm text-white/50 font-medium mb-2 block">Experience Level</label>
               <select value={experienceLevel} onChange={e => setExperienceLevel(e.target.value)} className="input-field">
                 {EXPERIENCE_LEVELS.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
               </select>
@@ -422,24 +422,24 @@ export default function SkillsPage() {
 
                         <div className="grid grid-cols-3 gap-2 mb-3">
                           <div className="bg-black/20 rounded-lg p-2 text-center">
-                            <p className="text-xs text-slate-500 mb-0.5">Your Level</p>
+                            <p className="text-xs text-white/50 mb-0.5">Your Level</p>
                             <p className={`text-xs font-bold capitalize ${
                               s.currentLevel === 'none' ? 'text-red-400' :
-                              s.currentLevel === 'beginner' ? 'text-yellow-400' :
-                              s.currentLevel === 'intermediate' ? 'text-blue-400' : 'text-green-400'
+                              s.currentLevel === 'beginner' ? 'text-pink-neon' :
+                              s.currentLevel === 'intermediate' ? 'text-cyan-neon' : 'text-green-400'
                             }`}>{s.currentLevel === 'none' ? 'Not Started' : s.currentLevel}</p>
                           </div>
                           <div className="bg-black/20 rounded-lg p-2 text-center">
-                            <p className="text-xs text-slate-500 mb-0.5">Required</p>
+                            <p className="text-xs text-white/50 mb-0.5">Required</p>
                             <p className="text-xs font-bold text-accent-green capitalize">{s.requiredLevel}</p>
                           </div>
                           <div className="bg-black/20 rounded-lg p-2 text-center">
-                            <p className="text-xs text-slate-500 mb-0.5">Learn Order</p>
+                            <p className="text-xs text-white/50 mb-0.5">Learn Order</p>
                             <p className="text-xs font-bold text-primary-400">#{s.learningOrder || i + 1}</p>
                           </div>
                         </div>
 
-                        <p className="text-slate-400 text-xs leading-relaxed">{s.gap}</p>
+                        <p className="text-white/50 text-xs leading-relaxed">{s.gap}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -456,7 +456,7 @@ export default function SkillsPage() {
                     {result.recommendations.map((step, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
                         <span className="w-6 h-6 rounded-full bg-accent-green/20 text-accent-green text-xs flex items-center justify-center font-bold flex-shrink-0">{i + 1}</span>
-                        <span className="text-slate-300 text-sm">{step}</span>
+                        <span className="text-white/50 text-sm">{step}</span>
                       </div>
                     ))}
                   </div>

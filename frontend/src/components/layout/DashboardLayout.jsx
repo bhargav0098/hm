@@ -47,7 +47,7 @@ export default function DashboardLayout({ children }) {
         className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group
           ${active
             ? 'bg-gradient-to-r from-primary-500/20 to-accent-purple/10 text-white border border-primary-500/30'
-            : 'text-slate-400 hover:text-white hover:bg-white/8'
+            : 'text-white/50 hover:text-white hover:bg-white/8'
           }`}>
         <item.icon className={`w-5 h-5 flex-shrink-0 ${active ? 'text-primary-400' : 'group-hover:text-primary-400 transition-colors'}`} />
         <span className="flex-1">{item.label}</span>
@@ -66,7 +66,7 @@ export default function DashboardLayout({ children }) {
           </div>
           <div>
             <p className="font-black text-white text-sm">CareerIQ AI</p>
-            <p className="text-slate-500 text-xs">Employment Platform</p>
+            <p className="text-white/50 text-xs">Employment Platform</p>
           </div>
         </Link>
       </div>
@@ -75,20 +75,20 @@ export default function DashboardLayout({ children }) {
 
       {/* Main Nav */}
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-        <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider px-3 mb-2">AI Agents</p>
+        <p className="text-white/40 text-xs font-semibold uppercase tracking-wider px-3 mb-2">AI Agents</p>
         {navItems.map(item => (
           <NavLink key={item.path} item={item} onClick={onClose} />
         ))}
 
         <div className="pt-4 pb-1">
-          <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider px-3 mb-2">Intelligence</p>
+          <p className="text-white/40 text-xs font-semibold uppercase tracking-wider px-3 mb-2">Intelligence</p>
         </div>
         {intelligenceItems.map(item => (
           <NavLink key={item.path} item={item} onClick={onClose} />
         ))}
 
         <div className="pt-4 pb-1">
-          <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider px-3 mb-2">Account</p>
+          <p className="text-white/40 text-xs font-semibold uppercase tracking-wider px-3 mb-2">Account</p>
         </div>
         {bottomItems.map(item => (
           <NavLink key={item.path} item={item} onClick={onClose} />
@@ -104,11 +104,11 @@ export default function DashboardLayout({ children }) {
           />
           <div className="flex-1 min-w-0">
             <p className="text-white text-sm font-semibold truncate">{user?.fullName}</p>
-            <p className="text-slate-500 text-xs truncate">{user?.email}</p>
+            <p className="text-white/50 text-xs truncate">{user?.email}</p>
           </div>
         </div>
         <button onClick={handleLogout}
-          className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 text-sm transition-all">
+          className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-white/50 hover:text-red-400 hover:bg-red-500/10 text-sm transition-all">
           <LogOut className="w-4 h-4" /> Sign Out
         </button>
       </div>
@@ -133,7 +133,7 @@ export default function DashboardLayout({ children }) {
               initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed left-0 top-0 bottom-0 w-72 bg-dark-800 border-r border-white/10 z-50 lg:hidden">
-              <button onClick={() => setSidebarOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+              <button onClick={() => setSidebarOpen(false)} className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
                 <X className="w-5 h-5" />
               </button>
               <SidebarContent onClose={() => setSidebarOpen(false)} />
@@ -146,7 +146,7 @@ export default function DashboardLayout({ children }) {
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
         {/* Mobile Header */}
         <header className="lg:hidden flex items-center gap-4 px-4 py-4 bg-dark-800/80 backdrop-blur-xl border-b border-white/8 sticky top-0 z-20">
-          <button onClick={() => setSidebarOpen(true)} className="text-slate-400 hover:text-white transition-colors">
+          <button onClick={() => setSidebarOpen(true)} className="text-white/50 hover:text-white transition-colors">
             <Menu className="w-6 h-6" />
           </button>
           <Link to="/dashboard" className="flex items-center gap-2">

@@ -147,12 +147,12 @@ export default function ProfilePage() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white">{user?.fullName}</h1>
-            <p className="text-slate-400 text-sm">{user?.email}</p>
+            <p className="text-white/50 text-sm">{user?.email}</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="w-24 h-1.5 bg-white/10 rounded-full">
                 <div className="h-full bg-gradient-to-r from-primary-500 to-accent-purple rounded-full" style={{ width: `${completionScore}%` }} />
               </div>
-              <span className="text-xs text-slate-500">Profile {completionScore}% complete</span>
+              <span className="text-xs text-white/50">Profile {completionScore}% complete</span>
             </div>
           </div>
         </motion.div>
@@ -162,13 +162,13 @@ export default function ProfilePage() {
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="glass-card p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-white font-semibold">Choose Avatar</h3>
-              <button onClick={() => setShowAvatarPicker(false)} className="text-slate-500 hover:text-white text-sm">Close</button>
+              <button onClick={() => setShowAvatarPicker(false)} className="text-white/50 hover:text-white text-sm">Close</button>
             </div>
             {/* Upload option */}
             <div className="mb-4">
               <label className="flex items-center gap-2 p-3 rounded-xl border border-dashed border-white/20 hover:border-primary-500/50 cursor-pointer transition-all group">
-                <Upload className="w-5 h-5 text-slate-500 group-hover:text-primary-400" />
-                <span className="text-slate-400 text-sm group-hover:text-white">Upload your own photo (max 2MB)</span>
+                <Upload className="w-5 h-5 text-white/50 group-hover:text-primary-400" />
+                <span className="text-white/50 text-sm group-hover:text-white">Upload your own photo (max 2MB)</span>
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               </label>
             </div>
@@ -177,7 +177,7 @@ export default function ProfilePage() {
               {AVATAR_CATEGORIES.map((cat, idx) => (
                 <button key={cat.label} onClick={() => setActiveAvatarCategory(idx)}
                   className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-                    activeAvatarCategory === idx ? 'bg-primary-500 text-white' : 'bg-white/5 text-slate-400 hover:text-white'
+                    activeAvatarCategory === idx ? 'bg-primary-500 text-white' : 'bg-white/5 text-white/50 hover:text-white'
                   }`}>
                   {cat.label}
                 </button>
@@ -200,7 +200,7 @@ export default function ProfilePage() {
           {TABS.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all
-                ${tab === t.id ? 'bg-primary-500 text-white shadow-lg' : 'bg-white/5 text-slate-400 hover:text-white'}`}>
+                ${tab === t.id ? 'bg-primary-500 text-white shadow-lg' : 'bg-white/5 text-white/50 hover:text-white'}`}>
               <t.icon className="w-4 h-4" /> {t.label}
             </button>
           ))}
@@ -220,14 +220,14 @@ export default function ProfilePage() {
                 { key: 'avatar', label: 'Avatar URL', type: 'url' },
               ].map(field => (
                 <div key={field.key}>
-                  <label className="text-sm text-slate-400 mb-1.5 block">{field.label}</label>
+                  <label className="text-sm text-white/50 mb-1.5 block">{field.label}</label>
                   <input type={field.type} value={profile[field.key]}
                     onChange={e => setProfile(p => ({ ...p, [field.key]: e.target.value }))}
                     className="input-field" />
                 </div>
               ))}
               <div className="sm:col-span-2">
-                <label className="text-sm text-slate-400 mb-1.5 block">Gender</label>
+                <label className="text-sm text-white/50 mb-1.5 block">Gender</label>
                 <select 
                   value={profile.gender}
                   onChange={e => setProfile(p => ({ ...p, gender: e.target.value }))}
@@ -239,7 +239,7 @@ export default function ProfilePage() {
                 </select>
               </div>
               <div className="sm:col-span-2">
-                <label className="text-sm text-slate-400 mb-1.5 block">Bio</label>
+                <label className="text-sm text-white/50 mb-1.5 block">Bio</label>
                 <textarea value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))}
                   placeholder="Tell us about yourself, your goals, and experience..." rows={3}
                   className="input-field resize-none w-full" />
@@ -264,7 +264,7 @@ export default function ProfilePage() {
                 { key: 'confirmPassword', label: 'Confirm New Password' }
               ].map(field => (
                 <div key={field.key}>
-                  <label className="text-sm text-slate-400 mb-1.5 block">{field.label}</label>
+                  <label className="text-sm text-white/50 mb-1.5 block">{field.label}</label>
                   <input type="password" value={passwords[field.key]}
                     onChange={e => setPasswords(p => ({ ...p, [field.key]: e.target.value }))}
                     className="input-field" />
@@ -280,7 +280,7 @@ export default function ProfilePage() {
             {/* Danger Zone */}
             <div className="mt-8 pt-6 border-t border-red-500/20">
                 <h3 className="text-red-400 font-bold mb-2">Danger Zone</h3>
-                <p className="text-slate-400 text-sm mb-4">Permanently delete your account and all data. This cannot be undone.</p>
+                <p className="text-white/50 text-sm mb-4">Permanently delete your account and all data. This cannot be undone.</p>
                 {!showDelete ? (
                   <button onClick={() => setShowDelete(true)}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl border border-red-500/40 text-red-400 hover:bg-red-500/10 transition-all text-sm">
@@ -309,7 +309,7 @@ export default function ProfilePage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6">
             <h2 className="text-white font-bold mb-4">Login Activity</h2>
             {activity.length === 0 ? (
-              <p className="text-slate-400 text-sm">No activity recorded yet.</p>
+              <p className="text-white/50 text-sm">No activity recorded yet.</p>
             ) : (
               <div className="space-y-2">
                 {activity.slice(0, 15).map((a, i) => (
@@ -319,9 +319,9 @@ export default function ProfilePage() {
                     </div>
                     <div className="flex-1">
                       <p className="text-white text-sm capitalize">{a.action?.replace('_', ' ')}</p>
-                      <p className="text-slate-500 text-xs">{new Date(a.timestamp).toLocaleString()}</p>
+                      <p className="text-white/50 text-xs">{new Date(a.timestamp).toLocaleString()}</p>
                     </div>
-                    {a.ip && <span className="text-slate-600 text-xs font-mono">{a.ip}</span>}
+                    {a.ip && <span className="text-white/40 text-xs font-mono">{a.ip}</span>}
                   </div>
                 ))}
               </div>
@@ -334,24 +334,24 @@ export default function ProfilePage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-white font-bold">Login Devices</h2>
-              <div className="flex items-center gap-2 text-xs text-slate-500">
+              <div className="flex items-center gap-2 text-xs text-white/50">
                 <Shield className="w-3 h-3" /> {devices.length} device{devices.length !== 1 ? 's' : ''} logged in
               </div>
             </div>
             {devices.length === 0 ? (
-              <p className="text-slate-400 text-sm">No devices recorded.</p>
+              <p className="text-white/50 text-sm">No devices recorded.</p>
             ) : (
               <div className="space-y-3">
                 {devices.map((d, i) => (
                   <div key={i} className="rounded-xl bg-white/5 border border-white/8 overflow-hidden">
                     <div className="flex items-center gap-4 p-4">
                       <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                        <Monitor className="w-5 h-5 text-slate-400" />
+                        <Monitor className="w-5 h-5 text-white/50" />
                       </div>
                       <div className="flex-1">
                         <p className="text-white font-medium text-sm">{d.device || 'Unknown Device'}</p>
-                        <p className="text-slate-500 text-xs">{d.ip} · Last seen {new Date(d.lastSeen).toLocaleDateString()}</p>
-                        {d.userAgent && <p className="text-slate-600 text-xs truncate max-w-xs">{d.userAgent.slice(0, 60)}...</p>}
+                        <p className="text-white/50 text-xs">{d.ip} · Last seen {new Date(d.lastSeen).toLocaleDateString()}</p>
+                        {d.userAgent && <p className="text-white/40 text-xs truncate max-w-xs">{d.userAgent.slice(0, 60)}...</p>}
                       </div>
                       <div className="flex items-center gap-2">
                         {i === 0 && (

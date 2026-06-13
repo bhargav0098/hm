@@ -11,13 +11,13 @@ import api from '../services/api';
 const PROVIDERS = [
   {
     id: 'gemini', label: 'Google Gemini', desc: 'Free tier available · Recommended for most users',
-    color: 'from-blue-500 to-cyan-500', recommended: true,
+    color: 'from-cyan-neon to-emerald-neon from-cyan-neon to-emerald-neon', recommended: true,
     docsUrl: 'https://aistudio.google.com/app/apikey',
     docsText: 'Get free API key'
   },
   {
     id: 'groq', label: 'Groq', desc: 'Ultra-fast inference · Free tier · LLaMA & Mixtral',
-    color: 'from-orange-500 to-red-500',
+    color: 'from-pink-neon to-purple-neon',
     docsUrl: 'https://console.groq.com/keys',
     docsText: 'Get Groq API key (free)'
   },
@@ -29,13 +29,13 @@ const PROVIDERS = [
   },
   {
     id: 'claude', label: 'Anthropic Claude', desc: 'Claude 3.5 Sonnet, Claude 3 Haiku — Paid',
-    color: 'from-orange-400 to-amber-500',
+    color: 'from-pink-neon to-purple-neon from-pink-neon to-purple-neon',
     docsUrl: 'https://console.anthropic.com/',
     docsText: 'Get Claude key'
   },
   {
     id: 'deepseek', label: 'DeepSeek AI', desc: 'DeepSeek Chat & Coder · Very affordable pricing',
-    color: 'from-indigo-500 to-blue-600',
+    color: 'from-purple-500 from-cyan-neon to-emerald-neon',
     docsUrl: 'https://platform.deepseek.com/',
     docsText: 'Get DeepSeek key'
   },
@@ -145,12 +145,12 @@ export default function SettingsPage() {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-500 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-space-border to-space-border flex items-center justify-center">
             <Settings className="w-7 h-7 text-white" />
           </div>
           <div>
             <h1 className="text-2xl font-black text-white">Settings</h1>
-            <p className="text-slate-400 text-sm">Manage AI providers, API keys, and model preferences</p>
+            <p className="text-white/50 text-sm">Manage AI providers, API keys, and model preferences</p>
           </div>
         </motion.div>
 
@@ -160,7 +160,7 @@ export default function SettingsPage() {
             <Info className="w-5 h-5 text-accent-cyan flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-white font-semibold text-sm">Bring Your Own API Keys</p>
-              <p className="text-slate-400 text-xs mt-0.5">
+              <p className="text-white/50 text-xs mt-0.5">
                 Add your API keys to use your personal quota. Keys are AES-256-CBC encrypted before storage.
                 Without a custom key, the platform uses the default Gemini API (free tier with rate limits).
               </p>
@@ -175,7 +175,7 @@ export default function SettingsPage() {
             <Cpu className="w-4 h-4 text-accent-green" />
             <p className="text-white text-sm">
               Currently using: <span className="font-black text-accent-green">{activeModel}</span>
-              <span className="text-slate-500 ml-2">via {activeProvider === 'default' ? 'Platform Default (Gemini)' : activeProvider.toUpperCase()}</span>
+              <span className="text-white/50 ml-2">via {activeProvider === 'default' ? 'Platform Default (Gemini)' : activeProvider.toUpperCase()}</span>
             </p>
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function SettingsPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-slate-400 text-xs">{provider.desc}</p>
+                      <p className="text-white/50 text-xs">{provider.desc}</p>
                     </div>
                   </div>
 
@@ -226,8 +226,8 @@ export default function SettingsPage() {
                       </span>
                     )}
                     {saved && status === 'inactive' && (
-                      <span className="flex items-center gap-1 text-xs text-slate-400 bg-white/5 border border-white/10 px-2 py-1 rounded-lg">
-                        <div className="w-2 h-2 rounded-full bg-slate-400" /> Saved
+                      <span className="flex items-center gap-1 text-xs text-white/50 bg-white/5 border border-white/10 px-2 py-1 rounded-lg">
+                        <div className="w-2 h-2 rounded-full bg-white/5" /> Saved
                       </span>
                     )}
                     {/* Docs link */}
@@ -241,8 +241,8 @@ export default function SettingsPage() {
                 {/* Saved Key Display */}
                 {saved && maskedKey(provider.id) && (
                   <div className="mb-3 flex items-center gap-2 p-3 rounded-xl bg-white/5 border border-white/8">
-                    <Key className="w-4 h-4 text-slate-500" />
-                    <span className="text-slate-400 font-mono text-sm flex-1">{maskedKey(provider.id)}</span>
+                    <Key className="w-4 h-4 text-white/50" />
+                    <span className="text-white/50 font-mono text-sm flex-1">{maskedKey(provider.id)}</span>
                     <div className="flex gap-2">
                       <button onClick={() => handleTest(provider.id)} disabled={testing[provider.id]}
                         className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1 border border-primary-500/30 px-2 py-1 rounded-lg transition-colors">
@@ -263,7 +263,7 @@ export default function SettingsPage() {
                 {/* Key Input */}
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <Key className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                    <Key className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                     <input
                       type={showKeys[provider.id] ? 'text' : 'password'}
                       value={keys[provider.id]}
@@ -273,7 +273,7 @@ export default function SettingsPage() {
                       className="input-field pl-10 pr-10 text-sm"
                     />
                     <button onClick={() => setShowKeys(s => ({ ...s, [provider.id]: !s[provider.id] }))}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/50 transition-colors">
                       {showKeys[provider.id] ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
@@ -301,7 +301,7 @@ export default function SettingsPage() {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-slate-400 mb-1.5 block">Provider</label>
+              <label className="text-sm text-white/50 mb-1.5 block">Provider</label>
               <select
                 value={activeProvider}
                 onChange={e => {
@@ -318,7 +318,7 @@ export default function SettingsPage() {
               </select>
             </div>
             <div>
-              <label className="text-sm text-slate-400 mb-1.5 block">Model</label>
+              <label className="text-sm text-white/50 mb-1.5 block">Model</label>
               <select value={activeModel} onChange={e => setActiveModel(e.target.value)} className="input-field">
                 {(MODELS[activeProvider] || MODELS.default).map(m => (
                   <option key={m} value={m}>{m}</option>
@@ -330,9 +330,9 @@ export default function SettingsPage() {
           {/* Current model indicator */}
           <div className="flex items-center gap-3 p-3 rounded-xl bg-primary-500/10 border border-primary-500/20">
             <div className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
-            <p className="text-slate-300 text-sm">
+            <p className="text-white/50 text-sm">
               Active: <span className="text-white font-semibold">{activeModel}</span>
-              <span className="text-slate-500 ml-2">via {activeProvider === 'default' ? 'Platform Key' : activeProvider.toUpperCase()}</span>
+              <span className="text-white/50 ml-2">via {activeProvider === 'default' ? 'Platform Key' : activeProvider.toUpperCase()}</span>
             </p>
           </div>
 
@@ -351,19 +351,19 @@ export default function SettingsPage() {
           <div className="grid sm:grid-cols-2 gap-3 text-xs">
             <div className="p-3 rounded-xl bg-white/5 border border-white/8">
               <p className="text-accent-green font-semibold mb-1">🆓 Best Free Options</p>
-              <p className="text-slate-400">Gemini (15 RPM free) or Groq (very fast, generous free tier)</p>
+              <p className="text-white/50">Gemini (15 RPM free) or Groq (very fast, generous free tier)</p>
             </div>
             <div className="p-3 rounded-xl bg-white/5 border border-white/8">
               <p className="text-primary-400 font-semibold mb-1">⚡ Fastest Response</p>
-              <p className="text-slate-400">Groq with LLaMA models — near real-time inference</p>
+              <p className="text-white/50">Groq with LLaMA models — near real-time inference</p>
             </div>
             <div className="p-3 rounded-xl bg-white/5 border border-white/8">
               <p className="text-accent-yellow font-semibold mb-1">🧠 Best Quality</p>
-              <p className="text-slate-400">GPT-4o or Claude 3.5 Sonnet for complex career analysis</p>
+              <p className="text-white/50">GPT-4o or Claude 3.5 Sonnet for complex career analysis</p>
             </div>
             <div className="p-3 rounded-xl bg-white/5 border border-white/8">
               <p className="text-accent-purple font-semibold mb-1">💰 Best Value</p>
-              <p className="text-slate-400">DeepSeek Chat — GPT-4 quality at fraction of the cost</p>
+              <p className="text-white/50">DeepSeek Chat — GPT-4 quality at fraction of the cost</p>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ const FEATURES = [
   { icon: Briefcase, title: 'Job Matching Agent', desc: 'Get matched with relevant jobs, internships, and freelance projects based on your exact skills and career goals.', color: 'from-accent-cyan to-accent-blue' },
   { icon: Mic, title: 'Interview Prep Agent', desc: 'Practice with realistic mock interviews, get AI feedback on your answers, and improve your confidence before the real thing.', color: 'from-accent-blue to-accent-green' },
   { icon: Target, title: 'Career Roadmap Agent', desc: 'Get a personalized 90-day action plan with daily routines, key milestones, and step-by-step guidance to land your dream job.', color: 'from-accent-green to-accent-yellow' },
-  { icon: MapPin, title: 'Local Opportunity Agent', desc: 'Find walk-in drives, government job openings, nearby skill centers, and online portals tailored to your location.', color: 'from-accent-yellow to-orange-500' },
+  { icon: MapPin, title: 'Local Opportunity Agent', desc: 'Find walk-in drives, government job openings, nearby skill centers, and online portals tailored to your location.', color: 'from-accent-yellow from-pink-neon to-purple-neon' },
 ];
 
 const WORKFLOW = [
@@ -47,11 +47,11 @@ function FAQ({ q, a }) {
       <button onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors">
         <span className="text-white font-medium text-sm pr-4">{q}</span>
-        {open ? <ChevronUp className="w-5 h-5 text-primary-400 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />}
+        {open ? <ChevronUp className="w-5 h-5 text-primary-400 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-white/50 flex-shrink-0" />}
       </button>
       {open && (
         <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} className="px-5 pb-5">
-          <p className="text-slate-400 text-sm leading-relaxed">{a}</p>
+          <p className="text-white/50 text-sm leading-relaxed">{a}</p>
         </motion.div>
       )}
     </div>
@@ -60,7 +60,7 @@ function FAQ({ q, a }) {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-dark-900 text-slate-100">
+    <div className="min-h-screen bg-dark-900 text-white/70">
       {/* Nav */}
       <nav className="fixed top-0 inset-x-0 z-50 bg-dark-900/80 backdrop-blur-xl border-b border-white/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
@@ -71,7 +71,7 @@ export default function LandingPage() {
             <span className="font-black text-white">CareerIQ AI</span>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/login" className="text-slate-400 hover:text-white text-sm transition-colors px-3 py-1.5">Sign In</Link>
+            <Link to="/login" className="text-white/50 hover:text-white text-sm transition-colors px-3 py-1.5">Sign In</Link>
             <Link to="/register">
               <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="btn-primary text-sm py-2 px-4">
                 Get Started Free
@@ -113,7 +113,7 @@ export default function LandingPage() {
             </span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-slate-400 text-xl mb-10 leading-relaxed max-w-2xl mx-auto">
+            className="text-white/50 text-xl mb-10 leading-relaxed max-w-2xl mx-auto">
             Six AI agents work together to analyze your skills, build your resume, match you with jobs,
             prep you for interviews, and guide you with a personalized roadmap — all in one platform.
           </motion.p>
@@ -127,7 +127,7 @@ export default function LandingPage() {
             </Link>
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-            className="flex items-center justify-center gap-6 mt-8 text-slate-500 text-sm">
+            className="flex items-center justify-center gap-6 mt-8 text-white/50 text-sm">
             {[['Free to use', CheckCircle], ['No credit card', CheckCircle], ['AI-powered', CheckCircle]].map(([label, Icon]) => (
               <span key={label} className="flex items-center gap-1.5">
                 <Icon className="w-4 h-4 text-accent-green" /> {label}
@@ -143,7 +143,7 @@ export default function LandingPage() {
           {[['6', 'AI Agents'], ['90 Days', 'To Get Hired'], ['100%', 'Free Platform'], ['24/7', 'AI Support']].map(([val, label]) => (
             <motion.div key={label} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <p className="text-3xl font-black text-primary-400 mb-1">{val}</p>
-              <p className="text-slate-400 text-sm">{label}</p>
+              <p className="text-white/50 text-sm">{label}</p>
             </motion.div>
           ))}
         </div>
@@ -154,7 +154,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">Six AI Agents, One Goal</h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">Each specialized agent tackles a key part of your job search, collaborating to give you the best possible outcome.</p>
+            <p className="text-white/50 text-lg max-w-2xl mx-auto">Each specialized agent tackles a key part of your job search, collaborating to give you the best possible outcome.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((f, i) => (
@@ -164,7 +164,7 @@ export default function LandingPage() {
                   <f.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-white font-bold mb-2">{f.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
+                <p className="text-white/50 text-sm leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -176,7 +176,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">How It Works</h2>
-            <p className="text-slate-400 text-lg">From zero to job offer in 90 days — here's the path.</p>
+            <p className="text-white/50 text-lg">From zero to job offer in 90 days — here's the path.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {WORKFLOW.map((w, i) => (
@@ -185,7 +185,7 @@ export default function LandingPage() {
                 <span className="text-5xl font-black text-primary-500/20 absolute top-3 right-4">{w.step}</span>
                 <p className="text-primary-400 font-bold text-sm mb-2">Step {w.step}</p>
                 <h3 className="text-white font-bold mb-2">{w.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{w.desc}</p>
+                <p className="text-white/50 text-sm leading-relaxed">{w.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -197,7 +197,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">Success Stories</h2>
-            <p className="text-slate-400">Real people, real results.</p>
+            <p className="text-white/50">Real people, real results.</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
@@ -206,7 +206,7 @@ export default function LandingPage() {
                 <div className="flex gap-1 mb-4">
                   {Array(t.rating).fill(0).map((_, i) => <Star key={i} className="w-4 h-4 text-accent-yellow fill-accent-yellow" />)}
                 </div>
-                <p className="text-slate-300 text-sm leading-relaxed mb-4 italic">"{t.text}"</p>
+                <p className="text-white/50 text-sm leading-relaxed mb-4 italic">"{t.text}"</p>
                 <div className="flex items-center gap-3">
                   <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full border border-white/20" />
                   <div>
@@ -241,7 +241,7 @@ export default function LandingPage() {
               <Brain className="w-9 h-9 text-white" />
             </div>
             <h2 className="text-4xl font-black text-white mb-4">Ready to Land Your Dream Job?</h2>
-            <p className="text-slate-400 text-lg mb-8">Join thousands of job seekers using AI to accelerate their career journey. Free, no credit card needed.</p>
+            <p className="text-white/50 text-lg mb-8">Join thousands of job seekers using AI to accelerate their career journey. Free, no credit card needed.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/register">
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
@@ -263,8 +263,8 @@ export default function LandingPage() {
             </div>
             <span className="text-white font-bold text-sm">CareerIQ AI</span>
           </div>
-          <p className="text-slate-500 text-sm">AI-powered career assistance · Helping job seekers find their path</p>
-          <div className="flex items-center gap-4 text-slate-500 text-xs">
+          <p className="text-white/50 text-sm">AI-powered career assistance · Helping job seekers find their path</p>
+          <div className="flex items-center gap-4 text-white/50 text-xs">
             <span>© 2024 CareerIQ AI</span>
           </div>
         </div>

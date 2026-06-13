@@ -23,10 +23,10 @@ const StatCard = ({ icon: Icon, label, value, sub, color, delay }) => (
       <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${color}`}>
         <Icon className="w-4 h-4 text-white" />
       </div>
-      <span className="text-[10px] text-slate-500 bg-white/5 px-2 py-0.5 rounded-lg">{sub}</span>
+      <span className="text-[10px] text-white/50 bg-white/5 px-2 py-0.5 rounded-lg">{sub}</span>
     </div>
     <p className="text-xl font-black text-white mb-0.5">{value}</p>
-    <p className="text-slate-400 text-xs">{label}</p>
+    <p className="text-white/50 text-xs">{label}</p>
   </motion.div>
 );
 
@@ -101,7 +101,7 @@ export default function Dashboard() {
             <h1 className="text-2xl font-black text-white">
               Welcome back, <span className="gradient-text">{user?.fullName?.split(' ')[0] || 'User'}! 👋</span>
             </h1>
-            <p className="text-slate-400 text-sm mt-1">
+            <p className="text-white/50 text-sm mt-1">
               {cp ? `Day ${cp.currentDay}/${cp.totalDays} · ${cp.targetRole}` :
                stats?.targetRole !== 'Not set' ? `Working towards: ${stats?.targetRole}` :
                'Complete your profile to get personalized guidance'}
@@ -115,7 +115,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="h-8 w-px bg-white/10" />
-            <div className="flex items-center gap-1.5 text-orange-400 bg-orange-400/10 px-2 py-1.5 rounded-lg border border-orange-400/20">
+            <div className="flex items-center gap-1.5 text-pink-neon bg-pink-neon/10 px-2 py-1.5 rounded-lg border border-pink-neon/20">
               <Flame className="w-4 h-4" />
               <span className="text-xs font-bold">{loading ? '--' : (stats?.streak || 0)} Day Streak</span>
             </div>
@@ -133,7 +133,7 @@ export default function Dashboard() {
               <p className="text-xs font-bold text-primary-400 mb-0.5 flex items-center gap-1">
                 <MessageSquare className="w-3 h-3" /> AI Career Coach
               </p>
-              <p className="text-slate-200 text-sm leading-relaxed">
+              <p className="text-white/70 text-sm leading-relaxed">
                 <span className="mr-1">{coach.icon}</span>{coach.msg}
               </p>
             </div>
@@ -159,7 +159,7 @@ export default function Dashboard() {
                 <span className="text-xs bg-accent-green/20 text-accent-green px-2 py-0.5 rounded-full border border-accent-green/30">Active</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <span className="text-slate-400">Day <span className="text-white font-bold">{cp.currentDay}</span> of <span className="text-white font-bold">{cp.totalDays}</span></span>
+                <span className="text-white/50">Day <span className="text-white font-bold">{cp.currentDay}</span> of <span className="text-white font-bold">{cp.totalDays}</span></span>
                 <span className="text-accent-green font-black text-lg">{roadmapDayPct}%</span>
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function Dashboard() {
               />
             </div>
             <div className="flex justify-between mt-2">
-              <span className="text-slate-500 text-xs">Started {new Date(cp.startDate).toLocaleDateString()}</span>
+              <span className="text-white/50 text-xs">Started {new Date(cp.startDate).toLocaleDateString()}</span>
               <Link to="/roadmap" className="text-xs text-primary-400 hover:text-primary-300 transition-colors flex items-center gap-1">
                 View full plan <ChevronRight className="w-3 h-3" />
               </Link>
@@ -214,8 +214,8 @@ export default function Dashboard() {
               />
             </div>
             <div className="flex justify-between mt-2">
-              <span className="text-slate-500 text-xs">Just starting</span>
-              <span className="text-slate-500 text-xs">Job ready! 🎯</span>
+              <span className="text-white/50 text-xs">Just starting</span>
+              <span className="text-white/50 text-xs">Job ready! 🎯</span>
             </div>
           </motion.div>
         )}
@@ -251,7 +251,7 @@ export default function Dashboard() {
                   <motion.div
                     initial={{ width: 0 }} animate={{ width: `${stats?.roadmapProgress || 0}%` }}
                     transition={{ duration: 1.2, ease: 'easeOut' }}
-                    className="h-full rounded-full bg-gradient-to-r from-accent-yellow to-orange-500"
+                    className="h-full rounded-full bg-gradient-to-r from-accent-yellow from-pink-neon to-purple-neon"
                   />
                 </div>
               </div>
@@ -318,7 +318,7 @@ export default function Dashboard() {
                   <Target className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-white font-bold mb-1">Activate Your Career Plan</h3>
-                <p className="text-slate-400 text-xs mb-4">Generate your AI roadmap and get personalized daily tasks based on your target role.</p>
+                <p className="text-white/50 text-xs mb-4">Generate your AI roadmap and get personalized daily tasks based on your target role.</p>
                 <div className="space-y-2">
                   <Link to="/roadmap">
                     <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
@@ -327,7 +327,7 @@ export default function Dashboard() {
                     </motion.button>
                   </Link>
                   <Link to="/skills">
-                    <button className="w-full py-2 text-xs text-slate-400 hover:text-white transition-colors">
+                    <button className="w-full py-2 text-xs text-white/50 hover:text-white transition-colors">
                       Or analyze your skills first →
                     </button>
                   </Link>
@@ -353,9 +353,9 @@ export default function Dashboard() {
                       <item.icon className={`w-4 h-4 ${item.color} flex-shrink-0`} />
                       <div className="flex-1 min-w-0">
                         <p className="text-white text-sm font-medium">{item.label}</p>
-                        <p className="text-slate-500 text-xs">{item.sub}</p>
+                        <p className="text-white/50 text-xs">{item.sub}</p>
                       </div>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-slate-400 transition-colors" />
+                      <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-white/50 transition-colors" />
                     </motion.div>
                   </Link>
                 ))}

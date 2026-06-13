@@ -6,16 +6,16 @@ import api from '../../services/api';
 import toast from 'react-hot-toast';
 
 const TYPE_ICONS = {
-  learning: { icon: BookOpen, color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'Learn' },
+  learning: { icon: BookOpen, color: 'text-cyan-neon', bg: 'bg-cyan-neon/10', label: 'Learn' },
   practice: { icon: BarChart3, color: 'text-purple-400', bg: 'bg-purple-500/10', label: 'Practice' },
-  build: { icon: Hammer, color: 'text-orange-400', bg: 'bg-orange-500/10', label: 'Build' },
+  build: { icon: Hammer, color: 'text-pink-neon', bg: 'bg-pink-neon/10', label: 'Build' },
   checkpoint: { icon: Flag, color: 'text-green-400', bg: 'bg-green-500/10', label: 'Check' },
   general: { icon: ListTodo, color: 'text-primary-400', bg: 'bg-primary-500/10', label: 'Task' },
 };
 
 const DIFFICULTY_COLORS = {
   easy: 'text-green-400 bg-green-500/10',
-  medium: 'text-yellow-400 bg-yellow-500/10',
+  medium: 'text-pink-neon bg-pink-neon/10',
   hard: 'text-red-400 bg-red-500/10',
 };
 
@@ -72,7 +72,7 @@ export default function TodayTasksCard() {
   if (loading) return (
     <div className="glass-card p-5 h-64 flex flex-col items-center justify-center">
       <div className="w-8 h-8 border-2 border-primary-500/30 border-t-primary-500 rounded-full animate-spin mb-4" />
-      <p className="text-slate-400 text-sm">Loading today's mission...</p>
+      <p className="text-white/50 text-sm">Loading today's mission...</p>
     </div>
   );
 
@@ -88,7 +88,7 @@ export default function TodayTasksCard() {
             <ListTodo className="w-5 h-5 text-primary-400" /> Today's Mission
           </h3>
           {meta.targetRole && (
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-white/50 mt-0.5">
               {meta.targetRole}
               {meta.totalDays && <span className="ml-2 text-primary-400">Day {meta.currentDay}/{meta.totalDays}</span>}
             </p>
@@ -134,21 +134,21 @@ export default function TodayTasksCard() {
                     {/* Type icon */}
                     <div className={`w-8 h-8 rounded-lg ${typeInfo.bg} flex items-center justify-center flex-shrink-0`}>
                       {isDone ? <CheckCircle className="w-4 h-4 text-accent-green" /> :
-                       isSkipped ? <SkipForward className="w-4 h-4 text-slate-500" /> :
+                       isSkipped ? <SkipForward className="w-4 h-4 text-white/50" /> :
                        <TypeIcon className={`w-4 h-4 ${typeInfo.color}`} />}
                     </div>
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm font-medium truncate ${isDone ? 'text-slate-400 line-through' : isSkipped ? 'text-slate-600' : 'text-white'}`}>
+                      <p className={`text-sm font-medium truncate ${isDone ? 'text-white/50 line-through' : isSkipped ? 'text-white/40' : 'text-white'}`}>
                         {task.title}
                       </p>
                       {task.description && !isDone && (
-                        <p className="text-slate-500 text-xs truncate mt-0.5">{task.description}</p>
+                        <p className="text-white/50 text-xs truncate mt-0.5">{task.description}</p>
                       )}
                       <div className="flex items-center gap-2 mt-1">
                         <span className={`text-xs px-1.5 py-0.5 rounded ${DIFFICULTY_COLORS[task.difficulty] || ''}`}>{task.difficulty}</span>
-                        <span className="text-xs text-slate-600">{task.durationStr}</span>
+                        <span className="text-xs text-white/40">{task.durationStr}</span>
                         <span className="text-xs text-primary-400">+{task.xpReward} XP</span>
                       </div>
                     </div>
@@ -161,7 +161,7 @@ export default function TodayTasksCard() {
                           Done
                         </button>
                         <button onClick={() => handleSkip(task._id)}
-                          className="text-xs px-2 py-1 bg-white/5 hover:bg-white/10 text-slate-400 rounded-lg transition-all">
+                          className="text-xs px-2 py-1 bg-white/5 hover:bg-white/10 text-white/50 rounded-lg transition-all">
                           Skip
                         </button>
                       </div>
@@ -174,7 +174,7 @@ export default function TodayTasksCard() {
         </>
       ) : (
         <div className="text-center py-4">
-          <p className="text-slate-400 text-sm mb-3">No AI tasks yet. Generate a roadmap to activate your daily plan!</p>
+          <p className="text-white/50 text-sm mb-3">No AI tasks yet. Generate a roadmap to activate your daily plan!</p>
           <div className="flex gap-2 justify-center">
             <Link to="/skills" className="btn-primary text-xs py-1.5 px-3 rounded-lg flex-1">Analyze Skills</Link>
             <Link to="/roadmap" className="btn-secondary text-xs py-1.5 px-3 rounded-lg flex-1 bg-white/5 hover:bg-white/10 text-white border border-white/10">Get Roadmap</Link>
@@ -188,8 +188,8 @@ export default function TodayTasksCard() {
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className="mt-3 p-3 bg-accent-cyan/10 border border-accent-cyan/20 rounded-xl flex items-start gap-2">
             <Zap className="w-4 h-4 text-accent-cyan flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-slate-300 flex-1">{coachMsg}</p>
-            <button onClick={() => setCoachMsg(null)}><X className="w-3 h-3 text-slate-500" /></button>
+            <p className="text-xs text-white/50 flex-1">{coachMsg}</p>
+            <button onClick={() => setCoachMsg(null)}><X className="w-3 h-3 text-white/50" /></button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -212,13 +212,13 @@ export default function TodayTasksCard() {
                 <h3 className="text-white font-bold flex items-center gap-2">
                   <MessageSquare className="w-5 h-5 text-primary-400" /> How was this task?
                 </h3>
-                <button onClick={() => setFeedbackModal(null)}><X className="w-4 h-4 text-slate-400" /></button>
+                <button onClick={() => setFeedbackModal(null)}><X className="w-4 h-4 text-white/50" /></button>
               </div>
-              <p className="text-slate-400 text-xs mb-4 truncate">{pendingTask.title}</p>
+              <p className="text-white/50 text-xs mb-4 truncate">{pendingTask.title}</p>
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { key: 'easy', label: '😄 Easy', color: 'border-green-500/40 hover:bg-green-500/20 text-green-400' },
-                  { key: 'normal', label: '😊 Normal', color: 'border-blue-500/40 hover:bg-blue-500/20 text-blue-400' },
+                  { key: 'normal', label: '😊 Normal', color: 'border-cyan-neon/40 hover:bg-cyan-neon/20 text-cyan-neon' },
                   { key: 'difficult', label: '😅 Difficult', color: 'border-red-500/40 hover:bg-red-500/20 text-red-400' },
                 ].map(f => (
                   <button key={f.key} onClick={() => handleComplete(feedbackModal, f.key)}
@@ -228,7 +228,7 @@ export default function TodayTasksCard() {
                 ))}
               </div>
               <button onClick={() => handleComplete(feedbackModal, null)}
-                className="w-full mt-3 text-xs text-slate-500 hover:text-slate-300 transition-colors">
+                className="w-full mt-3 text-xs text-white/50 hover:text-white/50 transition-colors">
                 Skip feedback &amp; mark done
               </button>
             </motion.div>

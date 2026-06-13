@@ -90,7 +90,7 @@ export default function LoginPage() {
                 With AI Power
               </span>
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-white/50 text-lg">
               Multi-agent AI platform for investors, incubators, and analysts to evaluate startups instantly.
             </p>
           </motion.div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">{f.label}</p>
-                  <p className="text-slate-400 text-xs">{f.desc}</p>
+                  <p className="text-white/50 text-xs">{f.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -126,7 +126,7 @@ export default function LoginPage() {
             {[['500+', 'Startups Analyzed'], ['97%', 'Accuracy Rate'], ['60s', 'Avg Analysis Time']].map(([val, label]) => (
               <div key={label}>
                 <p className="text-2xl font-black text-primary-400">{val}</p>
-                <p className="text-slate-500 text-xs">{label}</p>
+                <p className="text-white/50 text-xs">{label}</p>
               </div>
             ))}
           </motion.div>
@@ -153,7 +153,7 @@ export default function LoginPage() {
           <div className="glass-card p-8">
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-1">Welcome back</h2>
-              <p className="text-slate-400 text-sm">Sign in to your account to continue</p>
+              <p className="text-white/50 text-sm">Sign in to your account to continue</p>
             </div>
             
             {/* Demo Banner */}
@@ -161,9 +161,9 @@ export default function LoginPage() {
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="text-sm text-slate-400 mb-1.5 block">Email address</label>
+                <label className="text-sm text-white/50 mb-1.5 block">Email address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                   <input
                     type="email"
                     name="email"
@@ -177,9 +177,9 @@ export default function LoginPage() {
               </div>
               
               <div>
-                <label className="text-sm text-slate-400 mb-1.5 block">Password</label>
+                <label className="text-sm text-white/50 mb-1.5 block">Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                   <input
                     type={showPass ? 'text' : 'password'}
                     name="password"
@@ -192,7 +192,7 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPass(s => !s)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/50 transition-colors"
                   >
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -207,7 +207,7 @@ export default function LoginPage() {
                     onChange={e => setRememberMe(e.target.checked)}
                     className="w-4 h-4 rounded border-white/20 bg-white/5 text-primary-500 focus:ring-primary-500/30"
                   />
-                  <span className="text-sm text-slate-400">Remember me</span>
+                  <span className="text-sm text-white/50">Remember me</span>
                 </label>
                 <Link to="/forgot-password" className="text-sm text-primary-400 hover:text-primary-300 transition-colors">
                   Forgot password?
@@ -227,7 +227,7 @@ export default function LoginPage() {
               </motion.button>
             </form>
             
-            <p className="text-center text-sm text-slate-500 mt-6">
+            <p className="text-center text-sm text-white/50 mt-6">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">
                 Create account
@@ -235,7 +235,7 @@ export default function LoginPage() {
             </p>
           </div>
           
-          <p className="text-center text-xs text-slate-600 mt-4">
+          <p className="text-center text-xs text-white/40 mt-4">
             Protected by enterprise-grade security · JWT + bcrypt
           </p>
         </motion.div>

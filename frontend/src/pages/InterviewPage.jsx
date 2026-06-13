@@ -6,13 +6,13 @@ import DashboardLayout from '../components/layout/DashboardLayout';
 import api from '../services/api';
 
 const INTERVIEW_TYPES = [
-  { id: 'hr', label: 'HR Round', desc: 'Behavioral & personal questions', color: 'from-blue-500 to-cyan-500' },
+  { id: 'hr', label: 'HR Round', desc: 'Behavioral & personal questions', color: 'from-cyan-neon to-emerald-neon from-cyan-neon to-emerald-neon' },
   { id: 'technical', label: 'Technical Round', desc: 'Coding & technical concepts', color: 'from-purple-500 to-primary-500' },
   { id: 'behavioral', label: 'Behavioral', desc: 'Situational & STAR method', color: 'from-green-500 to-teal-500' },
-  { id: 'mixed', label: 'Full Mock Interview', desc: 'Comprehensive practice session', color: 'from-orange-500 to-red-500' }
+  { id: 'mixed', label: 'Full Mock Interview', desc: 'Comprehensive practice session', color: 'from-pink-neon to-purple-neon' }
 ];
 
-const difficultyColor = { easy: 'text-green-400', medium: 'text-yellow-400', hard: 'text-red-400' };
+const difficultyColor = { easy: 'text-green-400', medium: 'text-pink-neon', hard: 'text-red-400' };
 
 export default function InterviewPage() {
   const [step, setStep] = useState('setup'); // setup | interview | result
@@ -109,8 +109,8 @@ export default function InterviewPage() {
     } catch { toast.error('Failed to complete session'); }
   };
 
-  const scoreColor = (s) => s >= 8 ? 'text-green-400' : s >= 6 ? 'text-yellow-400' : 'text-red-400';
-  const scoreBg = (s) => s >= 8 ? 'bg-green-500' : s >= 6 ? 'bg-yellow-500' : 'bg-red-500';
+  const scoreColor = (s) => s >= 8 ? 'text-green-400' : s >= 6 ? 'text-pink-neon' : 'text-red-400';
+  const scoreBg = (s) => s >= 8 ? 'bg-green-500' : s >= 6 ? 'bg-pink-neon' : 'bg-red-500';
 
   const downloadGuide = () => {
     const type = INTERVIEW_TYPES.find(t => t.id === interviewType);
@@ -236,7 +236,7 @@ export default function InterviewPage() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white">Interview Prep Agent</h1>
-            <p className="text-slate-400 text-sm">AI-powered mock interview with real-time feedback</p>
+            <p className="text-white/50 text-sm">AI-powered mock interview with real-time feedback</p>
           </div>
           {step === 'interview' && (
             <div className="ml-auto flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
@@ -253,19 +253,19 @@ export default function InterviewPage() {
               <div className="glass-card p-6 space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-slate-300 font-medium mb-1.5 block">Target Role</label>
+                    <label className="text-sm text-white/50 font-medium mb-1.5 block">Target Role</label>
                     <input value={targetRole} onChange={e => setTargetRole(e.target.value)}
                       placeholder="e.g. React Developer, Data Analyst" className="input-field" />
                   </div>
                   <div>
-                    <label className="text-sm text-slate-300 font-medium mb-1.5 block">Your Skills</label>
+                    <label className="text-sm text-white/50 font-medium mb-1.5 block">Your Skills</label>
                     <input value={skills} onChange={e => setSkills(e.target.value)}
                       placeholder="JavaScript, React, SQL..." className="input-field" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm text-slate-300 font-medium mb-3 block">Interview Type</label>
+                  <label className="text-sm text-white/50 font-medium mb-3 block">Interview Type</label>
                   <div className="grid sm:grid-cols-2 gap-3">
                     {INTERVIEW_TYPES.map(type => (
                       <button key={type.id} onClick={() => setInterviewType(type.id)}
@@ -275,7 +275,7 @@ export default function InterviewPage() {
                           <Mic className="w-4 h-4 text-white" />
                         </div>
                         <p className="text-white font-semibold text-sm">{type.label}</p>
-                        <p className="text-slate-400 text-xs">{type.desc}</p>
+                        <p className="text-white/50 text-xs">{type.desc}</p>
                       </button>
                     ))}
                   </div>
@@ -302,19 +302,19 @@ export default function InterviewPage() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="p-3 rounded-xl bg-white/5 border border-white/8">
                     <p className="text-accent-cyan font-semibold mb-1">STAR Method</p>
-                    <p className="text-slate-400 text-xs">Situation → Task → Action → Result. Use for all behavioral questions.</p>
+                    <p className="text-white/50 text-xs">Situation → Task → Action → Result. Use for all behavioral questions.</p>
                   </div>
                   <div className="p-3 rounded-xl bg-white/5 border border-white/8">
                     <p className="text-accent-green font-semibold mb-1">Body Language</p>
-                    <p className="text-slate-400 text-xs">Eye contact, upright posture, smile. Pause before answering.</p>
+                    <p className="text-white/50 text-xs">Eye contact, upright posture, smile. Pause before answering.</p>
                   </div>
                   <div className="p-3 rounded-xl bg-white/5 border border-white/8">
                     <p className="text-accent-yellow font-semibold mb-1">Technical Tips</p>
-                    <p className="text-slate-400 text-xs">Think out loud. Clarify before solving. Start simple, then optimize.</p>
+                    <p className="text-white/50 text-xs">Think out loud. Clarify before solving. Start simple, then optimize.</p>
                   </div>
                   <div className="p-3 rounded-xl bg-white/5 border border-white/8">
                     <p className="text-accent-purple font-semibold mb-1">HR Tips</p>
-                    <p className="text-slate-400 text-xs">Research the company. Prepare 3 questions to ask. Follow up after.</p>
+                    <p className="text-white/50 text-xs">Research the company. Prepare 3 questions to ask. Follow up after.</p>
                   </div>
                 </div>
               </div>
@@ -330,7 +330,7 @@ export default function InterviewPage() {
               {/* Progress */}
               <div className="glass-card p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-slate-400 text-sm">Question {currentQ + 1} of {questions.length}</span>
+                  <span className="text-white/50 text-sm">Question {currentQ + 1} of {questions.length}</span>
                   <span className={`text-xs capitalize font-medium ${difficultyColor[questions[currentQ]?.difficulty]}`}>
                     {questions[currentQ]?.difficulty}
                   </span>
@@ -345,12 +345,12 @@ export default function InterviewPage() {
               <div className="glass-card p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <span className={`text-xs capitalize px-2 py-0.5 rounded-full border
-                    ${questions[currentQ]?.category === 'hr' ? 'text-blue-400 bg-blue-500/10 border-blue-500/30' :
+                    ${questions[currentQ]?.category === 'hr' ? 'text-cyan-neon bg-cyan-neon/10 border-cyan-neon/30' :
                       questions[currentQ]?.category === 'technical' ? 'text-purple-400 bg-purple-500/10 border-purple-500/30' :
                       'text-green-400 bg-green-500/10 border-green-500/30'}`}>
                     {questions[currentQ]?.category}
                   </span>
-                  <span className="text-slate-500 text-xs flex items-center gap-1">
+                  <span className="text-white/50 text-xs flex items-center gap-1">
                     <Clock className="w-3 h-3" /> {questions[currentQ]?.timeLimit}s suggested
                   </span>
                 </div>
@@ -360,7 +360,7 @@ export default function InterviewPage() {
                 </h2>
 
                 {questions[currentQ]?.hint && (
-                  <p className="text-slate-500 text-xs italic mb-4">💡 Hint: {questions[currentQ].hint}</p>
+                  <p className="text-white/50 text-xs italic mb-4">💡 Hint: {questions[currentQ].hint}</p>
                 )}
 
                 <textarea
@@ -392,7 +392,7 @@ export default function InterviewPage() {
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                     className="glass-card p-6 border-l-4 border-primary-500">
                     <div className="flex items-center gap-3 mb-4">
-                      <Star className="w-5 h-5 text-yellow-400" />
+                      <Star className="w-5 h-5 text-pink-neon" />
                       <h3 className="text-white font-bold">AI Feedback</h3>
                       <div className={`ml-auto text-2xl font-black ${scoreColor(evaluation.score)}`}>
                         {evaluation.score}/10
@@ -404,22 +404,22 @@ export default function InterviewPage() {
                         style={{ width: `${evaluation.score * 10}%` }} />
                     </div>
 
-                    <p className="text-slate-300 text-sm mb-4 leading-relaxed">{evaluation.feedback}</p>
+                    <p className="text-white/50 text-sm mb-4 leading-relaxed">{evaluation.feedback}</p>
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       {evaluation.strengths?.length > 0 && (
                         <div>
                           <p className="text-green-400 font-semibold text-sm mb-2">✅ Strengths</p>
                           {evaluation.strengths.map((s, i) => (
-                            <p key={i} className="text-slate-400 text-xs flex items-center gap-1"><CheckCircle className="w-3 h-3 text-green-400" /> {s}</p>
+                            <p key={i} className="text-white/50 text-xs flex items-center gap-1"><CheckCircle className="w-3 h-3 text-green-400" /> {s}</p>
                           ))}
                         </div>
                       )}
                       {evaluation.improvements?.length > 0 && (
                         <div>
-                          <p className="text-yellow-400 font-semibold text-sm mb-2">💡 Improve</p>
+                          <p className="text-pink-neon font-semibold text-sm mb-2">💡 Improve</p>
                           {evaluation.improvements.map((s, i) => (
-                            <p key={i} className="text-slate-400 text-xs flex items-center gap-1"><AlertCircle className="w-3 h-3 text-yellow-400" /> {s}</p>
+                            <p key={i} className="text-white/50 text-xs flex items-center gap-1"><AlertCircle className="w-3 h-3 text-pink-neon" /> {s}</p>
                           ))}
                         </div>
                       )}
@@ -428,7 +428,7 @@ export default function InterviewPage() {
                     {evaluation.betterAnswer && (
                       <div className="mt-4 p-3 rounded-xl bg-primary-500/10 border border-primary-500/20">
                         <p className="text-primary-400 font-semibold text-xs mb-1">Model Answer:</p>
-                        <p className="text-slate-300 text-xs leading-relaxed">{evaluation.betterAnswer}</p>
+                        <p className="text-white/50 text-xs leading-relaxed">{evaluation.betterAnswer}</p>
                       </div>
                     )}
 
@@ -456,12 +456,12 @@ export default function InterviewPage() {
                    finalResult.overallScore >= 65 ? '👍 Good Effort!' :
                    finalResult.overallScore >= 50 ? '💪 Decent Attempt!' : '📚 Keep Practicing!'}
                 </h2>
-                <p className="text-slate-400 mb-2">Interview completed in {formatTime(timer)}</p>
+                <p className="text-white/50 mb-2">Interview completed in {formatTime(timer)}</p>
                 {finalResult.performanceLevel && (
                   <span className={`text-sm px-3 py-1 rounded-full border font-semibold ${
                     finalResult.performanceLevel === 'Excellent' ? 'text-green-400 border-green-500/40 bg-green-500/10' :
-                    finalResult.performanceLevel === 'Good' ? 'text-blue-400 border-blue-500/40 bg-blue-500/10' :
-                    finalResult.performanceLevel === 'Average' ? 'text-yellow-400 border-yellow-500/40 bg-yellow-500/10' :
+                    finalResult.performanceLevel === 'Good' ? 'text-cyan-neon border-cyan-neon/40 bg-cyan-neon/10' :
+                    finalResult.performanceLevel === 'Average' ? 'text-pink-neon border-pink-neon/40 bg-pink-neon/10' :
                     'text-red-400 border-red-500/40 bg-red-500/10'
                   }`}>
                     {finalResult.performanceLevel}
@@ -473,26 +473,26 @@ export default function InterviewPage() {
               {finalResult.report && (
                 <div className="glass-card p-6 border-l-4 border-primary-500">
                   <h3 className="text-white font-bold mb-3 flex items-center gap-2">
-                    <Star className="w-5 h-5 text-yellow-400" /> Performance Report
+                    <Star className="w-5 h-5 text-pink-neon" /> Performance Report
                   </h3>
-                  <p className="text-slate-300 text-sm mb-4">{finalResult.report.summary}</p>
+                  <p className="text-white/50 text-sm mb-4">{finalResult.report.summary}</p>
 
                   <div className="grid sm:grid-cols-2 gap-3 mb-4">
                     <div className="p-3 rounded-xl bg-white/5 border border-white/8 text-center">
                       <div className="text-2xl font-black text-primary-400">{finalResult.answeredCount || 0}/{finalResult.totalQuestions || 0}</div>
-                      <div className="text-xs text-slate-500">Questions Answered</div>
+                      <div className="text-xs text-white/50">Questions Answered</div>
                     </div>
                     <div className="p-3 rounded-xl bg-white/5 border border-white/8 text-center">
-                      <div className={`text-2xl font-black ${finalResult.readinessScore >= 70 ? 'text-green-400' : 'text-yellow-400'}`}>{finalResult.readinessScore || 0}%</div>
-                      <div className="text-xs text-slate-500">Interview Readiness</div>
+                      <div className={`text-2xl font-black ${finalResult.readinessScore >= 70 ? 'text-green-400' : 'text-pink-neon'}`}>{finalResult.readinessScore || 0}%</div>
+                      <div className="text-xs text-white/50">Interview Readiness</div>
                     </div>
                   </div>
 
                   {finalResult.report.nextSteps?.length > 0 && (
                     <div>
-                      <p className="text-xs text-slate-400 font-semibold mb-2">Next Steps:</p>
+                      <p className="text-xs text-white/50 font-semibold mb-2">Next Steps:</p>
                       {finalResult.report.nextSteps.map((s, i) => (
-                        <div key={i} className="flex items-center gap-2 text-sm text-slate-300 mb-1">
+                        <div key={i} className="flex items-center gap-2 text-sm text-white/50 mb-1">
                           <span className="w-5 h-5 rounded-full bg-primary-500/20 text-primary-400 text-xs flex items-center justify-center font-bold flex-shrink-0">{i+1}</span>
                           {s}
                         </div>
@@ -509,20 +509,20 @@ export default function InterviewPage() {
                     <CheckCircle className="w-4 h-4" /> Strengths
                   </h3>
                   {finalResult.session?.strengths?.length > 0 ? finalResult.session.strengths.map((s, i) => (
-                    <p key={i} className="text-slate-300 text-sm mb-1.5 flex items-start gap-2">
+                    <p key={i} className="text-white/50 text-sm mb-1.5 flex items-start gap-2">
                       <span className="text-green-400 flex-shrink-0">•</span> {s}
                     </p>
-                  )) : <p className="text-slate-500 text-sm">Keep practicing to identify strengths.</p>}
+                  )) : <p className="text-white/50 text-sm">Keep practicing to identify strengths.</p>}
                 </div>
                 <div className="glass-card p-5">
-                  <h3 className="text-yellow-400 font-bold mb-3 flex items-center gap-2">
+                  <h3 className="text-pink-neon font-bold mb-3 flex items-center gap-2">
                     <AlertCircle className="w-4 h-4" /> Areas to Improve
                   </h3>
                   {finalResult.session?.improvements?.length > 0 ? finalResult.session.improvements.map((s, i) => (
-                    <p key={i} className="text-slate-300 text-sm mb-1.5 flex items-start gap-2">
-                      <span className="text-yellow-400 flex-shrink-0">•</span> {s}
+                    <p key={i} className="text-white/50 text-sm mb-1.5 flex items-start gap-2">
+                      <span className="text-pink-neon flex-shrink-0">•</span> {s}
                     </p>
-                  )) : <p className="text-slate-500 text-sm">Great job! Focus on depth in answers.</p>}
+                  )) : <p className="text-white/50 text-sm">Great job! Focus on depth in answers.</p>}
                 </div>
               </div>
 
@@ -545,7 +545,7 @@ export default function InterviewPage() {
                       </div>
                       <div>
                         <p className="text-white text-xs font-medium group-hover:text-primary-300">{r.name}</p>
-                        <p className="text-slate-500 text-xs">{r.desc}</p>
+                        <p className="text-white/50 text-xs">{r.desc}</p>
                       </div>
                     </a>
                   ))}
@@ -585,9 +585,9 @@ function InterviewHistory() {
           <div key={s._id} className="flex items-center justify-between p-3 rounded-xl bg-white/5">
             <div>
               <p className="text-white text-sm font-medium">{s.targetRole}</p>
-              <p className="text-slate-500 text-xs capitalize">{s.type} • {new Date(s.createdAt).toLocaleDateString()}</p>
+              <p className="text-white/50 text-xs capitalize">{s.type} • {new Date(s.createdAt).toLocaleDateString()}</p>
             </div>
-            <div className={`text-lg font-black ${s.overallScore >= 70 ? 'text-green-400' : s.overallScore >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+            <div className={`text-lg font-black ${s.overallScore >= 70 ? 'text-green-400' : s.overallScore >= 50 ? 'text-pink-neon' : 'text-red-400'}`}>
               {s.overallScore}%
             </div>
           </div>

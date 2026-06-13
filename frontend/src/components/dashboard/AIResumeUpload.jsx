@@ -31,7 +31,7 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
         </h3>
       </div>
 
-      <p className="text-sm text-slate-400 mb-4">
+      <p className="text-sm text-white/50 mb-4">
         Upload your existing resume and let our AI extract your skills, experience, and education to automatically build your profile.
       </p>
 
@@ -43,11 +43,11 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
           }`}
         >
           <input {...getInputProps()} />
-          <UploadCloud className={`w-8 h-8 mx-auto mb-3 ${isDragActive ? 'text-primary-400' : 'text-slate-400'}`} />
+          <UploadCloud className={`w-8 h-8 mx-auto mb-3 ${isDragActive ? 'text-primary-400' : 'text-white/50'}`} />
           <p className="text-white font-medium text-sm mb-1">
             {isDragActive ? 'Drop your resume here...' : 'Click or drag your resume here'}
           </p>
-          <p className="text-xs text-slate-500">Supports PDF and DOCX</p>
+          <p className="text-xs text-white/50">Supports PDF and DOCX</p>
         </div>
       )}
 
@@ -59,7 +59,7 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
           >
             <Loader2 className="w-8 h-8 text-primary-500 animate-spin mb-3" />
             <p className="text-white font-medium text-sm">Parsing resume with AI...</p>
-            <p className="text-xs text-slate-400 text-center mt-2">Extracting skills, work experience, and structuring your profile.</p>
+            <p className="text-xs text-white/50 text-center mt-2">Extracting skills, work experience, and structuring your profile.</p>
           </motion.div>
         )}
 
@@ -72,7 +72,7 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
               <CheckCircle className="w-5 h-5 text-accent-green mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-white font-medium text-sm mb-1">Extraction Complete</p>
-                <p className="text-xs text-slate-400 mb-2">We found {parsedData.skillsExtracted} skills, {parsedData.experienceParsed} roles, and {parsedData.educationParsed} education entries.</p>
+                <p className="text-xs text-white/50 mb-2">We found {parsedData.skillsExtracted} skills, {parsedData.experienceParsed} roles, and {parsedData.educationParsed} education entries.</p>
                 <button 
                   onClick={resetData}
                   className="text-xs text-primary-400 hover:text-primary-300 font-medium"

@@ -34,7 +34,7 @@ const PageLoader = () => (
   <div className="min-h-screen bg-dark-900 flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
       <div className="w-12 h-12 rounded-full border-2 border-primary-500/30 border-t-primary-500 animate-spin" />
-      <p className="text-slate-500 text-sm">Loading...</p>
+      <p className="text-white/50 text-sm">Loading...</p>
     </div>
   </div>
 );

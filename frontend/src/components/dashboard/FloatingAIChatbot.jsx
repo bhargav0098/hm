@@ -74,10 +74,10 @@ Try sending your message again later when I'm back online!`;
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] max-h-[80vh] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden"
+            className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] max-h-[80vh] bg-space-black border border-space-border rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden"
           >
             {/* Header */}
-            <div className="p-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between">
+            <div className="p-4 bg-space-black border-b border-space-border flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-primary-500/20 flex items-center justify-center">
                   <Bot className="w-4 h-4 text-primary-400" />
@@ -89,7 +89,7 @@ Try sending your message again later when I'm back online!`;
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="text-slate-400 hover:text-white transition-colors p-1"
+                className="text-white/50 hover:text-white transition-colors p-1"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -102,7 +102,7 @@ Try sending your message again later when I'm back online!`;
                   <div className={`max-w-[80%] rounded-2xl p-3 text-sm whitespace-pre-wrap ${
                     msg.role === 'user' 
                       ? 'bg-primary-600 text-white rounded-tr-sm' 
-                      : 'bg-slate-800 text-slate-200 border border-slate-700 rounded-tl-sm'
+                      : 'bg-space-black text-white/70 border border-space-border rounded-tl-sm'
                   }`}>
                     {msg.content}
                   </div>
@@ -110,7 +110,7 @@ Try sending your message again later when I'm back online!`;
               ))}
               {loading && (
                 <div className="flex justify-start">
-                  <div className="bg-slate-800 border border-slate-700 rounded-2xl rounded-tl-sm p-3">
+                  <div className="bg-space-black border border-space-border rounded-2xl rounded-tl-sm p-3">
                     <Loader2 className="w-4 h-4 text-primary-400 animate-spin" />
                   </div>
                 </div>
@@ -119,7 +119,7 @@ Try sending your message again later when I'm back online!`;
             </div>
 
             {/* Input */}
-            <div className="p-3 bg-slate-800 border-t border-slate-700">
+            <div className="p-3 bg-space-black border-t border-space-border">
               <form 
                 onSubmit={(e) => { e.preventDefault(); handleSend(); }}
                 className="flex items-center gap-2"
@@ -129,7 +129,7 @@ Try sending your message again later when I'm back online!`;
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask about your career path..."
-                  className="flex-1 bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-primary-500"
+                  className="flex-1 bg-space-black border border-space-border text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-primary-500"
                 />
                 <button
                   type="submit"

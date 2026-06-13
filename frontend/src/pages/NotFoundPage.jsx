@@ -12,7 +12,7 @@ export default function NotFoundPage() {
         </div>
         <h1 className="text-8xl font-black text-primary-400 mb-4">404</h1>
         <h2 className="text-2xl font-bold text-white mb-3">Page Not Found</h2>
-        <p className="text-slate-400 mb-8">The page you're looking for doesn't exist or has been moved.</p>
+        <p className="text-white/50 mb-8">The page you're looking for doesn't exist or has been moved.</p>
         <div className="flex gap-3 justify-center">
           <Link to="/">
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="btn-ghost flex items-center gap-2">

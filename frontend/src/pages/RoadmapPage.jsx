@@ -26,16 +26,16 @@ const dayColors = [
   'from-primary-500 to-accent-purple',
   'from-accent-cyan to-accent-blue',
   'from-accent-green to-teal-500',
-  'from-accent-yellow to-orange-500',
+  'from-accent-yellow from-pink-neon to-purple-neon',
   'from-pink-500 to-rose-500',
-  'from-indigo-500 to-violet-500',
-  'from-emerald-500 to-cyan-500',
+  'from-purple-500 to-violet-500',
+  'from-emerald-500 from-cyan-neon to-emerald-neon',
 ];
 
 const priorityColors = {
   critical: 'border-red-500/40 bg-red-500/10 text-red-400',
-  high: 'border-orange-500/40 bg-orange-500/10 text-orange-400',
-  medium: 'border-yellow-500/40 bg-yellow-500/10 text-yellow-400',
+  high: 'border-pink-neon/40 bg-pink-neon/10 text-pink-neon',
+  medium: 'border-pink-neon/40 bg-pink-neon/10 text-pink-neon',
   low: 'border-green-500/40 bg-green-500/10 text-green-400',
 };
 
@@ -229,7 +229,7 @@ export default function RoadmapPage() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white">Career Roadmap Agent</h1>
-            <p className="text-slate-400 text-sm">AI generates a personalized day-by-day plan for your exact target role</p>
+            <p className="text-white/50 text-sm">AI generates a personalized day-by-day plan for your exact target role</p>
           </div>
         </motion.div>
 
@@ -237,12 +237,12 @@ export default function RoadmapPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="glass-card p-6 space-y-5">
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-slate-300 font-medium mb-1.5 block">Target Role</label>
+              <label className="text-sm text-white/50 font-medium mb-1.5 block">Target Role</label>
               <input value={targetRole} onChange={e => setTargetRole(e.target.value)}
                 placeholder="e.g. Machine Learning Engineer" className="input-field" />
             </div>
             <div>
-              <label className="text-sm text-slate-300 font-medium mb-1.5 block">Current Skills</label>
+              <label className="text-sm text-white/50 font-medium mb-1.5 block">Current Skills</label>
               <input value={skills} onChange={e => setSkills(e.target.value)}
                 placeholder="Python, SQL, JavaScript..." className="input-field" />
             </div>
@@ -250,14 +250,14 @@ export default function RoadmapPage() {
 
           {/* Duration Selector */}
           <div>
-            <label className="text-sm text-slate-300 font-medium mb-3 block">Roadmap Duration</label>
+            <label className="text-sm text-white/50 font-medium mb-3 block">Roadmap Duration</label>
             <div className="grid grid-cols-5 gap-2">
               {DURATION_OPTIONS.map(opt => (
                 <button key={opt.value} onClick={() => setDuration(opt.value)}
                   className={`p-3 rounded-xl border text-center transition-all
                     ${duration === opt.value
                       ? 'border-primary-500/60 bg-primary-500/20 text-white'
-                      : 'border-white/10 bg-white/5 text-slate-400 hover:border-white/20 hover:text-white'}`}>
+                      : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white'}`}>
                   <p className="font-bold text-sm">{opt.label}</p>
                   <p className="text-xs opacity-70 mt-0.5">{opt.desc}</p>
                 </button>
@@ -283,7 +283,7 @@ export default function RoadmapPage() {
                 <div className="flex items-start justify-between flex-wrap gap-4">
                   <div>
                     <h2 className="text-white font-black text-xl">{result.role || targetRole}</h2>
-                    <p className="text-slate-400 text-sm">{result.duration} • AI-generated personalized plan</p>
+                    <p className="text-white/50 text-sm">{result.duration} • AI-generated personalized plan</p>
                     <p className="text-primary-400 text-sm mt-1 font-medium">🎯 {result.goal}</p>
                   </div>
                   <div className="flex gap-2">
@@ -296,7 +296,7 @@ export default function RoadmapPage() {
                 {/* Progress bar (day-by-day only) */}
                 {isDayByDay && (
                   <div className="mt-4">
-                    <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+                    <div className="flex items-center justify-between text-xs text-white/50 mb-1">
                       <span>{completedDays.length} / {result.days.length} days completed</span>
                       <span>{progress}%</span>
                     </div>
@@ -320,11 +320,11 @@ export default function RoadmapPage() {
                     </h2>
                     <div className="flex gap-2">
                       <button onClick={() => setViewMode('timeline')}
-                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'timeline' ? 'border-primary-500 bg-primary-500/20 text-white' : 'border-white/10 text-slate-400'}`}>
+                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'timeline' ? 'border-primary-500 bg-primary-500/20 text-white' : 'border-white/10 text-white/50'}`}>
                         Full Detail
                       </button>
                       <button onClick={() => setViewMode('compact')}
-                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'compact' ? 'border-primary-500 bg-primary-500/20 text-white' : 'border-white/10 text-slate-400'}`}>
+                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'compact' ? 'border-primary-500 bg-primary-500/20 text-white' : 'border-white/10 text-white/50'}`}>
                         Compact
                       </button>
                     </div>
@@ -348,7 +348,7 @@ export default function RoadmapPage() {
                             </span>
                             <span className={`text-xs font-semibold truncate ${completedDays.includes(day.dayNumber) ? 'text-green-400 line-through' : 'text-white'}`}>{day.theme}</span>
                           </div>
-                          <p className="text-slate-500 text-xs truncate">{day.learning}</p>
+                          <p className="text-white/50 text-xs truncate">{day.learning}</p>
                         </motion.button>
                       ))}
                     </div>
@@ -372,7 +372,7 @@ export default function RoadmapPage() {
                                     <span className="text-xs px-2 py-0.5 rounded-full bg-accent-yellow/20 text-accent-yellow border border-accent-yellow/30">🏆 Project Day</span>
                                   )}
                                 </div>
-                                <p className="text-slate-400 text-xs">{day.learning}</p>
+                                <p className="text-white/50 text-xs">{day.learning}</p>
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 <button
@@ -380,11 +380,11 @@ export default function RoadmapPage() {
                                   className={`text-xs px-3 py-1 rounded-lg border transition-all ${
                                     completedDays.includes(day.dayNumber)
                                       ? 'border-green-500/40 bg-green-500/20 text-green-400'
-                                      : 'border-white/10 text-slate-500 hover:border-green-500/30 hover:text-green-400'
+                                      : 'border-white/10 text-white/50 hover:border-green-500/30 hover:text-green-400'
                                   }`}>
                                   {completedDays.includes(day.dayNumber) ? '✓ Done' : 'Mark Done'}
                                 </button>
-                                <span className="text-slate-600 text-xs">{expandedDay === idx ? '▲' : '▼'}</span>
+                                <span className="text-white/40 text-xs">{expandedDay === idx ? '▲' : '▼'}</span>
                               </div>
                             </div>
 
@@ -394,33 +394,33 @@ export default function RoadmapPage() {
                                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                                   className="overflow-hidden border-t border-white/8">
                                   <div className="p-4 grid sm:grid-cols-2 gap-3">
-                                    <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-xl">
+                                    <div className="bg-cyan-neon/10 border border-cyan-neon/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
-                                        <BookOpen className="w-4 h-4 text-blue-400" />
-                                        <span className="text-blue-400 text-xs font-bold uppercase tracking-wider">Learn</span>
+                                        <BookOpen className="w-4 h-4 text-cyan-neon" />
+                                        <span className="text-cyan-neon text-xs font-bold uppercase tracking-wider">Learn</span>
                                       </div>
-                                      <p className="text-slate-200 text-sm">{day.learning}</p>
+                                      <p className="text-white/70 text-sm">{day.learning}</p>
                                     </div>
                                     <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
                                         <BarChart3 className="w-4 h-4 text-purple-400" />
                                         <span className="text-purple-400 text-xs font-bold uppercase tracking-wider">Practice</span>
                                       </div>
-                                      <p className="text-slate-200 text-sm">{day.practice}</p>
+                                      <p className="text-white/70 text-sm">{day.practice}</p>
                                     </div>
-                                    <div className="bg-orange-500/10 border border-orange-500/20 p-3 rounded-xl">
+                                    <div className="bg-pink-neon/10 border border-pink-neon/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
-                                        <Hammer className="w-4 h-4 text-orange-400" />
-                                        <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">Build</span>
+                                        <Hammer className="w-4 h-4 text-pink-neon" />
+                                        <span className="text-pink-neon text-xs font-bold uppercase tracking-wider">Build</span>
                                       </div>
-                                      <p className="text-slate-200 text-sm">{day.build}</p>
+                                      <p className="text-white/70 text-sm">{day.build}</p>
                                     </div>
                                     <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
                                         <CheckCircle className="w-4 h-4 text-green-400" />
                                         <span className="text-green-400 text-xs font-bold uppercase tracking-wider">Checkpoint</span>
                                       </div>
-                                      <p className="text-slate-200 text-sm">{day.checkpoint}</p>
+                                      <p className="text-white/70 text-sm">{day.checkpoint}</p>
                                     </div>
                                   </div>
                                 </motion.div>
@@ -451,7 +451,7 @@ export default function RoadmapPage() {
                       <div className="flex-1 glass-card p-5 mb-2">
                         <div className="flex items-center justify-between mb-3">
                           <span className={`text-sm font-bold bg-gradient-to-r ${dayColors[idx % dayColors.length]} bg-clip-text text-transparent`}>{w.week}</span>
-                          <span className="text-xs text-slate-500 bg-white/5 px-2 py-0.5 rounded-lg">{w.theme}</span>
+                          <span className="text-xs text-white/50 bg-white/5 px-2 py-0.5 rounded-lg">{w.theme}</span>
                         </div>
                         <div className="flex flex-wrap gap-1 mb-3">
                           {w.skillsToLearn?.map((s, i) => (
@@ -460,14 +460,14 @@ export default function RoadmapPage() {
                         </div>
                         <div className="space-y-1.5 mb-3">
                           {w.dailyTasks?.map((t, i) => (
-                            <div key={i} className="flex items-center gap-2 text-sm text-slate-300">
-                              <span className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center text-xs text-slate-400 flex-shrink-0">{i+1}</span>
+                            <div key={i} className="flex items-center gap-2 text-sm text-white/50">
+                              <span className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/50 flex-shrink-0">{i+1}</span>
                               {t}
                             </div>
                           ))}
                         </div>
-                        <div className="bg-orange-500/10 border border-orange-500/20 p-2 rounded-lg">
-                          <p className="text-xs text-orange-400 font-medium">🔨 Weekend Project: {w.weekendProject || w.project}</p>
+                        <div className="bg-pink-neon/10 border border-pink-neon/20 p-2 rounded-lg">
+                          <p className="text-xs text-pink-neon font-medium">🔨 Weekend Project: {w.weekendProject || w.project}</p>
                         </div>
                         <div className="bg-green-500/10 border border-green-500/20 p-2 rounded-lg mt-2">
                           <p className="text-xs text-green-400 font-medium">✓ Checkpoint: {w.checkpoint}</p>
@@ -492,21 +492,21 @@ export default function RoadmapPage() {
                         </div>
                         <div>
                           <span className={`font-bold bg-gradient-to-r ${dayColors[idx % dayColors.length]} bg-clip-text text-transparent`}>{m.month}</span>
-                          <p className="text-slate-400 text-xs">{m.theme}</p>
+                          <p className="text-white/50 text-xs">{m.theme}</p>
                         </div>
                       </div>
                       <div className="grid sm:grid-cols-2 gap-3 mb-3">
                         <div className="bg-white/5 p-3 rounded-xl">
-                          <p className="text-xs text-slate-400 mb-1 font-medium">Skills</p>
+                          <p className="text-xs text-white/50 mb-1 font-medium">Skills</p>
                           <div className="flex flex-wrap gap-1">{m.skills?.map((s, i) => <span key={i} className="text-xs bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded">{s}</span>)}</div>
                         </div>
                         <div className="bg-white/5 p-3 rounded-xl">
-                          <p className="text-xs text-slate-400 mb-1 font-medium">Weekly Focus</p>
-                          <div className="space-y-1">{m.weeklyFocus?.map((wf, i) => <p key={i} className="text-xs text-slate-300">{wf}</p>)}</div>
+                          <p className="text-xs text-white/50 mb-1 font-medium">Weekly Focus</p>
+                          <div className="space-y-1">{m.weeklyFocus?.map((wf, i) => <p key={i} className="text-xs text-white/50">{wf}</p>)}</div>
                         </div>
                       </div>
-                      <div className="bg-orange-500/10 border border-orange-500/20 p-2 rounded-lg mb-2">
-                        <p className="text-xs text-orange-400 font-medium">🔨 Project: {m.project}</p>
+                      <div className="bg-pink-neon/10 border border-pink-neon/20 p-2 rounded-lg mb-2">
+                        <p className="text-xs text-pink-neon font-medium">🔨 Project: {m.project}</p>
                       </div>
                       <div className="bg-green-500/10 border border-green-500/20 p-2 rounded-lg">
                         <p className="text-xs text-green-400 font-medium">✓ Milestone: {m.milestone}</p>
@@ -527,9 +527,9 @@ export default function RoadmapPage() {
                       <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/8 hover:border-accent-cyan/30 transition-all">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-white font-semibold text-sm">{p.name}</span>
-                          {p.day && <span className="text-xs text-slate-500">Day {p.day}</span>}
+                          {p.day && <span className="text-xs text-white/50">Day {p.day}</span>}
                         </div>
-                        <p className="text-slate-400 text-xs mb-3">{p.description}</p>
+                        <p className="text-white/50 text-xs mb-3">{p.description}</p>
                         <div className="flex flex-wrap gap-1 mb-2">
                           {p.skills?.map((s, si) => (
                             <span key={si} className="text-xs bg-accent-cyan/10 text-accent-cyan px-1.5 py-0.5 rounded">{s}</span>
@@ -550,7 +550,7 @@ export default function RoadmapPage() {
                   <CheckCircle className="w-5 h-5 text-accent-green flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-white font-bold text-sm mb-1">Final Outcome</p>
-                    <p className="text-slate-200 text-sm">{result.finalOutcome}</p>
+                    <p className="text-white/70 text-sm">{result.finalOutcome}</p>
                   </div>
                 </div>
               </div>
@@ -560,7 +560,7 @@ export default function RoadmapPage() {
                 <h2 className="text-white font-bold mb-2 flex items-center gap-2">
                   <ArrowRight className="w-5 h-5 text-primary-400" /> Follow These Steps Next
                 </h2>
-                <p className="text-slate-400 text-sm mb-4">Your roadmap is ready. Complete each step below to maximize your chances of getting hired.</p>
+                <p className="text-white/50 text-sm mb-4">Your roadmap is ready. Complete each step below to maximize your chances of getting hired.</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {NEXT_STEPS.map((step) => (
                     <Link key={step.path} to={step.path}>
@@ -571,7 +571,7 @@ export default function RoadmapPage() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-semibold">{step.label}</p>
-                          <p className="text-slate-500 text-xs truncate">{step.desc}</p>
+                          <p className="text-white/50 text-xs truncate">{step.desc}</p>
                         </div>
                       </motion.div>
                     </Link>

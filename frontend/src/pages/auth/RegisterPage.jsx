@@ -63,7 +63,7 @@ export default function RegisterPage() {
   };
 
   const passStrength = passwordRules.filter(r => r.test(form.password)).length;
-  const strengthColors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500'];
+  const strengthColors = ['bg-red-500', 'bg-pink-neon', 'bg-pink-neon', 'bg-green-500'];
   const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong'];
 
   return (
@@ -89,11 +89,11 @@ export default function RegisterPage() {
                 <Shield className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-white mb-1">Verify Your Email</h2>
-              <p className="text-slate-400 text-sm">We sent a 6-digit OTP to <span className="text-primary-400 font-medium">{form.email}</span></p>
+              <p className="text-white/50 text-sm">We sent a 6-digit OTP to <span className="text-primary-400 font-medium">{form.email}</span></p>
             </div>
             <form onSubmit={handleVerifyOTP} className="space-y-4">
               <div>
-                <label className="text-sm text-slate-400 mb-1.5 block">Enter OTP</label>
+                <label className="text-sm text-white/50 mb-1.5 block">Enter OTP</label>
                 <input
                   type="text"
                   value={otp}
@@ -110,7 +110,7 @@ export default function RegisterPage() {
                 {verifying ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <><CheckCircle className="w-4 h-4" /> Verify Email</>}
               </motion.button>
               <button type="button" onClick={handleSkipVerify}
-                className="w-full text-center text-sm text-slate-500 hover:text-slate-300 transition-colors py-2">
+                className="w-full text-center text-sm text-white/50 hover:text-white/50 transition-colors py-2">
                 Skip for now — verify later
               </button>
             </form>
@@ -119,15 +119,15 @@ export default function RegisterPage() {
         <div className="glass-card p-8">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-white mb-1">Create your account</h2>
-            <p className="text-slate-400 text-sm">Start your AI-powered career journey</p>
+            <p className="text-white/50 text-sm">Start your AI-powered career journey</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Full Name */}
             <div>
-              <label className="text-sm text-slate-400 mb-1.5 block">Full Name</label>
+              <label className="text-sm text-white/50 mb-1.5 block">Full Name</label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                 <input type="text" name="fullName" value={form.fullName} onChange={handleChange}
                   placeholder="John Doe" className="input-field pl-10" />
               </div>
@@ -135,9 +135,9 @@ export default function RegisterPage() {
             
             {/* Email */}
             <div>
-              <label className="text-sm text-slate-400 mb-1.5 block">Email address</label>
+              <label className="text-sm text-white/50 mb-1.5 block">Email address</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                 <input type="email" name="email" value={form.email} onChange={handleChange}
                   placeholder="you@email.com" className="input-field pl-10" />
               </div>
@@ -145,7 +145,7 @@ export default function RegisterPage() {
 
             {/* Gender */}
             <div>
-              <label className="text-sm text-slate-400 mb-1.5 block">Gender</label>
+              <label className="text-sm text-white/50 mb-1.5 block">Gender</label>
               <div className="relative">
                 <select 
                   name="gender" 
@@ -162,14 +162,14 @@ export default function RegisterPage() {
             
             {/* Password */}
             <div>
-              <label className="text-sm text-slate-400 mb-1.5 block">Password</label>
+              <label className="text-sm text-white/50 mb-1.5 block">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                 <input type={showPass ? 'text' : 'password'} name="password" value={form.password}
                   onChange={handleChange} onFocus={() => setFocusPass(true)} onBlur={() => setFocusPass(false)}
                   placeholder="Create a strong password" className="input-field pl-10 pr-10" />
                 <button type="button" onClick={() => setShowPass(s => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/50 transition-colors">
                   {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
@@ -181,15 +181,15 @@ export default function RegisterPage() {
                     ))}
                   </div>
                   {form.password && (
-                    <p className={`text-xs mb-2 ${passStrength >= 4 ? 'text-green-400' : passStrength >= 2 ? 'text-yellow-400' : 'text-red-400'}`}>
+                    <p className={`text-xs mb-2 ${passStrength >= 4 ? 'text-green-400' : passStrength >= 2 ? 'text-pink-neon' : 'text-red-400'}`}>
                       {strengthLabels[passStrength - 1] || 'Very Weak'}
                     </p>
                   )}
                   <div className="space-y-1">
                     {passwordRules.map(rule => (
                       <div key={rule.label} className="flex items-center gap-2">
-                        {rule.test(form.password) ? <CheckCircle className="w-3 h-3 text-green-400 flex-shrink-0" /> : <XCircle className="w-3 h-3 text-slate-600 flex-shrink-0" />}
-                        <span className={`text-xs ${rule.test(form.password) ? 'text-green-400' : 'text-slate-500'}`}>{rule.label}</span>
+                        {rule.test(form.password) ? <CheckCircle className="w-3 h-3 text-green-400 flex-shrink-0" /> : <XCircle className="w-3 h-3 text-white/40 flex-shrink-0" />}
+                        <span className={`text-xs ${rule.test(form.password) ? 'text-green-400' : 'text-white/50'}`}>{rule.label}</span>
                       </div>
                     ))}
                   </div>
@@ -199,14 +199,14 @@ export default function RegisterPage() {
             
             {/* Confirm Password */}
             <div>
-              <label className="text-sm text-slate-400 mb-1.5 block">Confirm Password</label>
+              <label className="text-sm text-white/50 mb-1.5 block">Confirm Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                 <input type={showConfirm ? 'text' : 'password'} name="confirmPassword" value={form.confirmPassword}
                   onChange={handleChange} placeholder="Repeat your password"
                   className={`input-field pl-10 pr-10 ${form.confirmPassword && (form.password !== form.confirmPassword ? 'border-red-500/50' : 'border-green-500/50')}`} />
                 <button type="button" onClick={() => setShowConfirm(s => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/50 transition-colors">
                   {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
@@ -222,7 +222,7 @@ export default function RegisterPage() {
             </motion.button>
           </form>
           
-          <p className="text-center text-sm text-slate-500 mt-6">
+          <p className="text-center text-sm text-white/50 mt-6">
             Already have an account?{' '}
             <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">Sign in</Link>
           </p>
