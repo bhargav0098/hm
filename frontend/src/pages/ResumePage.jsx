@@ -90,7 +90,7 @@ function ResumePreview({ resume, template, profilePic }) {
           {resume.summary && (
             <div>
               <h2 className="text-purple-700 font-bold text-xs uppercase tracking-wide border-b border-purple-200 pb-1 mb-1">Profile</h2>
-              <p className="text-white/40 text-xs leading-relaxed">{resume.summary}</p>
+              <p className="text-gray-600 text-xs leading-relaxed">{resume.summary}</p>
             </div>
           )}
           {resume.experience?.filter(e => e.company || e.role).length > 0 && (
@@ -98,9 +98,9 @@ function ResumePreview({ resume, template, profilePic }) {
               <h2 className="text-purple-700 font-bold text-xs uppercase tracking-wide border-b border-purple-200 pb-1 mb-2">Experience</h2>
               {resume.experience.filter(e => e.company || e.role).map((exp, i) => (
                 <div key={i} className="mb-2">
-                  <div className="flex justify-between"><span className="font-semibold text-xs">{exp.role}</span><span className="text-white/50 text-xs">{exp.duration}</span></div>
+                  <div className="flex justify-between"><span className="font-semibold text-xs">{exp.role}</span><span className="text-gray-500 text-xs">{exp.duration}</span></div>
                   <p className="text-purple-600 text-xs">{exp.company}</p>
-                  {exp.description && <p className="text-white/50 text-xs mt-0.5">{exp.description}</p>}
+                  {exp.description && <p className="text-gray-600 text-xs mt-0.5">{exp.description}</p>}
                 </div>
               ))}
             </div>
@@ -110,8 +110,8 @@ function ResumePreview({ resume, template, profilePic }) {
               <h2 className="text-purple-700 font-bold text-xs uppercase tracking-wide border-b border-purple-200 pb-1 mb-2">Education</h2>
               {resume.education.filter(e => e.degree || e.institution).map((edu, i) => (
                 <div key={i} className="mb-1">
-                  <div className="flex justify-between"><span className="font-semibold text-xs">{edu.degree}</span><span className="text-white/50 text-xs">{edu.year}</span></div>
-                  <p className="text-white/50 text-xs">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p>
+                  <div className="flex justify-between"><span className="font-semibold text-xs">{edu.degree}</span><span className="text-gray-500 text-xs">{edu.year}</span></div>
+                  <p className="text-gray-600 text-xs">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p>
                 </div>
               ))}
             </div>
@@ -122,7 +122,7 @@ function ResumePreview({ resume, template, profilePic }) {
               {resume.projects.filter(p => p.name).map((proj, i) => (
                 <div key={i} className="mb-1">
                   <span className="font-semibold text-xs">{proj.name}</span>
-                  {proj.description && <p className="text-white/50 text-xs">{proj.description}</p>}
+                  {proj.description && <p className="text-gray-600 text-xs">{proj.description}</p>}
                 </div>
               ))}
             </div>
@@ -139,7 +139,7 @@ function ResumePreview({ resume, template, profilePic }) {
           {profilePic && <img src={profilePic} alt="profile" className="w-12 h-12 rounded-full object-cover border border-white/10" />}
           <div>
             <h1 className="text-lg font-bold text-gray-900">{p.fullName || 'Your Name'}</h1>
-            <div className="flex flex-wrap gap-2 text-white/50 text-xs mt-1">
+            <div className="flex flex-wrap gap-2 text-gray-500 text-xs mt-1">
               {p.email && <span>{p.email}</span>}
               {p.phone && <span>| {p.phone}</span>}
               {p.location && <span>| {p.location}</span>}
@@ -148,51 +148,51 @@ function ResumePreview({ resume, template, profilePic }) {
             </div>
           </div>
         </div>
-        {resume.summary && <div className="mb-3"><p className="text-white/40 text-xs leading-relaxed">{resume.summary}</p></div>}
+        {resume.summary && <div className="mb-3"><p className="text-gray-600 text-xs leading-relaxed">{resume.summary}</p></div>}
         {resume.experience?.filter(e => e.company || e.role).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-white/40 mb-1">EXPERIENCE</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">EXPERIENCE</h2>
             {resume.experience.filter(e => e.company || e.role).map((exp, i) => (
               <div key={i} className="mb-2">
-                <div className="flex justify-between"><span className="font-semibold">{exp.role} — {exp.company}</span><span className="text-white/50">{exp.duration}</span></div>
-                {exp.description && <p className="text-white/50 mt-0.5">{exp.description}</p>}
+                <div className="flex justify-between"><span className="font-semibold">{exp.role} — {exp.company}</span><span className="text-gray-500">{exp.duration}</span></div>
+                {exp.description && <p className="text-gray-600 mt-0.5">{exp.description}</p>}
               </div>
             ))}
           </div>
         )}
         {resume.education?.filter(e => e.degree).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-white/40 mb-1">EDUCATION</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">EDUCATION</h2>
             {resume.education.filter(e => e.degree).map((edu, i) => (
               <div key={i} className="flex justify-between mb-1">
                 <span className="font-semibold">{edu.degree}, {edu.institution}</span>
-                <span className="text-white/50">{edu.year}</span>
+                <span className="text-gray-500">{edu.year}</span>
               </div>
             ))}
           </div>
         )}
         {resume.skills?.filter(Boolean).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-white/40 mb-1">SKILLS</h2>
-            <p className="text-white/40">{resume.skills.filter(Boolean).join(' · ')}</p>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">SKILLS</h2>
+            <p className="text-gray-600">{resume.skills.filter(Boolean).join(' · ')}</p>
           </div>
         )}
         {resume.projects?.filter(p => p.name).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-white/40 mb-1">PROJECTS</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">PROJECTS</h2>
             {resume.projects.filter(p => p.name).map((proj, i) => (
               <div key={i} className="mb-1">
                 <span className="font-semibold">{proj.name}</span>
-                {proj.description && <span className="text-white/50"> — {proj.description}</span>}
+                {proj.description && <span className="text-gray-600"> — {proj.description}</span>}
               </div>
             ))}
           </div>
         )}
         {resume.certifications?.filter(c => c.name).length > 0 && (
           <div>
-            <h2 className="font-bold text-xs uppercase tracking-widest text-white/40 mb-1">CERTIFICATIONS</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">CERTIFICATIONS</h2>
             {resume.certifications.filter(c => c.name).map((c, i) => (
-              <p key={i} className="text-white/40 text-xs">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}{c.year ? ` (${c.year})` : ''}</p>
+              <p key={i} className="text-gray-600 text-xs">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}{c.year ? ` (${c.year})` : ''}</p>
             ))}
           </div>
         )}
@@ -225,7 +225,7 @@ function ResumePreview({ resume, template, profilePic }) {
         {resume.summary && (
           <div>
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-1">Professional Summary</h2>
-            <p className="text-white/40 leading-relaxed">{resume.summary}</p>
+            <p className="text-gray-600 leading-relaxed">{resume.summary}</p>
           </div>
         )}
         {resume.experience?.filter(e => e.company || e.role).length > 0 && (
@@ -234,10 +234,10 @@ function ResumePreview({ resume, template, profilePic }) {
             {resume.experience.filter(e => e.company || e.role).map((exp, i) => (
               <div key={i} className="mb-3 pl-3 border-l-2 border-purple-200">
                 <div className="flex justify-between items-start">
-                  <div><p className="font-bold text-white/40">{exp.role}</p><p className="text-purple-500">{exp.company}</p></div>
-                  <span className="text-white/50 text-xs whitespace-nowrap ml-2">{exp.duration}</span>
+                  <div><p className="font-bold text-gray-800">{exp.role}</p><p className="text-purple-500">{exp.company}</p></div>
+                  <span className="text-gray-500 text-xs whitespace-nowrap ml-2">{exp.duration}</span>
                 </div>
-                {exp.description && <p className="text-white/50 mt-1 leading-relaxed">{exp.description}</p>}
+                {exp.description && <p className="text-gray-600 mt-1 leading-relaxed">{exp.description}</p>}
               </div>
             ))}
           </div>
@@ -247,8 +247,8 @@ function ResumePreview({ resume, template, profilePic }) {
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-2">Education</h2>
             {resume.education.filter(e => e.degree || e.institution).map((edu, i) => (
               <div key={i} className="flex justify-between mb-1">
-                <div><p className="font-semibold">{edu.degree}</p><p className="text-white/50">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p></div>
-                <span className="text-white/50 text-xs">{edu.year}</span>
+                <div><p className="font-semibold">{edu.degree}</p><p className="text-gray-600">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p></div>
+                <span className="text-gray-500 text-xs">{edu.year}</span>
               </div>
             ))}
           </div>
@@ -268,8 +268,8 @@ function ResumePreview({ resume, template, profilePic }) {
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-2">Projects</h2>
             {resume.projects.filter(p => p.name).map((proj, i) => (
               <div key={i} className="mb-2">
-                <p className="font-semibold text-white/40">{proj.name}{proj.link ? <a href={proj.link} className="text-purple-400 ml-2 text-xs" target="_blank" rel="noopener noreferrer">↗</a> : ''}</p>
-                {proj.description && <p className="text-white/50 leading-relaxed">{proj.description}</p>}
+                <p className="font-semibold text-gray-800">{proj.name}{proj.link ? <a href={proj.link} className="text-purple-400 ml-2 text-xs" target="_blank" rel="noopener noreferrer">↗</a> : ''}</p>
+                {proj.description && <p className="text-gray-600 leading-relaxed">{proj.description}</p>}
               </div>
             ))}
           </div>
@@ -279,8 +279,8 @@ function ResumePreview({ resume, template, profilePic }) {
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-2">Certifications</h2>
             {resume.certifications.filter(c => c.name).map((c, i) => (
               <div key={i} className="flex justify-between mb-1">
-                <span className="font-semibold text-white/40">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}</span>
-                <span className="text-white/50 text-xs">{c.year}</span>
+                <span className="font-semibold text-gray-800">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}</span>
+                <span className="text-gray-500 text-xs">{c.year}</span>
               </div>
             ))}
           </div>
