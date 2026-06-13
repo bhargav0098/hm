@@ -427,7 +427,7 @@ export default function ResumePage() {
       toast.success('Resume parsed successfully!', { id: toastId });
     } catch (error) {
       console.error(error);
-      toast.error('Failed to parse resume automatically. Please fill manually.', { id: toastId });
+      toast.error(error.response?.data?.message || 'Failed to parse resume automatically. Please fill manually.', { id: toastId });
     } finally {
       setIsParsing(false);
     }
