@@ -17,6 +17,6 @@ const upload = multer({
   }
 });
 
-router.post('/parse', upload.single('resume'), parseResume);
+router.post('/parse', protect, upload.single('resume'), parseResume);
 
 module.exports = router;
