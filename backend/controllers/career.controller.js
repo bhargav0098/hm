@@ -2,7 +2,8 @@ const { SkillProfile, Resume, JobApplication, InterviewSession, Progress, Career
 const ApiSettings = require('../models/ApiSettings');
 const {
   runSkillAgent, runResumeAgent, runJobMatchAgent,
-  runInterviewAgent, evaluateAnswer, generateCareerRoadmap, findLocalOpportunities,
+  runInterviewAgent, evaluateAnswer, generateFollowUpQuestion, questionCountForDuration,
+  generateCareerRoadmap, findLocalOpportunities,
   generateWeeklyReport, generateDailyTasks
 } = require('../services/gemini.service');
 
@@ -196,13 +197,23 @@ exports.updateJobStatus = async (req, res, next) => {
 // ─── INTERVIEW AGENT ──────────────────────────────────────────────────────
 exports.generateInterview = async (req, res, next) => {
   try {
-    const { role, type, skills } = req.body;
+    const { role, type, skills, experienceLevel, difficulty, duration, readinessCheck } = req.body;
     const llmConfig = await getUserLLMConfig(req.user._id);
-    const result = await runInterviewAgent(role, type, skills || [], llmConfig);
+    const result = await runInterviewAgent(role, type, skills || [], llmConfig, {
+      experienceLevel: experienceLevel || 'fresher',
+      difficulty: difficulty || 'medium',
+      duration: duration || 30
+    });
 
     const session = await InterviewSession.create({
-      user: req.user._id, type: type || 'mixed', targetRole: role,
-      questions: result.questions?.map(q => ({ question: q.question, userAnswer: '', aiFeedback: '', score: 0 })) || [],
+      user: req.user._id,
+      type: type || 'mixed',
+      targetRole: role,
+      experienceLevel: experienceLevel || 'fresher',
+      difficulty: difficulty || 'medium',
+      plannedDuration: duration || 30,
+      readinessCheck: readinessCheck || undefined,
+      questions: result.questions?.map(q => ({ question: q.question, category: q.category || type || 'mixed', userAnswer: '', aiFeedback: '', score: 0 })) || [],
       status: 'in-progress'
     });
 
@@ -229,9 +240,45 @@ exports.submitAnswer = async (req, res, next) => {
   } catch (error) { next(error); }
 };
 
+// Adaptive follow-up: only called by the client for a very strong (>=8) or
+// very weak (<5) answer, so it doesn't multiply Gemini API usage per answer.
+exports.generateFollowUp = async (req, res, next) => {
+  try {
+    const { role, question, answer, score } = req.body;
+    const llmConfig = await getUserLLMConfig(req.user._id);
+    const followUp = await generateFollowUpQuestion(role, question, answer, score, llmConfig);
+    if (!followUp || !followUp.question) {
+      return res.json({ success: true, followUp: null });
+    }
+    res.json({ success: true, followUp });
+  } catch (error) { next(error); }
+};
+
+// Integrity penalty per browser-observable event type. Kept conservative and
+// transparent — this is NOT a claim of detecting cheating, just a log of
+// things a browser can genuinely observe (tab switches, camera/mic state).
+const INTEGRITY_PENALTIES = {
+  tab_switch: 6,
+  window_blur: 4,
+  camera_off: 10,
+  mic_muted: 5,
+  camera_covered: 8,
+  no_motion: 3,
+  multiple_faces: 9,
+  face_missing: 7,
+  looking_away: 2,
+  mobile_detected: 100
+};
+
+const computeIntegrityScore = (events = []) => {
+  let score = 100;
+  events.forEach(e => { score -= (INTEGRITY_PENALTIES[e.type] || 3); });
+  return Math.max(0, Math.min(100, score));
+};
+
 exports.completeInterview = async (req, res, next) => {
   try {
-    const { sessionId } = req.body;
+    const { sessionId, integrityEvents, durationSeconds } = req.body;
     const session = await InterviewSession.findOne({ _id: sessionId, user: req.user._id });
     if (!session) return res.status(404).json({ success: false, message: 'Session not found.' });
 
@@ -239,8 +286,6 @@ exports.completeInterview = async (req, res, next) => {
     const scores = answeredQuestions.map(q => q.score);
     const overallScore = scores.length ? Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) : 0;
 
-    // Build real strengths/improvements from question evaluations
-    const allFeedbacks = session.questions.filter(q => q.aiFeedback).map(q => q.aiFeedback);
     const highScoreQuestions = session.questions.filter(q => q.score >= 7);
     const lowScoreQuestions = session.questions.filter(q => q.score > 0 && q.score < 6);
 
@@ -255,11 +300,17 @@ exports.completeInterview = async (req, res, next) => {
     const performanceLevel = overallScore >= 80 ? 'Excellent' : overallScore >= 65 ? 'Good' : overallScore >= 50 ? 'Average' : 'Needs Improvement';
     const readinessScore = Math.min(100, overallScore + (answeredQuestions.length * 2));
 
+    const cleanEvents = Array.isArray(integrityEvents) ? integrityEvents.filter(e => e && e.type) : [];
+    const integrityScore = computeIntegrityScore(cleanEvents);
+
     const updated = await InterviewSession.findByIdAndUpdate(sessionId, {
       overallScore,
       status: 'completed',
       strengths: strengths.slice(0, 3),
-      improvements: improvements.slice(0, 3)
+      improvements: improvements.slice(0, 3),
+      integrityEvents: cleanEvents,
+      integrityScore,
+      duration: durationSeconds ? Math.round(durationSeconds / 60) : session.duration
     }, { new: true });
 
     await updateProgress(req.user._id, 'interviewsPracticed');
@@ -269,6 +320,8 @@ exports.completeInterview = async (req, res, next) => {
       overallScore,
       performanceLevel,
       readinessScore,
+      integrityScore,
+      integrityEvents: cleanEvents,
       answeredCount: answeredQuestions.length,
       totalQuestions: session.questions.length,
       report: {

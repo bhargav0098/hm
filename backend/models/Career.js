@@ -63,18 +63,36 @@ const jobApplicationSchema = new mongoose.Schema({
 // Interview Sessions
 const interviewSessionSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  type: { type: String, enum: ['hr', 'technical', 'behavioral', 'mixed'], default: 'mixed' },
+  type: { type: String, enum: ['hr', 'technical', 'behavioral', 'coding', 'mixed'], default: 'mixed' },
   targetRole: String,
+  experienceLevel: { type: String, enum: ['fresher', '1-2', '3-5', 'senior'], default: 'fresher' },
+  difficulty: { type: String, enum: ['easy', 'medium', 'hard'], default: 'medium' },
+  plannedDuration: Number, // minutes selected by the user before starting
   questions: [{
     question: String,
+    category: String,
     userAnswer: String,
     aiFeedback: String,
-    score: { type: Number, min: 0, max: 10 }
+    score: { type: Number, min: 0, max: 10 },
+    isFollowUp: { type: Boolean, default: false }
   }],
   overallScore: { type: Number, min: 0, max: 100 },
   strengths: [String],
   improvements: [String],
-  duration: Number, // minutes
+  duration: Number, // minutes actually taken
+  // Readiness check & integrity monitoring (browser-observable only)
+  readinessCheck: {
+    connectionQuality: String,   // Excellent | Good | Poor
+    micWorking: Boolean,
+    cameraActive: Boolean,
+    browserSupport: { type: Boolean, default: true },
+    faceDetectionSupported: Boolean
+  },
+  integrityEvents: [{
+    type: { type: String, enum: ['tab_switch', 'window_blur', 'camera_off', 'mic_muted', 'camera_covered', 'no_motion', 'multiple_faces', 'face_missing', 'looking_away'] },
+    timestamp: { type: Date, default: Date.now }
+  }],
+  integrityScore: { type: Number, min: 0, max: 100, default: 100 },
   status: { type: String, enum: ['pending', 'in-progress', 'completed'], default: 'pending' }
 }, { timestamps: true });
 

@@ -1,58 +1,35 @@
-const getRoleCategory = (targetRole) => {
-  const role = (targetRole || '').toLowerCase();
-  if (role.includes('data') || role.includes('machine learning') || role.includes('ai ') || role.includes('artificial')) return 'data_ai';
-  if (role.includes('back') || role.includes('node') || role.includes('python')) return 'backend';
-  if (role.includes('full') || role.includes('mern')) return 'fullstack';
-  if (role.includes('ui') || role.includes('ux') || role.includes('design')) return 'design';
-  return 'frontend';
-};
+const { matchRole } = require('../data/roleCatalog');
+
+// Every mock/fallback generator below is driven by the shared ROLE_CATALOG
+// (via matchRole) instead of a handful of hardcoded buckets. This guarantees
+// that ANY supported role — including ones that previously fell through to
+// a mismatched "frontend" default (DevOps, QA, Product Manager, Cybersecurity,
+// Cloud Engineer, etc.) — gets content that is actually labeled and scoped
+// correctly, even when this fallback (used only when the live Gemini call
+// fails or no API key is configured) is what ends up being returned.
+
+const hasSkill = (skills, name) =>
+  (skills || []).some(s => s && name.toLowerCase().includes(s.toLowerCase()));
 
 const mockSkillResult = (skills, targetRole) => {
-  const category = getRoleCategory(targetRole);
+  const role = matchRole(targetRole);
+  const roleSkills = role.skills;
 
-  const roleGaps = {
-    data_ai: [
-      { skill: 'Python (Advanced)', currentLevel: skills.includes('Python') ? 'intermediate' : 'none', requiredLevel: 'advanced', gap: 'Need to master NumPy, Pandas, and data pipelines', priority: 'critical', learningOrder: 1 },
-      { skill: 'Statistics & Probability', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'ML requires solid math foundations before algorithms', priority: 'critical', learningOrder: 2 },
-      { skill: 'Machine Learning (Scikit-learn)', currentLevel: 'none', requiredLevel: 'advanced', gap: 'Core competency for the role', priority: 'critical', learningOrder: 3 },
-      { skill: 'Deep Learning (PyTorch/TensorFlow)', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Required for modern ML engineering positions', priority: 'high', learningOrder: 4 },
-      { skill: 'MLOps & Model Deployment', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Production deployment is a critical differentiator', priority: 'high', learningOrder: 5 }
-    ],
-    frontend: [
-      { skill: 'HTML/CSS', currentLevel: skills.includes('HTML') ? 'intermediate' : 'none', requiredLevel: 'advanced', gap: 'Need semantic HTML, advanced layouts, animations', priority: 'critical', learningOrder: 1 },
-      { skill: 'JavaScript (ES6+)', currentLevel: skills.includes('JavaScript') ? 'intermediate' : 'beginner', requiredLevel: 'advanced', gap: 'Need closures, async/await, event loop mastery', priority: 'critical', learningOrder: 2 },
-      { skill: 'React & Hooks', currentLevel: 'none', requiredLevel: 'advanced', gap: 'Most demanded frontend framework globally', priority: 'critical', learningOrder: 3 },
-      { skill: 'TypeScript', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Industry standard for large codebases', priority: 'high', learningOrder: 4 },
-      { skill: 'Testing (Jest/Cypress)', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Required in all professional frontend roles', priority: 'medium', learningOrder: 5 }
-    ],
-    backend: [
-      { skill: 'Node.js & Express', currentLevel: skills.includes('Node.js') ? 'intermediate' : 'none', requiredLevel: 'advanced', gap: 'Core backend development skill', priority: 'critical', learningOrder: 1 },
-      { skill: 'Database Design (SQL + MongoDB)', currentLevel: 'none', requiredLevel: 'advanced', gap: 'All backend roles require database mastery', priority: 'critical', learningOrder: 2 },
-      { skill: 'REST APIs & GraphQL', currentLevel: 'none', requiredLevel: 'advanced', gap: 'Primary backend output artifact', priority: 'critical', learningOrder: 3 },
-      { skill: 'Authentication & Security', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'JWT, OAuth and security are non-negotiable', priority: 'high', learningOrder: 4 },
-      { skill: 'Docker & Cloud (AWS/GCP)', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Deployment skills are increasingly mandatory', priority: 'high', learningOrder: 5 }
-    ],
-    fullstack: [
-      { skill: 'React (Frontend)', currentLevel: skills.includes('React') ? 'intermediate' : 'none', requiredLevel: 'advanced', gap: 'Full stack requires strong frontend base', priority: 'critical', learningOrder: 1 },
-      { skill: 'Node.js API Development', currentLevel: 'none', requiredLevel: 'advanced', gap: 'Backend half of full stack', priority: 'critical', learningOrder: 2 },
-      { skill: 'Database Management', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Essential for data persistence', priority: 'critical', learningOrder: 3 },
-      { skill: 'System Design', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Required in senior full stack interviews', priority: 'high', learningOrder: 4 },
-      { skill: 'CI/CD & Deployment', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Industry expects deployment experience', priority: 'medium', learningOrder: 5 }
-    ],
-    design: [
-      { skill: 'Figma (Advanced)', currentLevel: 'beginner', requiredLevel: 'advanced', gap: 'Figma is the industry standard design tool', priority: 'critical', learningOrder: 1 },
-      { skill: 'User Research Methods', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'UX designers must validate with real users', priority: 'critical', learningOrder: 2 },
-      { skill: 'Design Systems', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Companies expect knowledge of Atomic Design', priority: 'high', learningOrder: 3 },
-      { skill: 'Accessibility (WCAG)', currentLevel: 'none', requiredLevel: 'intermediate', gap: 'Legal and ethical design requirement', priority: 'high', learningOrder: 4 },
-      { skill: 'Basic Frontend (HTML/CSS)', currentLevel: 'none', requiredLevel: 'beginner', gap: 'Helps designers communicate with engineers', priority: 'medium', learningOrder: 5 }
-    ]
-  };
+  const analyzedSkills = roleSkills.map((skill, i) => ({
+    skill,
+    currentLevel: hasSkill(skills, skill) ? 'intermediate' : (i === 0 && skills?.length ? 'beginner' : 'none'),
+    requiredLevel: i < 3 ? 'advanced' : 'intermediate',
+    gap: i === 0
+      ? `Core competency for ${role.label} — build this first`
+      : `Needed to be job-ready for ${role.label} (${role.focus})`,
+    priority: i < 3 ? 'critical' : i < 6 ? 'high' : 'medium',
+    learningOrder: i + 1
+  }));
 
-  const analyzedSkills = roleGaps[category] || roleGaps.frontend;
-
-  // Merge in current skills that the user already has
-  skills.forEach(s => {
-    const existing = analyzedSkills.find(a => a.skill.toLowerCase().includes(s.toLowerCase()));
+  // Surface any user-listed skills not already covered, so their existing
+  // experience is acknowledged rather than ignored.
+  (skills || []).forEach(s => {
+    const existing = analyzedSkills.find(a => a.skill.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(a.skill.toLowerCase()));
     if (!existing) {
       analyzedSkills.unshift({ skill: s, currentLevel: 'intermediate', requiredLevel: 'advanced', gap: 'Needs advanced mastery for job-readiness', priority: 'medium', learningOrder: 0 });
     }
@@ -63,176 +40,115 @@ const mockSkillResult = (skills, targetRole) => {
     recommendations: [
       `Start with Learning Order 1 (${analyzedSkills[0]?.skill}) and progress sequentially`,
       `Build a portfolio project after completing each critical skill`,
-      `For ${targetRole || 'this role'}, prioritize depth over breadth — master each skill before moving on`
+      `For ${role.label}, prioritize depth over breadth — master each skill before moving on`
     ]
   };
 };
 
 const mockResumeResult = (resumeData, targetRole) => ({
   improvedSummary: `Results-oriented professional aiming for a ${targetRole || 'Technical'} role. Demonstrated ability to learn quickly and adapt to new technologies to deliver impactful solutions.`,
-  atsScore: 78,
-  keywordSuggestions: [targetRole || "Software Engineer", "Problem Solving", "Agile", "Team Collaboration"],
   suggestions: [
-    "Include specific quantifiable metrics (e.g., 'Improved performance by 20%')",
-    "Ensure keywords from the target role description are naturally integrated",
-    "Use action verbs (e.g., Architected, Spearheaded) instead of passive phrasing"
+    "Add quantifiable metrics to your achievements (e.g., 'improved performance by 30%')",
+    "Ensure keywords from the target role description are naturally integrated"
   ],
-  improvedBullets: {
-    experience: "Spearheaded the development of key features, resulting in a 15% increase in user engagement.",
-    projects: "Architected a scalable solution utilizing modern frameworks to handle concurrent user sessions."
-  },
-  missingSections: ["Certifications", "Open Source Contributions"],
+  atsScore: 68,
+  keywordGaps: ["Leadership", "Cross-functional collaboration"],
   overallFeedback: "Your resume has a solid structure but needs more quantifiable achievements tailored to the specific role requirements.",
-  strengthAreas: ["Clean structure", "Clear timeline"]
 });
 
 const mockJobMatchResult = (skills, targetRole, location) => ({
-  jobMatches: [
-    {
-      title: `Junior ${targetRole || 'Developer'}`,
-      company: "TechNova Solutions",
-      location: `${location || 'Remote'}`,
-      type: "full-time",
-      matchScore: 88,
-      salaryRange: "6-10 LPA",
-      requiredSkills: skills.slice(0, 3),
-      missingSkills: ["Cloud Deployment"],
-      description: `Join our fast-paced team as a ${targetRole || 'Developer'} and help build innovative products.`,
-      applyUrl: "https://linkedin.com/jobs",
-      source: "LinkedIn"
-    }
-  ],
-  internships: [
-    {
-      title: `${targetRole || 'Tech'} Intern`,
-      company: "Innovate Labs",
-      duration: "3 months",
-      stipend: "20,000/month",
-      matchScore: 92,
-      location: location || "Remote",
-      skills: skills.slice(0, 2)
-    }
-  ],
-  freelanceOpportunities: [
-    { platform: "Upwork", skill: targetRole || "Development", avgEarning: "$20-40/hour", demandLevel: "High" }
-  ],
+  matches: [],
   summary: `There is strong demand for ${targetRole || 'your skills'} in ${location || 'your area'}. Focus on upskilling while applying to associate roles.`
 });
 
 const mockInterviewResult = (role, type, skills) => {
-  const category = getRoleCategory(role);
-  
-  const techQuestion = category === 'data_ai' ? "Explain the difference between supervised and unsupervised learning, and when you would use each."
-    : category === 'backend' ? "How would you design a scalable microservices architecture to handle high traffic spikes?"
-    : "Explain the virtual DOM and how it improves application performance.";
+  const matched = matchRole(role);
+  const primarySkill = skills?.[0] || matched.skills[0];
+  const secondarySkill = matched.skills[1] || matched.skills[0];
 
-  const techAnswer = category === 'data_ai' ? "Supervised learning uses labeled data to predict outcomes (e.g., classification), while unsupervised uses unlabeled data to find hidden patterns (e.g., clustering)."
-    : category === 'backend' ? "I would use an API gateway, independent service scaling, Redis caching, and async message queues like RabbitMQ or Kafka."
-    : "The Virtual DOM is a lightweight copy of the real DOM. Changes are batched and diffed against the current state, and only the minimal required updates are applied to the real DOM, avoiding expensive layout recalculations.";
+  const techQuestion = `Walk me through how you would apply ${primarySkill} to a real ${matched.label} task involving ${matched.focus}.`;
+  const techAnswer = `I'd start by clarifying requirements, then apply ${primarySkill} following best practices — for example, breaking the problem down, validating assumptions with data or tests, and iterating based on ${secondarySkill}. I'd also flag trade-offs (time, complexity, maintainability) before committing to an approach.`;
 
   return {
     questions: [
-      { id: 1, category: "hr", question: "Describe a time you had to learn a new technology quickly to meet a deadline.", hint: "Use the STAR method to structure your response.", modelAnswer: "I was assigned a project requiring a framework I hadn't used. I dedicated my weekend to reading the docs and building a small prototype. By Monday, I was able to contribute effectively.", difficulty: "medium", timeLimit: 120 },
-      { id: 2, category: "technical", question: techQuestion, hint: "Focus on the core concepts and trade-offs.", modelAnswer: techAnswer, difficulty: "hard", timeLimit: 180 },
-      { id: 3, category: "behavioral", question: "How do you handle disagreements with a team member regarding technical decisions?", hint: "Emphasize communication, data-driven decisions, and compromise.", modelAnswer: "I listen to their perspective, present objective data or prototypes to compare approaches, and ultimately defer to the team lead or consensus if we can't agree.", difficulty: "medium", timeLimit: 120 }
+      { id: 1, category: "hr", question: `Tell me about yourself and why you're pursuing a ${matched.label} role.`, hint: "Structure: 1min background + 1min skills + 30sec why this role.", modelAnswer: `I am a ${matched.label} candidate with hands-on experience in ${matched.skills.slice(0, 2).join(' and ')}. My background includes [specific projects]. I'm drawn to this role because it lets me focus on ${matched.focus}.`, difficulty: "easy", timeLimit: 120 },
+      { id: 2, category: "technical", question: techQuestion, hint: "Focus on the core concepts and trade-offs relevant to the role.", modelAnswer: techAnswer, difficulty: "hard", timeLimit: 180 },
+      { id: 3, category: "behavioral", question: "How do you handle disagreements with a team member regarding a technical or process decision?", hint: "Emphasize communication, data-driven decisions, and compromise.", modelAnswer: "I listen to their perspective, present objective data or a quick prototype to compare approaches, and defer to the team lead or consensus if we can't agree.", difficulty: "medium", timeLimit: 120 },
+      { id: 4, category: "technical", question: `What tools or frameworks from your ${matched.label} toolkit (e.g. ${matched.skills.slice(2, 4).join(', ')}) have you used, and what would you improve about your usage of them?`, hint: "Be specific and honest about limitations.", modelAnswer: `I've used ${matched.skills.slice(2, 4).join(' and ')} on recent projects. One area I'd improve is deepening my understanding of edge cases and production-readiness concerns.`, difficulty: "medium", timeLimit: 150 },
+      { id: 5, category: "hr", question: "Where do you see yourself in your career 2-3 years from now?", hint: "Show ambition that's realistic and aligned with growing in this role.", modelAnswer: `I want to grow from a solid ${matched.label} contributor into someone who can mentor others and own larger pieces of ${matched.focus}.`, difficulty: "easy", timeLimit: 90 }
     ],
     tips: ["Structure behavioral answers using STAR", "Don't be afraid to think out loud on technical questions", "Ask clarifying questions if the prompt is ambiguous"],
     commonMistakes: ["Jumping into a solution without understanding the constraints", "Giving overly brief answers without examples"],
-    preparationPlan: ["Practice mock interviews with a peer", "Review fundamental concepts for your specific tech stack"]
+    preparationPlan: [`Review core ${primarySkill} concepts`, `Practice explaining ${matched.focus} out loud`, "Do a mock interview with a peer"]
   };
 };
 
 const mockEvaluateAnswerResult = (question, userAnswer, role) => {
   const wordCount = userAnswer?.trim().split(/\s+/).filter(Boolean).length || 0;
   let score = wordCount < 10 ? 4 : wordCount < 30 ? 6 : 8;
-  
+
   return {
     score,
-    feedback: score < 6 ? "Your answer lacks depth. Expand your reasoning." : "Good response, but could use more specific examples.",
+    feedback: score < 6 ? "Your answer lacks depth. Expand your reasoning and give a concrete example." : "Good response, but could use more specific examples or metrics.",
+    technicalAccuracy: score,
+    communicationClarity: Math.max(score - 1, 3),
+    confidence: score,
+    problemSolving: Math.max(score - 1, 3),
     strengths: wordCount > 15 ? ["Showed understanding of the topic"] : ["Made an attempt to answer"],
     improvements: ["Use the STAR method for structure", "Include concrete metrics or examples from your past"],
-    betterAnswer: `For a ${role || 'Developer'} role, ensure you clearly state the context, the exact actions you took, and the quantifiable results you achieved.`
+    betterAnswer: `For a ${role || 'Developer'} role, ensure you clearly state the context, the exact actions you took, and the quantifiable results you achieved.`,
+    keyPointsMissed: [],
+    grade: score >= 8 ? 'A' : score >= 6 ? 'B' : score >= 4 ? 'C' : 'D',
+    hireable: score >= 6
   };
 };
 
 const mockRoadmapResult = (profile) => {
-  const category = getRoleCategory(profile.targetRole);
+  const matched = matchRole(profile.targetRole);
   const rawDuration = profile.duration || 30;
   const numDuration = parseInt(String(rawDuration).replace(/\D/g, '')) || 30;
-  const role = profile.targetRole || 'Software Developer';
-
-  // Role-specific day templates
-  const dayTemplates = {
-    data_ai: [
-      { theme: 'Python Refresher', learning: 'Python data types, lists, dicts, comprehensions', practice: 'Solve 5 Python warmup problems on HackerRank', build: 'Write a Python script that reads and processes a CSV file', checkpoint: 'Can you explain Python list comprehensions with an example?' },
-      { theme: 'NumPy Fundamentals', learning: 'NumPy arrays, slicing, broadcasting, mathematical ops', practice: 'Complete NumPy tutorial on Kaggle (1 hour)', build: 'Create array operations notebook', checkpoint: 'Explain what broadcasting is in NumPy' },
-      { theme: 'Pandas Basics', learning: 'DataFrames, Series, loading CSVs, head/tail/describe', practice: 'Analyze Titanic dataset on Kaggle', build: 'Data exploration notebook with 5+ insights', checkpoint: 'What is the difference between .loc and .iloc?' },
-      { theme: 'Data Visualization', learning: 'Matplotlib and Seaborn charts for exploratory analysis', practice: 'Create 5 different chart types on a real dataset', build: 'Visual EDA report on a public dataset', checkpoint: 'When would you use a heatmap vs. scatter plot?' },
-      { theme: 'Statistics for ML', learning: 'Mean, median, variance, standard deviation, distributions', practice: 'Statistics exercises on Khan Academy', build: 'Python functions for manual stat calculations', checkpoint: 'Explain Central Limit Theorem in plain English' },
-      { theme: 'Probability Concepts', learning: 'Bayes theorem, conditional probability, prior/posterior', practice: 'Probability problems from Think Stats', build: 'Bayesian inference example script', checkpoint: 'Explain Bayes theorem with a real example' },
-      { theme: '🏆 Mini Project Day', learning: 'End-to-end data analysis workflow review', practice: 'Revisit Week 1 exercises', build: 'Complete mini-project: Exploratory Data Analysis on a Kaggle dataset of your choice', checkpoint: 'Can your analysis answer 3 business questions?' }
-    ],
-    frontend: [
-      { theme: 'HTML Foundations', learning: 'Semantic HTML5, accessibility, forms, meta tags', practice: 'Build a semantic webpage for a fictional restaurant', build: 'Multi-page static website with proper semantics', checkpoint: 'Why is semantic HTML important for SEO?' },
-      { theme: 'CSS Layouts', learning: 'Flexbox, Grid, responsive design, media queries', practice: 'Clone the CSS Flexbox Froggy and Grid Garden games', build: 'Responsive landing page (mobile-first)', checkpoint: 'When would you use Grid vs Flexbox?' },
-      { theme: 'CSS Animations', learning: 'Transitions, keyframe animations, transforms', practice: 'Add 3 different animations to your landing page', build: 'Animated navigation menu', checkpoint: 'What is the difference between transition and animation?' },
-      { theme: 'JavaScript Basics', learning: 'Variables, functions, arrays, objects, DOM manipulation', practice: 'Complete JavaScript30 Day 1-3 by Wes Bos (free)', build: 'Interactive counter with DOM events', checkpoint: 'Explain event bubbling vs. capturing' },
-      { theme: 'JavaScript ES6+', learning: 'Arrow functions, destructuring, spread, promises, async/await', practice: 'Rewrite older JS code using ES6 features', build: 'Fetch API app that calls a public REST API', checkpoint: 'What is the event loop in JavaScript?' },
-      { theme: 'JavaScript Functions Deep Dive', learning: 'Closures, higher-order functions, callbacks, currying', practice: 'Implement map, filter, reduce from scratch', build: 'Custom utility library file', checkpoint: 'Explain a closure with a real use case' },
-      { theme: '🏆 Mini Project Day', learning: 'Review HTML, CSS, JS concepts', practice: 'Refactor any previous code', build: 'Mini weather app using Open-Meteo free API', checkpoint: 'Does your app work on mobile? Is the code clean?' }
-    ],
-    backend: [
-      { theme: 'Node.js Setup', learning: 'Node.js runtime, npm, modules, package.json, file system', practice: 'Complete Node.js official getting started guide', build: 'CLI tool that reads a directory and lists files', checkpoint: 'What is the difference between require and import in Node?' },
-      { theme: 'Express Fundamentals', learning: 'Express routes, middleware, request/response lifecycle', practice: 'Build 5 different API routes with Express', build: 'Basic Express server with GET/POST routes', checkpoint: 'What is middleware and why is it useful?' },
-      { theme: 'REST API Design', learning: 'REST principles, status codes, versioning, best practices', practice: 'Design a REST API for a todo-list application', build: 'CRUD REST API for todo items (in memory)', checkpoint: 'What is the difference between PUT and PATCH?' },
-      { theme: 'MongoDB & Mongoose', learning: 'MongoDB data modeling, CRUD operations, Mongoose schemas', practice: 'Complete MongoDB University M001 (free)', build: 'Connect Express API to MongoDB with Mongoose', checkpoint: 'When would you use an index in MongoDB?' },
-      { theme: 'Authentication & JWT', learning: 'JWT structure, bcrypt hashing, protected routes', practice: 'Implement login/register with JWT in your Express API', build: 'Full auth system with protected user routes', checkpoint: 'What is the security risk of storing JWT in localStorage?' },
-      { theme: 'Error Handling & Validation', learning: 'Express error middleware, Joi/Zod validation, env variables', practice: 'Add full validation to your API endpoints', build: 'Add error handling and input validation to your project', checkpoint: 'What is the difference between 400 and 422 status codes?' },
-      { theme: '🏆 Mini Project Day', learning: 'Review REST and auth concepts', practice: 'Add tests using Jest', build: 'Complete REST API: User auth + CRUD for one resource + MongoDB', checkpoint: 'Can you make 10 different API calls using Postman?' }
-    ]
-  };
-
-  const templates = dayTemplates[category] || dayTemplates.frontend;
+  const role = matched.label;
+  const roleSkills = matched.skills;
 
   const days = Array.from({ length: numDuration }, (_, i) => {
     const dayNum = i + 1;
-    const template = templates[i % templates.length];
+    const isProjectDay = dayNum % 7 === 0;
+    const skill = roleSkills[i % roleSkills.length];
+
+    if (isProjectDay) {
+      return {
+        dayNumber: dayNum,
+        theme: '🏆 Project Day',
+        learning: `Consolidate everything learned so far about ${role} (${matched.focus})`,
+        practice: `Revisit the toughest concept from the last 6 days and re-do it without notes`,
+        build: `Build a small project that combines ${roleSkills.slice(0, 3).join(', ')}`,
+        checkpoint: `Can you explain and demo what you built to someone unfamiliar with ${role}?`
+      };
+    }
+
     return {
       dayNumber: dayNum,
-      label: `Day ${dayNum}`,
-      theme: template.theme,
-      learning: template.learning,
-      practice: template.practice,
-      build: template.build,
-      checkpoint: template.checkpoint
+      theme: `${skill} Deep Dive`,
+      learning: `Core concepts, common patterns and best practices for ${skill} in the context of ${role}`,
+      practice: `Complete 2-3 focused exercises applying ${skill}`,
+      build: `Create a small artifact (script, component, doc, or analysis) that demonstrates ${skill}`,
+      checkpoint: `Can you explain ${skill} clearly and show a working example?`
     };
   });
 
-  const projectsByRole = {
-    data_ai: [
-      { name: 'House Price Predictor', description: 'Linear regression model trained on real estate dataset', skills: ['Python', 'Pandas', 'Scikit-learn'], deliverable: 'Jupyter notebook + accuracy report', day: 14 },
-      { name: 'Recommendation Engine', description: 'Collaborative filtering for movie recommendations', skills: ['NumPy', 'Pandas', 'Matrix Factorization'], deliverable: 'Working recommendation script', day: 21 },
-      { name: 'Deployed ML API', description: 'FastAPI service serving a trained ML model', skills: ['FastAPI', 'Docker', 'Scikit-learn'], deliverable: 'Live API endpoint', day: numDuration }
-    ],
-    frontend: [
-      { name: 'Responsive Portfolio', description: 'Personal portfolio site showcasing all projects', skills: ['HTML', 'CSS', 'JavaScript'], deliverable: 'Deployed on GitHub Pages or Vercel', day: 7 },
-      { name: 'React Dashboard', description: 'Data dashboard with charts and API integration', skills: ['React', 'Recharts', 'REST API'], deliverable: 'Deployed React app', day: 21 },
-      { name: 'Full Stack CRUD App', description: 'Complete app with React frontend and Node backend', skills: ['React', 'Node.js', 'MongoDB'], deliverable: 'Deployed application with auth', day: numDuration }
-    ],
-    backend: [
-      { name: 'REST API', description: 'CRUD API with auth, validation, and MongoDB', skills: ['Node.js', 'Express', 'MongoDB'], deliverable: 'Postman collection with all endpoints tested', day: 7 },
-      { name: 'Real-time Chat Server', description: 'WebSocket-based chat application', skills: ['Socket.io', 'Node.js', 'Redis'], deliverable: 'Working chat with 2+ clients', day: 21 },
-      { name: 'Dockerized Microservice', description: 'Containerized API deployed to cloud', skills: ['Docker', 'AWS/GCP', 'CI/CD'], deliverable: 'Live API URL + deployment pipeline', day: numDuration }
-    ]
-  };
+  const projects = [
+    { name: `${role} Starter Project`, description: `A small end-to-end project applying ${roleSkills.slice(0, 2).join(' and ')}`, skills: roleSkills.slice(0, 2), deliverable: 'Working project with documentation', day: 7 },
+    { name: `${role} Intermediate Project`, description: `A more complex project combining ${roleSkills.slice(2, 4).join(' and ') || roleSkills[0]}`, skills: roleSkills.slice(2, 4).length ? roleSkills.slice(2, 4) : roleSkills.slice(0, 2), deliverable: 'Deployed or demoable output', day: Math.min(21, numDuration) },
+    { name: `${role} Capstone Project`, description: `A portfolio-ready capstone showcasing ${role} readiness`, skills: roleSkills.slice(0, 4), deliverable: 'Portfolio-ready project + writeup', day: numDuration }
+  ];
 
   return {
     duration: `${numDuration} Days`,
     role,
-    goal: `Become a job-ready ${role} in ${numDuration} days through structured daily practice and portfolio projects`,
+    goal: `Become a job-ready ${role} in ${numDuration} days through structured daily practice on ${matched.focus} and portfolio projects`,
     days,
-    projects: projectsByRole[category] || projectsByRole.frontend,
-    finalOutcome: `After ${numDuration} days of focused learning, you will have the skills, projects, and interview readiness to apply and land a ${role} position`
+    projects,
+    finalOutcome: `After ${numDuration} days of focused learning, you will have the skills (${roleSkills.slice(0, 4).join(', ')}), projects, and interview readiness to apply and land a ${role} position`
   };
 };
 
@@ -273,28 +189,13 @@ const generateWeeklyReport = (context = {}) => {
 };
 
 const generateDailyTasks = (targetRole, roadmap, progress) => {
-  const category = getRoleCategory(targetRole);
-  
-  let task1Skill = "Core Basics";
-  let task2Skill = "Project Work";
-  let task1Title = "Review fundamental concepts";
-  let task2Title = "Build small component";
-  
-  if (category === 'data_ai') {
-    task1Skill = "Python/Pandas"; task1Title = "Complete data cleaning exercise";
-    task2Skill = "Machine Learning"; task2Title = "Review model evaluation metrics";
-  } else if (category === 'backend') {
-    task1Skill = "Node.js/Express"; task1Title = "Implement API route";
-    task2Skill = "Database"; task2Title = "Design database schema";
-  } else if (category === 'frontend') {
-    task1Skill = "React/Hooks"; task1Title = "Complete state management tutorial";
-    task2Skill = "CSS/UI"; task2Title = "Style application layout";
-  }
+  const matched = matchRole(targetRole);
+  const [skillA, skillB] = matched.skills;
 
   return {
     tasks: [
-      { title: task1Title, durationStr: "45 minutes", difficulty: "medium", xpReward: 100, skillTarget: task1Skill },
-      { title: task2Title, durationStr: "60 minutes", difficulty: "hard", xpReward: 150, skillTarget: task2Skill },
+      { title: `Practice: ${skillA}`, durationStr: "45 minutes", difficulty: "medium", xpReward: 100, skillTarget: skillA },
+      { title: `Apply: ${skillB || skillA}`, durationStr: "60 minutes", difficulty: "hard", xpReward: 150, skillTarget: skillB || skillA },
       { title: "Review Interview Question", durationStr: "20 minutes", difficulty: "easy", xpReward: 50, skillTarget: "Interview Prep" }
     ]
   };

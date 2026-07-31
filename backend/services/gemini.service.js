@@ -416,22 +416,36 @@ Return ONLY valid JSON (no markdown):
   }
 };
 
-const runInterviewAgent = async (role, type, skills, apiKey) => {
+// Recommended question counts by selected interview duration (minutes),
+// so the session finishes naturally within the time the candidate picked.
+const questionCountForDuration = (minutes) => {
+  const m = parseInt(minutes) || 30;
+  if (m <= 15) return 5;
+  if (m <= 30) return 9;
+  if (m <= 45) return 14;
+  return 20; // 60 min
+};
+
+const runInterviewAgent = async (role, type, skills, apiKey, options = {}) => {
+  const { experienceLevel = 'fresher', difficulty = 'medium', duration = 30 } = options;
+  const questionCount = questionCountForDuration(duration);
   try {
     const prompt = `You are an elite interview coach with experience at FAANG, top Indian startups, and MNCs. Generate highly realistic, role-specific interview questions.
 
 Target Role: ${role || 'Software Developer'}
 Interview Type: ${type || 'mixed'}
+Candidate Experience Level: ${experienceLevel}
+Requested Difficulty: ${difficulty}
 Candidate Skills: ${skills.join(', ')}
 
-CRITICAL RULES:
-- Questions MUST be highly specific to the role "${role}"
-- Technical questions must test actual knowledge of their skills: ${skills.join(', ')}
-- Each question must have a COMPLETE, EXPERT-LEVEL model answer
+CRITICAL RULES — READ CAREFULLY:
+- The candidate is interviewing for EXACTLY this role: "${role}". Every single question must make sense for someone applying to be a "${role}" — do NOT generate generic software-developer questions if the role is more specific (e.g. DevOps, QA, Product Manager, Designer, Cybersecurity, Cloud, Data Analyst, etc.). Reason step by step about what a real interviewer for "${role}" would actually ask.
+- Technical questions must test actual knowledge relevant to "${role}" and the candidate's listed skills: ${skills.join(', ')}
+- Each question must have a COMPLETE, EXPERT-LEVEL model answer written for a "${role}" candidate specifically
 - Behavioral questions should use STAR method
-- Difficulty must be calibrated to a realistic interview for ${role}
-- Include at least 2 technical, 2 behavioral, and 1 HR question for "mixed"
-- Generate EXACTLY 5 questions minimum
+- Calibrate difficulty to the candidate's experience level (${experienceLevel}) and requested difficulty (${difficulty}) for a realistic "${role}" interview
+- For interview type "${type}": if "technical" or "coding", generate mostly technical/coding questions; if "hr", mostly HR/behavioral; if "behavioral", mostly STAR-style behavioral; if "mixed", include a balanced spread of technical, behavioral, and HR questions
+- Generate EXACTLY ${questionCount} questions — no more, no less
 
 Return ONLY valid JSON (no markdown):
 {
@@ -533,6 +547,41 @@ Return ONLY valid JSON (no markdown):
   } catch (error) {
     console.warn("[LLM Service] evaluateAnswer failed, returning premium mock fallback data:", error.message);
     return mockEvaluateAnswerResult(question, userAnswer, role);
+  }
+};
+
+// Generates a single adaptive follow-up question based on how the candidate
+// just performed. Deliberately kept to ONE call (not one per answer) so it's
+// only used at the moments it matters — a very strong or very weak answer —
+// to keep Gemini API usage optimized as required.
+const generateFollowUpQuestion = async (role, previousQuestion, userAnswer, score, apiKey) => {
+  try {
+    const direction = score >= 8
+      ? 'The candidate answered very well. Ask a DEEPER, harder follow-up question that probes further into the same topic.'
+      : 'The candidate struggled with this answer. Ask a SIMPLER, more supportive clarification question on the same general topic to help them recover.';
+
+    const prompt = `You are an interviewer for a "${role || 'Software Developer'}" position conducting a live adaptive interview.
+
+Previous question: "${previousQuestion}"
+Candidate's answer: "${userAnswer || '(no answer)'}"
+Score given: ${score}/10
+
+${direction}
+
+Return ONLY valid JSON (no markdown):
+{
+  "question": "The follow-up question text",
+  "hint": "Short hint for the candidate",
+  "modelAnswer": "A complete expert-level model answer",
+  "difficulty": "${score >= 8 ? 'hard' : 'easy'}",
+  "timeLimit": 120,
+  "category": "technical"
+}`;
+    const raw = await callLLM(prompt, apiKey);
+    return parseJSON(raw);
+  } catch (error) {
+    console.warn('[LLM Service] generateFollowUpQuestion failed, skipping follow-up:', error.message);
+    return null;
   }
 };
 
@@ -822,6 +871,6 @@ Return ONLY valid JSON with this exact structure:
 
 module.exports = {
   callLLM, callGemini, runSkillAgent, runResumeAgent, runJobMatchAgent,
-  runInterviewAgent, evaluateAnswer, generateCareerRoadmap, findLocalOpportunities,
+  runInterviewAgent, evaluateAnswer, generateFollowUpQuestion, questionCountForDuration, generateCareerRoadmap, findLocalOpportunities,
   generateWeeklyReport, generateDailyTasks
 };

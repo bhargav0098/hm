@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import api from '../services/api';
+import { RoleSelect, SkillMultiSelect } from '../components/career/RolePicker';
+import { EXPERIENCE_LEVELS } from '../data/roleCatalog';
 
 const DURATION_OPTIONS = [
   { value: 30, label: '30 Days', desc: 'Quick sprint' },
@@ -43,7 +45,8 @@ export default function RoadmapPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [targetRole, setTargetRole] = useState('');
-  const [skills, setSkills] = useState('');
+  const [skills, setSkills] = useState([]);
+  const [experienceLevel, setExperienceLevel] = useState('fresher');
   const [duration, setDuration] = useState(30);
   const [completedDays, setCompletedDays] = useState([]);
   const [expandedDay, setExpandedDay] = useState(null);
@@ -56,14 +59,15 @@ export default function RoadmapPage() {
     api.get('/career/skills/profile').then(r => {
       if (r.data.profile) {
         setTargetRole(r.data.profile.targetRole || '');
-        setSkills(r.data.profile.currentSkills?.map(s => s.name).join(', ') || '');
+        setSkills(r.data.profile.currentSkills?.map(s => s.name) || []);
+        if (r.data.profile.experienceLevel) setExperienceLevel(r.data.profile.experienceLevel);
       }
     }).catch(() => {});
   }, []);
 
   const generate = async () => {
     if (!targetRole.trim()) {
-      toast.error('Please enter a target role first.');
+      toast.error('Please select a target role first.');
       return;
     }
     setLoading(true);
@@ -84,8 +88,9 @@ export default function RoadmapPage() {
 
     try {
       const { data } = await api.post('/career/roadmap', {
-        skills: skills.split(',').map(s => s.trim()).filter(Boolean),
+        skills,
         targetRole: targetRole.trim(),
+        experienceLevel,
         duration
       });
       if (!data.success || !data.result) {
@@ -182,7 +187,7 @@ export default function RoadmapPage() {
       <h1>🗺️ ${result.duration || duration + ' Days'} Career Roadmap</h1>
       <div class="meta">
         <strong>Target Role:</strong> ${role} &nbsp;|&nbsp;
-        <strong>Skills:</strong> ${skills || 'Various'} &nbsp;|&nbsp;
+        <strong>Skills:</strong> ${skills?.length ? skills.join(', ') : 'Various'} &nbsp;|&nbsp;
         <strong>Generated:</strong> ${new Date().toLocaleDateString()}
       </div>
       <div class="goal">🎯 Goal: ${result.goal}</div>
@@ -238,14 +243,27 @@ export default function RoadmapPage() {
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="text-sm text-white/50 font-medium mb-1.5 block">Target Role</label>
-              <input value={targetRole} onChange={e => setTargetRole(e.target.value)}
-                placeholder="e.g. Machine Learning Engineer" className="input-field" />
+              <RoleSelect value={targetRole} onChange={(label) => { setTargetRole(label); setSkills([]); }} />
             </div>
             <div>
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">Current Skills</label>
-              <input value={skills} onChange={e => setSkills(e.target.value)}
-                placeholder="Python, SQL, JavaScript..." className="input-field" />
+              <label className="text-sm text-white/50 font-medium mb-1.5 block">Experience Level</label>
+              <div className="grid grid-cols-4 gap-2">
+                {EXPERIENCE_LEVELS.map(lvl => (
+                  <button key={lvl.value} type="button" onClick={() => setExperienceLevel(lvl.value)}
+                    className={`px-2 py-3 rounded-xl border text-center transition-all
+                      ${experienceLevel === lvl.value
+                        ? 'border-primary-500/60 bg-primary-500/20 text-white'
+                        : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white'}`}>
+                    <p className="font-bold text-xs">{lvl.label}</p>
+                  </button>
+                ))}
+              </div>
             </div>
+          </div>
+
+          <div>
+            <label className="text-sm text-white/50 font-medium mb-1.5 block">Current Skills</label>
+            <SkillMultiSelect roleLabel={targetRole} value={skills} onChange={setSkills} />
           </div>
 
           {/* Duration Selector */}

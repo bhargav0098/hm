@@ -6,6 +6,9 @@ const c = require('../controllers/career.controller');
 
 const aiLimiter = rateLimit({ windowMs: 60 * 1000, max: 15, message: { success: false, message: 'Slow down! Too many AI requests.' } });
 
+// Lightweight ping for the interview readiness check's connection-quality test
+router.get('/ping', (req, res) => res.json({ ok: true, ts: Date.now() }));
+
 router.use(protect);
 
 // Dashboard & Intelligence
@@ -37,6 +40,7 @@ router.put('/jobs/:id/status', c.updateJobStatus);
 // Interview Agent
 router.post('/interview/generate', aiLimiter, c.generateInterview);
 router.post('/interview/answer', aiLimiter, c.submitAnswer);
+router.post('/interview/followup', aiLimiter, c.generateFollowUp);
 router.post('/interview/complete', c.completeInterview);
 router.get('/interview/history', c.getInterviewHistory);
 
