@@ -12,6 +12,17 @@ const { corsOptions, getAllowedOrigins } = require('./config/cors');
 const app = express();
 connectDB();
 
+// Middleware to ensure DB connection is ready before handling requests (critical for serverless like Vercel)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('Database connection middleware error:', err.message);
+    res.status(500).json({ success: false, message: 'Database connection failed. Please try again.' });
+  }
+});
+
 // CORS must run before auth and rate limiting so preflight OPTIONS succeed
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
