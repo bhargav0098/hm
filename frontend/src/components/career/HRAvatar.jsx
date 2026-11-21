@@ -13,12 +13,12 @@ export default function HRAvatar({ state = 'idle', caption = '', mouthOpen = fal
   const headAnim = state === 'speaking' ? 'avatar-head-speaking' : state === 'thinking' ? 'avatar-head-thinking' : 'avatar-head-idle';
 
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-white/10">
+    <div className="relative rounded-2xl overflow-hidden border border-primary-300/40">
       {/* "Office" backdrop — soft studio-style gradient, not a stock photo */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1b1430] via-[#221a3a] to-[#140f24]">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1E1042] via-[#2E1065] to-[#150A33]">
         <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-primary-500/10 blur-3xl" />
-        <div className="absolute bottom-8 right-8 w-48 h-48 rounded-full bg-accent-cyan/10 blur-3xl" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent" />
+        <div className="absolute bottom-8 right-8 w-48 h-48 rounded-full bg-primary-300/10 blur-3xl" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/40 to-transparent" />
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center py-10 px-6 min-h-[280px]">
@@ -34,8 +34,8 @@ export default function HRAvatar({ state = 'idle', caption = '', mouthOpen = fal
           <svg width="132" height="132" viewBox="0 0 132 132" className="drop-shadow-[0_8px_30px_rgba(139,92,246,0.35)]">
             <defs>
               <linearGradient id="avatarHead" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#a78bfa" />
-                <stop offset="100%" stopColor="#22d3ee" />
+                <stop offset="0%" stopColor="#C7B3FF" />
+                <stop offset="100%" stopColor="#8B5CF6" />
               </linearGradient>
               <linearGradient id="avatarCollar" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#312e81" />
@@ -71,12 +71,12 @@ export default function HRAvatar({ state = 'idle', caption = '', mouthOpen = fal
           </svg>
 
           {state === 'listening' && (
-            <span className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-accent-cyan flex items-center justify-center border-2 border-[#1b1430]">
-              <Mic className="w-3.5 h-3.5 text-[#1b1430]" />
+            <span className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-primary-300 flex items-center justify-center border-2 border-[#1E1042]">
+              <Mic className="w-3.5 h-3.5 text-[#1E1042]" />
             </span>
           )}
           {state === 'thinking' && (
-            <span className="absolute -bottom-1 -right-1 flex items-center gap-0.5 px-2 py-1.5 rounded-full bg-white/10 border border-white/20">
+            <span className="absolute -bottom-1 -right-1 flex items-center gap-0.5 px-2 py-1.5 rounded-full bg-primary-100 border border-primary-300/60">
               <span className="w-1.5 h-1.5 rounded-full bg-white avatar-think-dot" />
               <span className="w-1.5 h-1.5 rounded-full bg-white avatar-think-dot" style={{ animationDelay: '0.15s' }} />
               <span className="w-1.5 h-1.5 rounded-full bg-white avatar-think-dot" style={{ animationDelay: '0.3s' }} />
@@ -84,13 +84,13 @@ export default function HRAvatar({ state = 'idle', caption = '', mouthOpen = fal
           )}
         </div>
 
-        <p className="mt-4 text-xs uppercase tracking-wider text-white/30 font-semibold">
+        <p className="mt-4 text-xs uppercase tracking-wider text-ink/50 font-semibold">
           {state === 'speaking' ? 'Speaking' : state === 'listening' ? 'Listening' : state === 'thinking' ? 'Thinking' : 'AI HR Interviewer'}
         </p>
 
         {caption && (
           <div className="mt-3 max-w-md text-center">
-            <p className="text-white/80 text-sm leading-relaxed">{caption}</p>
+            <p className="text-ink/90 text-sm leading-relaxed">{caption}</p>
           </div>
         )}
       </div>

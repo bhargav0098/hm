@@ -34,12 +34,12 @@ export default function CareerMentorChat() {
       initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
       className="glass-card flex flex-col h-[400px] overflow-hidden"
     >
-      <div className="p-4 border-b border-white/10 bg-white/5 flex items-center gap-3">
+      <div className="p-4 border-b border-primary-300/40 bg-white/70 flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-cyan flex items-center justify-center">
           <BrainCircuit className="w-4 h-4 text-white" />
         </div>
         <div>
-          <h3 className="text-white font-bold text-sm">AI Career Mentor</h3>
+          <h3 className="text-ink font-bold text-sm">AI Career Mentor</h3>
           <p className="text-[10px] text-accent-cyan flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse" /> Online
           </p>
@@ -52,7 +52,7 @@ export default function CareerMentorChat() {
             <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${
               msg.role === 'user' 
                 ? 'bg-primary-500 text-white rounded-tr-sm' 
-                : 'bg-white/10 text-white/70 rounded-tl-sm border border-white/5'
+                : 'bg-primary-100 text-ink/80 rounded-tl-sm border border-primary-300/30'
             }`}>
               {msg.content}
             </div>
@@ -60,22 +60,22 @@ export default function CareerMentorChat() {
         ))}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-white/10 rounded-tl-sm flex gap-1">
-              <span className="w-1.5 h-1.5 bg-white/5 rounded-full animate-bounce" />
-              <span className="w-1.5 h-1.5 bg-white/5 rounded-full animate-bounce delay-100" />
-              <span className="w-1.5 h-1.5 bg-white/5 rounded-full animate-bounce delay-200" />
+            <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-primary-100 rounded-tl-sm flex gap-1">
+              <span className="w-1.5 h-1.5 bg-white/70 rounded-full animate-bounce" />
+              <span className="w-1.5 h-1.5 bg-white/70 rounded-full animate-bounce delay-100" />
+              <span className="w-1.5 h-1.5 bg-white/70 rounded-full animate-bounce delay-200" />
             </div>
           </div>
         )}
       </div>
 
-      <div className="p-3 border-t border-white/10 bg-dark-900/50">
+      <div className="p-3 border-t border-primary-300/40 bg-canvas/60">
         <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
           {chips.map((chip, i) => (
             <button 
               key={i}
               onClick={() => handleSend(chip)}
-              className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 hover:bg-white/10 transition-colors whitespace-nowrap"
+              className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full bg-white/70 border border-primary-300/40 text-ink/70 hover:bg-primary-100 transition-colors whitespace-nowrap"
             >
               {chip}
             </button>
@@ -88,12 +88,12 @@ export default function CareerMentorChat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask your AI career mentor anything..."
-            className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-4 pr-10 text-sm text-white focus:outline-none focus:border-primary-500/50 placeholder-space-border"
+            className="w-full bg-white/70 border border-primary-300/40 rounded-xl py-2.5 pl-4 pr-10 text-sm text-ink focus:outline-none focus:border-primary-500/50 placeholder-space-border"
           />
           <button 
             type="submit"
             disabled={!input.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-white/50 hover:text-primary-400 disabled:opacity-50 transition-colors"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-ink/70 hover:text-primary-500 disabled:opacity-50 transition-colors"
           >
             <Send className="w-4 h-4" />
           </button>

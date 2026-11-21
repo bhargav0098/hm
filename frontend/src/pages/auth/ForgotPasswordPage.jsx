@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, ArrowLeft, Key, Lock, RefreshCw, CheckCircle, Brain, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '../../services/api';
+import AuthLayout from '../../components/auth/AuthLayout';
+import Brand from '../../components/common/Brand';
 
 const STEPS = { EMAIL: 'email', OTP: 'otp', PASSWORD: 'password', SUCCESS: 'success' };
 
@@ -125,17 +127,9 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-dark-900 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-80 h-80 bg-primary-500/8 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent-purple/8 rounded-full blur-3xl" />
-      
+    <AuthLayout>
       <div className="w-full max-w-md">
-        <Link to="/" className="flex items-center gap-3 mb-8 justify-center">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-            <Brain className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-lg font-bold text-white">Startup Intelligence</span>
-        </Link>
+        <Brand className="lg:hidden mb-8" />
         
         <AnimatePresence mode="wait">
           {/* STEP 1: Email */}
@@ -143,24 +137,24 @@ export default function ForgotPasswordPage() {
             <motion.div key="email" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
               className="glass-card p-8">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500/20 to-accent-purple/20 border border-primary-500/30 flex items-center justify-center mb-6">
-                <Mail className="w-7 h-7 text-primary-400" />
+                <Mail className="w-7 h-7 text-primary-500" />
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">Forgot password?</h2>
-              <p className="text-white/50 text-sm mb-8">Enter your email and we'll send you a verification code.</p>
+              <h2 className="text-2xl font-bold text-ink mb-2">Forgot password?</h2>
+              <p className="text-ink/70 text-sm mb-8">Enter your email and we'll send you a verification code.</p>
               
               <form onSubmit={handleSendOTP} className="space-y-4">
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink/70" />
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)}
                     placeholder="you@company.com" className="input-field pl-10" autoFocus />
                 </div>
                 <motion.button type="submit" disabled={isLoading} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
                   className="btn-primary w-full flex items-center justify-center gap-2">
-                  {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Send OTP'}
+                  {isLoading ? <div className="w-5 h-5 border-2 border-primary-400/40 border-t-white rounded-full animate-spin" /> : 'Send OTP'}
                 </motion.button>
               </form>
               
-              <Link to="/login" className="flex items-center gap-2 text-white/50 hover:text-white text-sm mt-6 transition-colors">
+              <Link to="/login" className="flex items-center gap-2 text-ink/70 hover:text-primary-600 text-sm mt-6 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Back to login
               </Link>
             </motion.div>
@@ -173,9 +167,9 @@ export default function ForgotPasswordPage() {
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-green/20 to-primary-500/20 border border-accent-green/30 flex items-center justify-center mb-6">
                 <Key className="w-7 h-7 text-accent-green" />
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">Enter OTP</h2>
-              <p className="text-white/50 text-sm mb-2">We sent a 6-digit code to</p>
-              <p className="text-primary-400 font-medium text-sm mb-8">{email}</p>
+              <h2 className="text-2xl font-bold text-ink mb-2">Enter OTP</h2>
+              <p className="text-ink/70 text-sm mb-2">We sent a 6-digit code to</p>
+              <p className="text-primary-500 font-medium text-sm mb-8">{email}</p>
               
               {/* OTP Input */}
               <div className="flex gap-2 justify-center mb-6">
@@ -189,7 +183,7 @@ export default function ForgotPasswordPage() {
                     value={digit}
                     onChange={e => handleOTPChange(i, e.target.value)}
                     onKeyDown={e => handleOTPKeyDown(i, e)}
-                    className="w-12 h-14 text-center text-xl font-bold bg-white/5 border border-white/15 rounded-xl text-white outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all"
+                    className="w-12 h-14 text-center text-xl font-bold bg-white/70 border border-primary-300/50 rounded-xl text-ink outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all"
                     autoFocus={i === 0}
                   />
                 ))}
@@ -197,25 +191,25 @@ export default function ForgotPasswordPage() {
               
               {/* Timer */}
               <div className="flex items-center justify-between mb-6">
-                <p className="text-white/50 text-sm">
-                  Expires in <span className={`font-mono font-bold ${timer < 60 ? 'text-red-400' : 'text-primary-400'}`}>{formatTime(timer)}</span>
+                <p className="text-ink/70 text-sm">
+                  Expires in <span className={`font-mono font-bold ${timer < 60 ? 'text-red-600' : 'text-primary-500'}`}>{formatTime(timer)}</span>
                 </p>
                 {canResend ? (
                   <button onClick={handleResend} disabled={isLoading}
-                    className="flex items-center gap-1 text-primary-400 hover:text-primary-300 text-sm transition-colors">
+                    className="flex items-center gap-1 text-primary-500 hover:text-primary-600 text-sm transition-colors">
                     <RefreshCw className="w-3 h-3" /> Resend OTP
                   </button>
                 ) : (
-                  <p className="text-white/50 text-sm">Resend in {resendTimer}s</p>
+                  <p className="text-ink/70 text-sm">Resend in {resendTimer}s</p>
                 )}
               </div>
               
               <motion.button onClick={() => handleVerifyOTP()} disabled={isLoading || otp.join('').length !== 6}
                 whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="btn-primary w-full flex items-center justify-center gap-2">
-                {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Verify OTP'}
+                {isLoading ? <div className="w-5 h-5 border-2 border-primary-400/40 border-t-white rounded-full animate-spin" /> : 'Verify OTP'}
               </motion.button>
               
-              <button onClick={() => setStep(STEPS.EMAIL)} className="flex items-center gap-2 text-white/50 hover:text-white text-sm mt-6 transition-colors">
+              <button onClick={() => setStep(STEPS.EMAIL)} className="flex items-center gap-2 text-ink/70 hover:text-primary-600 text-sm mt-6 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Change email
               </button>
             </motion.div>
@@ -228,27 +222,27 @@ export default function ForgotPasswordPage() {
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-purple/20 to-primary-500/20 border border-accent-purple/30 flex items-center justify-center mb-6">
                 <Lock className="w-7 h-7 text-accent-purple" />
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">New password</h2>
-              <p className="text-white/50 text-sm mb-8">Create a new secure password for your account.</p>
+              <h2 className="text-2xl font-bold text-ink mb-2">New password</h2>
+              <p className="text-ink/70 text-sm mb-8">Create a new secure password for your account.</p>
               
               <form onSubmit={handleResetPassword} className="space-y-4">
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink/70" />
                   <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
                     placeholder="New password (min 8 chars)" className="input-field pl-10 pr-10" />
                   <button type="button" onClick={() => setShowPass(s => !s)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/50 transition-colors">
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/70 hover:text-white/50 transition-colors">
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink/70" />
                   <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                     placeholder="Confirm new password" className="input-field pl-10" />
                 </div>
                 <motion.button type="submit" disabled={isLoading} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
                   className="btn-primary w-full flex items-center justify-center gap-2">
-                  {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Reset Password'}
+                  {isLoading ? <div className="w-5 h-5 border-2 border-primary-400/40 border-t-white rounded-full animate-spin" /> : 'Reset Password'}
                 </motion.button>
               </form>
             </motion.div>
@@ -262,8 +256,8 @@ export default function ForgotPasswordPage() {
                 className="w-20 h-20 rounded-full bg-gradient-to-br from-accent-green/30 to-primary-500/20 border border-accent-green/40 flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="w-10 h-10 text-accent-green" />
               </motion.div>
-              <h2 className="text-2xl font-bold text-white mb-2">Password reset!</h2>
-              <p className="text-white/50 mb-8">Your password has been reset successfully. You can now sign in with your new password.</p>
+              <h2 className="text-2xl font-bold text-ink mb-2">Password reset!</h2>
+              <p className="text-ink/70 mb-8">Your password has been reset successfully. You can now sign in with your new password.</p>
               <Link to="/login">
                 <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="btn-primary w-full">
                   Back to Login
@@ -273,6 +267,6 @@ export default function ForgotPasswordPage() {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

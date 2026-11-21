@@ -27,25 +27,25 @@ export default function WeeklyReportCard() {
   if (loading) return (
     <div className="glass-card p-5 h-48 flex flex-col items-center justify-center">
       <div className="w-8 h-8 border-2 border-accent-blue/30 border-t-accent-blue rounded-full animate-spin mb-3" />
-      <p className="text-white/50 text-sm">Generating AI Weekly Report...</p>
+      <p className="text-ink/70 text-sm">Generating AI Weekly Report...</p>
     </div>
   );
 
   if (!report) return (
     <div className="glass-card p-5">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-white font-bold flex items-center gap-2 text-sm">
+        <h3 className="text-ink font-bold flex items-center gap-2 text-sm">
           <FileText className="w-4 h-4 text-accent-blue" /> Weekly AI Report
         </h3>
       </div>
-      <p className="text-white/50 text-xs">Complete some daily tasks to generate your first weekly AI coaching report.</p>
+      <p className="text-ink/70 text-xs">Complete some daily tasks to generate your first weekly AI coaching report.</p>
     </div>
   );
 
   const taskRate = report.taskRate ?? 0;
   const xpEarned = report.xpEarned ?? 0;
   const weekLabel = report.weekNumber ? `Week ${report.weekNumber}` : 'This Week';
-  const rateColor = taskRate >= 80 ? 'text-accent-green' : taskRate >= 50 ? 'text-accent-yellow' : 'text-red-400';
+  const rateColor = taskRate >= 80 ? 'text-accent-green' : taskRate >= 50 ? 'text-accent-yellow' : 'text-red-600';
   const rateBg = taskRate >= 80 ? 'bg-accent-green/10 border-accent-green/20' : taskRate >= 50 ? 'bg-pink-neon/10 border-pink-neon/20' : 'bg-red-500/10 border-red-500/20';
 
   return (
@@ -55,16 +55,16 @@ export default function WeeklyReportCard() {
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-bold flex items-center gap-2 text-sm">
+        <h3 className="text-ink font-bold flex items-center gap-2 text-sm">
           <FileText className="w-4 h-4 text-accent-blue" /> AI Weekly Report
-          <span className="text-xs text-white/50 font-normal bg-white/5 px-2 py-0.5 rounded-lg">{weekLabel}</span>
+          <span className="text-xs text-ink/70 font-normal bg-white/70 px-2 py-0.5 rounded-lg">{weekLabel}</span>
         </h3>
         <div className="flex items-center gap-2">
           <button onClick={() => fetchReport(true)} disabled={refreshing}
-            className="text-white/50 hover:text-white transition-colors">
+            className="text-ink/70 hover:text-primary-600 transition-colors">
             <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
           </button>
-          <button onClick={() => setExpanded(e => !e)} className="text-white/50 hover:text-white transition-colors">
+          <button onClick={() => setExpanded(e => !e)} className="text-ink/70 hover:text-primary-600 transition-colors">
             {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
         </div>
@@ -72,7 +72,7 @@ export default function WeeklyReportCard() {
 
       {/* Coach Message */}
       <div className="bg-gradient-to-r from-accent-blue/10 to-primary-500/10 border border-accent-blue/20 rounded-xl p-3 mb-4">
-        <p className="text-white/70 text-xs leading-relaxed italic">"{report.summaryMessage}"</p>
+        <p className="text-ink/80 text-xs leading-relaxed italic">"{report.summaryMessage}"</p>
       </div>
 
       {/* Stats Row */}
@@ -80,24 +80,24 @@ export default function WeeklyReportCard() {
         <div className={`rounded-xl border p-3 text-center ${rateBg}`}>
           <Activity className={`w-4 h-4 mx-auto mb-1 ${rateColor}`} />
           <p className={`text-lg font-black ${rateColor}`}>{taskRate}%</p>
-          <p className="text-[10px] text-white/50 uppercase tracking-wider">Task Rate</p>
+          <p className="text-[10px] text-ink/70 uppercase tracking-wider">Task Rate</p>
         </div>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+        <div className="bg-white/70 border border-primary-300/40 rounded-xl p-3 text-center">
           <Zap className="w-4 h-4 text-accent-yellow mx-auto mb-1" />
-          <p className="text-lg font-black text-white">+{xpEarned}</p>
-          <p className="text-[10px] text-white/50 uppercase tracking-wider">XP Earned</p>
+          <p className="text-lg font-black text-ink">+{xpEarned}</p>
+          <p className="text-[10px] text-ink/70 uppercase tracking-wider">XP Earned</p>
         </div>
       </div>
 
       {/* Highlights (always visible) */}
       {report.completedHighlights?.length > 0 && (
         <div className="mb-3">
-          <p className="text-white/50 text-xs font-semibold mb-1.5 flex items-center gap-1">
+          <p className="text-ink/70 text-xs font-semibold mb-1.5 flex items-center gap-1">
             <TrendingUp className="w-3.5 h-3.5 text-accent-green" /> Highlights
           </p>
           <div className="space-y-1">
             {report.completedHighlights.map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-xs text-white/50">
+              <div key={i} className="flex items-start gap-2 text-xs text-ink/70">
                 <span className="text-accent-green mt-0.5 flex-shrink-0">✓</span> {item}
               </div>
             ))}
@@ -107,11 +107,11 @@ export default function WeeklyReportCard() {
 
       {/* Next Week Preview */}
       {!expanded && report.nextWeekPlan?.length > 0 && (
-        <div className="pt-2 border-t border-white/8">
-          <p className="text-white/50 text-xs font-semibold mb-1 flex items-center gap-1">
+        <div className="pt-2 border-t border-primary-300/40">
+          <p className="text-ink/70 text-xs font-semibold mb-1 flex items-center gap-1">
             <Star className="w-3.5 h-3.5 text-accent-yellow" /> Next Up
           </p>
-          <p className="text-xs text-primary-400">→ {report.nextWeekPlan[0]}</p>
+          <p className="text-xs text-primary-500">→ {report.nextWeekPlan[0]}</p>
         </div>
       )}
 
@@ -120,17 +120,17 @@ export default function WeeklyReportCard() {
         {expanded && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden">
-            <div className="space-y-3 pt-3 border-t border-white/8 mt-1">
+            <div className="space-y-3 pt-3 border-t border-primary-300/40 mt-1">
 
               {/* Missed Goals */}
               {report.missedGoals?.filter(g => g && g !== 'Keep up the momentum').length > 0 && (
                 <div>
-                  <p className="text-white/50 text-xs font-semibold mb-1.5 flex items-center gap-1">
-                    <TrendingDown className="w-3.5 h-3.5 text-red-400" /> Areas to Improve
+                  <p className="text-ink/70 text-xs font-semibold mb-1.5 flex items-center gap-1">
+                    <TrendingDown className="w-3.5 h-3.5 text-red-600" /> Areas to Improve
                   </p>
                   {report.missedGoals.map((item, i) => (
-                    <div key={i} className="text-xs text-white/50 flex items-start gap-2">
-                      <span className="text-red-400 flex-shrink-0">→</span> {item}
+                    <div key={i} className="text-xs text-ink/70 flex items-start gap-2">
+                      <span className="text-red-600 flex-shrink-0">→</span> {item}
                     </div>
                   ))}
                 </div>
@@ -140,19 +140,19 @@ export default function WeeklyReportCard() {
               {report.improvementArea && (
                 <div className="bg-pink-neon/10 border border-pink-neon/20 rounded-lg p-2.5">
                   <p className="text-xs text-pink-neon font-medium">💡 Focus Area</p>
-                  <p className="text-xs text-white/50 mt-0.5">{report.improvementArea}</p>
+                  <p className="text-xs text-ink/70 mt-0.5">{report.improvementArea}</p>
                 </div>
               )}
 
               {/* Next Week Full Plan */}
               {report.nextWeekPlan?.length > 0 && (
                 <div>
-                  <p className="text-white/50 text-xs font-semibold mb-1.5 flex items-center gap-1">
+                  <p className="text-ink/70 text-xs font-semibold mb-1.5 flex items-center gap-1">
                     <Star className="w-3.5 h-3.5 text-accent-yellow" /> Next Week Plan
                   </p>
                   <ul className="space-y-1">
                     {report.nextWeekPlan.map((item, i) => (
-                      <li key={i} className="text-xs text-primary-400 flex items-start gap-2">
+                      <li key={i} className="text-xs text-primary-500 flex items-start gap-2">
                         <span className="font-bold flex-shrink-0">{i + 1}.</span> {item}
                       </li>
                     ))}
@@ -166,7 +166,7 @@ export default function WeeklyReportCard() {
 
       {/* Show more toggle */}
       <button onClick={() => setExpanded(e => !e)}
-        className="w-full mt-3 text-xs text-white/40 hover:text-white/50 transition-colors flex items-center justify-center gap-1">
+        className="w-full mt-3 text-xs text-ink/60 hover:text-white/50 transition-colors flex items-center justify-center gap-1">
         {expanded ? <><ChevronUp className="w-3 h-3" /> Show less</> : <><ChevronDown className="w-3 h-3" /> Full report</>}
       </button>
     </motion.div>

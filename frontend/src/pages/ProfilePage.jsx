@@ -139,20 +139,20 @@ export default function ProfilePage() {
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4">
           <div className="relative">
             <img src={profile.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
-              alt="avatar" className="w-16 h-16 rounded-2xl border-2 border-primary-500/40 object-cover bg-white/10" />
+              alt="avatar" className="w-16 h-16 rounded-2xl border-2 border-primary-500/40 object-cover bg-primary-100" />
             <button onClick={() => setShowAvatarPicker(p => !p)}
               className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center hover:bg-primary-400 transition-colors">
               <Camera className="w-3 h-3 text-white" />
             </button>
           </div>
           <div>
-            <h1 className="text-2xl font-black text-white">{user?.fullName}</h1>
-            <p className="text-white/50 text-sm">{user?.email}</p>
+            <h1 className="text-2xl font-black text-ink">{user?.fullName}</h1>
+            <p className="text-ink/70 text-sm">{user?.email}</p>
             <div className="flex items-center gap-2 mt-1">
-              <div className="w-24 h-1.5 bg-white/10 rounded-full">
+              <div className="w-24 h-1.5 bg-primary-100 rounded-full">
                 <div className="h-full bg-gradient-to-r from-primary-500 to-accent-purple rounded-full" style={{ width: `${completionScore}%` }} />
               </div>
-              <span className="text-xs text-white/50">Profile {completionScore}% complete</span>
+              <span className="text-xs text-ink/70">Profile {completionScore}% complete</span>
             </div>
           </div>
         </motion.div>
@@ -161,14 +161,14 @@ export default function ProfilePage() {
         {showAvatarPicker && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="glass-card p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-white font-semibold">Choose Avatar</h3>
-              <button onClick={() => setShowAvatarPicker(false)} className="text-white/50 hover:text-white text-sm">Close</button>
+              <h3 className="text-ink font-semibold">Choose Avatar</h3>
+              <button onClick={() => setShowAvatarPicker(false)} className="text-ink/70 hover:text-primary-600 text-sm">Close</button>
             </div>
             {/* Upload option */}
             <div className="mb-4">
-              <label className="flex items-center gap-2 p-3 rounded-xl border border-dashed border-white/20 hover:border-primary-500/50 cursor-pointer transition-all group">
-                <Upload className="w-5 h-5 text-white/50 group-hover:text-primary-400" />
-                <span className="text-white/50 text-sm group-hover:text-white">Upload your own photo (max 2MB)</span>
+              <label className="flex items-center gap-2 p-3 rounded-xl border border-dashed border-primary-300/60 hover:border-primary-500/50 cursor-pointer transition-all group">
+                <Upload className="w-5 h-5 text-ink/70 group-hover:text-primary-500" />
+                <span className="text-ink/70 text-sm group-hover:text-primary-600">Upload your own photo (max 2MB)</span>
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               </label>
             </div>
@@ -177,7 +177,7 @@ export default function ProfilePage() {
               {AVATAR_CATEGORIES.map((cat, idx) => (
                 <button key={cat.label} onClick={() => setActiveAvatarCategory(idx)}
                   className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-                    activeAvatarCategory === idx ? 'bg-primary-500 text-white' : 'bg-white/5 text-white/50 hover:text-white'
+                    activeAvatarCategory === idx ? 'bg-primary-500 text-white' : 'bg-white/70 text-ink/70 hover:text-primary-600'
                   }`}>
                   {cat.label}
                 </button>
@@ -187,8 +187,8 @@ export default function ProfilePage() {
               {avatarList.map((url, i) => (
                 <button key={i} onClick={() => { setProfile(p => ({ ...p, avatar: url })); setShowAvatarPicker(false); }}
                   className={`rounded-xl overflow-hidden border-2 transition-all hover:scale-105
-                    ${profile.avatar === url ? 'border-primary-500' : 'border-transparent hover:border-white/30'}`}>
-                  <img src={url} alt={`avatar ${i+1}`} className="w-full h-full bg-white/10" />
+                    ${profile.avatar === url ? 'border-primary-500' : 'border-transparent hover:border-primary-400/60'}`}>
+                  <img src={url} alt={`avatar ${i+1}`} className="w-full h-full bg-primary-100" />
                 </button>
               ))}
             </div>
@@ -200,7 +200,7 @@ export default function ProfilePage() {
           {TABS.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all
-                ${tab === t.id ? 'bg-primary-500 text-white shadow-lg' : 'bg-white/5 text-white/50 hover:text-white'}`}>
+                ${tab === t.id ? 'bg-primary-500 text-white shadow-lg' : 'bg-white/70 text-ink/70 hover:text-primary-600'}`}>
               <t.icon className="w-4 h-4" /> {t.label}
             </button>
           ))}
@@ -209,7 +209,7 @@ export default function ProfilePage() {
         {/* Profile Tab */}
         {tab === 'profile' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6 space-y-4">
-            <h2 className="text-white font-bold">Personal Information</h2>
+            <h2 className="text-ink font-bold">Personal Information</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               {[
                 { key: 'fullName', label: 'Full Name', type: 'text' },
@@ -220,14 +220,14 @@ export default function ProfilePage() {
                 { key: 'avatar', label: 'Avatar URL', type: 'url' },
               ].map(field => (
                 <div key={field.key}>
-                  <label className="text-sm text-white/50 mb-1.5 block">{field.label}</label>
+                  <label className="text-sm text-ink/70 mb-1.5 block">{field.label}</label>
                   <input type={field.type} value={profile[field.key]}
                     onChange={e => setProfile(p => ({ ...p, [field.key]: e.target.value }))}
                     className="input-field" />
                 </div>
               ))}
               <div className="sm:col-span-2">
-                <label className="text-sm text-white/50 mb-1.5 block">Gender</label>
+                <label className="text-sm text-ink/70 mb-1.5 block">Gender</label>
                 <select 
                   value={profile.gender}
                   onChange={e => setProfile(p => ({ ...p, gender: e.target.value }))}
@@ -239,7 +239,7 @@ export default function ProfilePage() {
                 </select>
               </div>
               <div className="sm:col-span-2">
-                <label className="text-sm text-white/50 mb-1.5 block">Bio</label>
+                <label className="text-sm text-ink/70 mb-1.5 block">Bio</label>
                 <textarea value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))}
                   placeholder="Tell us about yourself, your goals, and experience..." rows={3}
                   className="input-field resize-none w-full" />
@@ -256,7 +256,7 @@ export default function ProfilePage() {
         {/* Password Tab */}
         {tab === 'password' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6 space-y-4">
-            <h2 className="text-white font-bold">Change Password</h2>
+            <h2 className="text-ink font-bold">Change Password</h2>
             <>
               {[
                 { key: 'currentPassword', label: 'Current Password' },
@@ -264,7 +264,7 @@ export default function ProfilePage() {
                 { key: 'confirmPassword', label: 'Confirm New Password' }
               ].map(field => (
                 <div key={field.key}>
-                  <label className="text-sm text-white/50 mb-1.5 block">{field.label}</label>
+                  <label className="text-sm text-ink/70 mb-1.5 block">{field.label}</label>
                   <input type="password" value={passwords[field.key]}
                     onChange={e => setPasswords(p => ({ ...p, [field.key]: e.target.value }))}
                     className="input-field" />
@@ -279,16 +279,16 @@ export default function ProfilePage() {
 
             {/* Danger Zone */}
             <div className="mt-8 pt-6 border-t border-red-500/20">
-                <h3 className="text-red-400 font-bold mb-2">Danger Zone</h3>
-                <p className="text-white/50 text-sm mb-4">Permanently delete your account and all data. This cannot be undone.</p>
+                <h3 className="text-red-600 font-bold mb-2">Danger Zone</h3>
+                <p className="text-ink/70 text-sm mb-4">Permanently delete your account and all data. This cannot be undone.</p>
                 {!showDelete ? (
                   <button onClick={() => setShowDelete(true)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl border border-red-500/40 text-red-400 hover:bg-red-500/10 transition-all text-sm">
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl border border-red-500/40 text-red-600 hover:bg-red-500/10 transition-all text-sm">
                     <Trash2 className="w-4 h-4" /> Delete Account
                   </button>
                 ) : (
                   <div className="space-y-3 p-4 rounded-xl bg-red-500/10 border border-red-500/30">
-                    <p className="text-red-400 text-sm font-semibold">Enter your password to confirm:</p>
+                    <p className="text-red-600 text-sm font-semibold">Enter your password to confirm:</p>
                     <input type="password" value={deletePassword} onChange={e => setDeletePassword(e.target.value)}
                       placeholder="Your password" className="input-field border-red-500/40" />
                     <div className="flex gap-3">
@@ -307,21 +307,21 @@ export default function ProfilePage() {
         {/* Activity Tab */}
         {tab === 'activity' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6">
-            <h2 className="text-white font-bold mb-4">Login Activity</h2>
+            <h2 className="text-ink font-bold mb-4">Login Activity</h2>
             {activity.length === 0 ? (
-              <p className="text-white/50 text-sm">No activity recorded yet.</p>
+              <p className="text-ink/70 text-sm">No activity recorded yet.</p>
             ) : (
               <div className="space-y-2">
                 {activity.slice(0, 15).map((a, i) => (
-                  <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-white/5">
+                  <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-white/70">
                     <div className="w-8 h-8 rounded-full bg-primary-500/20 flex items-center justify-center">
-                      <Activity className="w-4 h-4 text-primary-400" />
+                      <Activity className="w-4 h-4 text-primary-500" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-white text-sm capitalize">{a.action?.replace('_', ' ')}</p>
-                      <p className="text-white/50 text-xs">{new Date(a.timestamp).toLocaleString()}</p>
+                      <p className="text-ink text-sm capitalize">{a.action?.replace('_', ' ')}</p>
+                      <p className="text-ink/70 text-xs">{new Date(a.timestamp).toLocaleString()}</p>
                     </div>
-                    {a.ip && <span className="text-white/40 text-xs font-mono">{a.ip}</span>}
+                    {a.ip && <span className="text-ink/60 text-xs font-mono">{a.ip}</span>}
                   </div>
                 ))}
               </div>
@@ -333,33 +333,33 @@ export default function ProfilePage() {
         {tab === 'devices' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-white font-bold">Login Devices</h2>
-              <div className="flex items-center gap-2 text-xs text-white/50">
+              <h2 className="text-ink font-bold">Login Devices</h2>
+              <div className="flex items-center gap-2 text-xs text-ink/70">
                 <Shield className="w-3 h-3" /> {devices.length} device{devices.length !== 1 ? 's' : ''} logged in
               </div>
             </div>
             {devices.length === 0 ? (
-              <p className="text-white/50 text-sm">No devices recorded.</p>
+              <p className="text-ink/70 text-sm">No devices recorded.</p>
             ) : (
               <div className="space-y-3">
                 {devices.map((d, i) => (
-                  <div key={i} className="rounded-xl bg-white/5 border border-white/8 overflow-hidden">
+                  <div key={i} className="rounded-xl bg-white/70 border border-primary-300/40 overflow-hidden">
                     <div className="flex items-center gap-4 p-4">
-                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                        <Monitor className="w-5 h-5 text-white/50" />
+                      <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center">
+                        <Monitor className="w-5 h-5 text-ink/70" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-white font-medium text-sm">{d.device || 'Unknown Device'}</p>
-                        <p className="text-white/50 text-xs">{d.ip} · Last seen {new Date(d.lastSeen).toLocaleDateString()}</p>
-                        {d.userAgent && <p className="text-white/40 text-xs truncate max-w-xs">{d.userAgent.slice(0, 60)}...</p>}
+                        <p className="text-ink font-medium text-sm">{d.device || 'Unknown Device'}</p>
+                        <p className="text-ink/70 text-xs">{d.ip} · Last seen {new Date(d.lastSeen).toLocaleDateString()}</p>
+                        {d.userAgent && <p className="text-ink/60 text-xs truncate max-w-xs">{d.userAgent.slice(0, 60)}...</p>}
                       </div>
                       <div className="flex items-center gap-2">
                         {i === 0 && (
-                          <span className="text-xs text-green-400 bg-green-500/10 border border-green-500/30 px-2 py-0.5 rounded-full">Current</span>
+                          <span className="text-xs text-green-700 bg-green-500/10 border border-green-500/30 px-2 py-0.5 rounded-full">Current</span>
                         )}
                         {i !== 0 && (
                           <button onClick={() => setBlockingDevice(blockingDevice === i ? null : i)}
-                            className="text-xs text-red-400 hover:text-red-300 border border-red-500/30 hover:border-red-500/60 px-3 py-1 rounded-lg transition-all flex items-center gap-1">
+                            className="text-xs text-red-600 hover:text-red-600 border border-red-500/30 hover:border-red-500/60 px-3 py-1 rounded-lg transition-all flex items-center gap-1">
                             <LogOut className="w-3 h-3" /> Revoke
                           </button>
                         )}
@@ -368,7 +368,7 @@ export default function ProfilePage() {
                     {blockingDevice === i && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
                         className="px-4 pb-4 border-t border-red-500/20 bg-red-500/5">
-                        <p className="text-red-400 text-xs font-semibold mt-3 mb-2">Enter your password to revoke this device's access:</p>
+                        <p className="text-red-600 text-xs font-semibold mt-3 mb-2">Enter your password to revoke this device's access:</p>
                         <div className="flex gap-2">
                           <input type="password" value={blockPassword} onChange={e => setBlockPassword(e.target.value)}
                             placeholder="Your password" className="input-field text-sm flex-1 py-2 border-red-500/30" />

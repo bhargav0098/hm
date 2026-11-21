@@ -10,18 +10,18 @@ import DashboardLayout from '../components/layout/DashboardLayout';
 import api from '../services/api';
 
 const typeColors = {
-  'full-time': 'text-green-400 bg-green-500/10 border-green-500/30',
+  'full-time': 'text-green-700 bg-green-500/10 border-green-500/30',
   'internship': 'text-cyan-neon bg-cyan-neon/10 border-cyan-neon/30',
   'freelance': 'text-pink-neon bg-pink-neon/10 border-pink-neon/30',
-  'remote': 'text-purple-400 bg-purple-500/10 border-purple-500/30',
+  'remote': 'text-primary-500 bg-purple-500/10 border-purple-500/30',
   'part-time': 'text-pink-neon bg-pink-neon/10 border-pink-neon/30',
-  'contract': 'text-pink-400 bg-pink-500/10 border-pink-500/30'
+  'contract': 'text-primary-500 bg-pink-500/10 border-pink-500/30'
 };
 
 const confidenceColors = {
-  'High': 'text-green-400 bg-green-500/10 border-green-500/30',
+  'High': 'text-green-700 bg-green-500/10 border-green-500/30',
   'Medium': 'text-pink-neon bg-pink-neon/10 border-pink-neon/30',
-  'Low': 'text-red-400 bg-red-500/10 border-red-500/30'
+  'Low': 'text-red-600 bg-red-500/10 border-red-500/30'
 };
 
 const QUICK_SKILLS = ['JavaScript', 'Python', 'React', 'Node.js', 'Java', 'SQL', 'Machine Learning', 'Data Analysis', 'UI/UX Design', 'Digital Marketing'];
@@ -46,17 +46,17 @@ function JobCard({ job, onSave, isSaved }) {
   };
 
   const applyUrl = getApplyUrl();
-  const matchColor = job.matchScore >= 80 ? 'bg-green-500/20 text-green-400 border-green-500/30' :
+  const matchColor = job.matchScore >= 80 ? 'bg-green-500/20 text-green-700 border-green-500/30' :
                      job.matchScore >= 60 ? 'bg-pink-neon/20 text-pink-neon border-pink-neon/30' :
-                     'bg-red-500/20 text-red-400 border-red-500/30';
+                     'bg-red-500/20 text-red-600 border-red-500/30';
 
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
       className="glass-card p-5 hover:border-primary-500/30 transition-all">
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
-          <h3 className="text-white font-bold truncate">{job.title}</h3>
-          <p className="text-white/50 text-sm">{job.company}</p>
+          <h3 className="text-ink font-bold truncate">{job.title}</h3>
+          <p className="text-ink/70 text-sm">{job.company}</p>
         </div>
         <div className={`px-2 py-1 rounded-xl flex items-center gap-1 border text-sm font-black flex-shrink-0 ${matchColor}`}>
           <Target className="w-3 h-3" /> {job.matchScore}%
@@ -72,7 +72,7 @@ function JobCard({ job, onSave, isSaved }) {
             {job.workType}
           </span>
         )}
-        <span className="flex items-center gap-1 text-xs text-white/50">
+        <span className="flex items-center gap-1 text-xs text-ink/70">
           <MapPin className="w-3 h-3" /> {job.location}
         </span>
         {job.salaryRange && (
@@ -80,11 +80,11 @@ function JobCard({ job, onSave, isSaved }) {
             <DollarSign className="w-3 h-3" /> {job.salaryRange}
           </span>
         )}
-        {job.source && <span className="text-xs text-white/50 bg-white/5 px-1.5 py-0.5 rounded">{job.source}</span>}
-        {job.postedDate && <span className="text-xs text-white/50">{job.postedDate}</span>}
+        {job.source && <span className="text-xs text-ink/70 bg-white/70 px-1.5 py-0.5 rounded">{job.source}</span>}
+        {job.postedDate && <span className="text-xs text-ink/70">{job.postedDate}</span>}
       </div>
 
-      <p className="text-white/50 text-xs mb-3 line-clamp-2">{job.description}</p>
+      <p className="text-ink/70 text-xs mb-3 line-clamp-2">{job.description}</p>
 
       {/* Match confidence */}
       {job.matchConfidence && (
@@ -96,7 +96,7 @@ function JobCard({ job, onSave, isSaved }) {
       {/* Why this matches */}
       {job.whyMatch && (
         <div className="mb-3 p-2.5 rounded-xl bg-primary-500/5 border border-primary-500/20">
-          <p className="text-xs text-primary-300"><Info className="w-3 h-3 inline mr-1" />{job.whyMatch}</p>
+          <p className="text-xs text-primary-600"><Info className="w-3 h-3 inline mr-1" />{job.whyMatch}</p>
         </div>
       )}
 
@@ -106,8 +106,8 @@ function JobCard({ job, onSave, isSaved }) {
           {job.requiredSkills.map(s => (
             <span key={s} className={`text-xs px-2 py-0.5 rounded ${
               job.missingSkills?.includes(s)
-                ? 'bg-red-500/10 text-red-400 border border-red-500/20'
-                : 'bg-green-500/10 text-green-400 border border-green-500/20'
+                ? 'bg-red-500/10 text-red-600 border border-red-500/20'
+                : 'bg-green-500/10 text-green-700 border border-green-500/20'
             }`}>
               {job.missingSkills?.includes(s) ? '✗' : '✓'} {s}
             </span>
@@ -121,7 +121,7 @@ function JobCard({ job, onSave, isSaved }) {
           <p className="text-xs text-pink-neon">
             <AlertCircle className="w-3 h-3 inline mr-1" />
             Skill gap: {job.missingSkills.join(', ')}
-            {job.skillGapAnalysis && <span className="text-white/50 ml-1">— {job.skillGapAnalysis}</span>}
+            {job.skillGapAnalysis && <span className="text-ink/70 ml-1">— {job.skillGapAnalysis}</span>}
           </p>
         </div>
       )}
@@ -169,20 +169,20 @@ function InternshipCard({ item, onSave }) {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
       className="glass-card p-5 border-l-4 border-accent-blue/60">
       <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
-        <h3 className="text-white font-bold">{item.title}</h3>
+        <h3 className="text-ink font-bold">{item.title}</h3>
         <span className="text-accent-blue font-bold text-sm">{item.matchScore}% match</span>
       </div>
-      <p className="text-white/50 text-sm mb-1">{item.company}</p>
-      <div className="flex flex-wrap gap-3 text-xs text-white/50 mb-3">
+      <p className="text-ink/70 text-sm mb-1">{item.company}</p>
+      <div className="flex flex-wrap gap-3 text-xs text-ink/70 mb-3">
         <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {item.duration}</span>
         <span><MapPin className="w-3 h-3 inline mr-1" />{item.location}</span>
         {item.stipend && <span className="text-accent-green font-medium">💰 {item.stipend}</span>}
       </div>
-      {item.description && <p className="text-white/50 text-xs mb-3">{item.description}</p>}
+      {item.description && <p className="text-ink/70 text-xs mb-3">{item.description}</p>}
       {item.perks?.length > 0 && (
         <div className="flex flex-wrap gap-1 mb-3">
           {item.perks.map(perk => (
-            <span key={perk} className="text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded">
+            <span key={perk} className="text-xs bg-green-500/10 text-green-700 border border-green-500/20 px-2 py-0.5 rounded">
               {perk}
             </span>
           ))}
@@ -287,8 +287,8 @@ export default function JobsPage() {
             <Briefcase className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-white">Job Matching Agent</h1>
-            <p className="text-white/50 text-sm">AI-powered job matching with confidence scores and direct apply links</p>
+            <h1 className="text-2xl font-black text-ink">Job Matching Agent</h1>
+            <p className="text-ink/70 text-sm">AI-powered job matching with confidence scores and direct apply links</p>
           </div>
         </motion.div>
 
@@ -296,8 +296,8 @@ export default function JobsPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="glass-card p-6">
           <div className="grid sm:grid-cols-2 gap-4 mb-4">
             <div className="sm:col-span-2">
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">
-                Your Skills <span className="text-white/50">(comma separated)</span>
+              <label className="text-sm text-ink/70 font-medium mb-1.5 block">
+                Your Skills <span className="text-ink/70">(comma separated)</span>
               </label>
               <input value={skills} onChange={e => setSkills(e.target.value)}
                 placeholder="e.g. JavaScript, React, Node.js, Python, SQL" className="input-field" />
@@ -305,26 +305,26 @@ export default function JobsPage() {
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {QUICK_SKILLS.filter(s => !skills.includes(s)).map(s => (
                   <button key={s} onClick={() => addQuickSkill(s)}
-                    className="text-xs px-2 py-0.5 rounded-lg bg-white/5 border border-white/10 text-white/50 hover:text-white hover:border-primary-500/40 transition-all">
+                    className="text-xs px-2 py-0.5 rounded-lg bg-white/70 border border-primary-300/40 text-ink/70 hover:text-primary-600 hover:border-primary-500/40 transition-all">
                     + {s}
                   </button>
                 ))}
               </div>
             </div>
             <div>
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">Target Role</label>
+              <label className="text-sm text-ink/70 font-medium mb-1.5 block">Target Role</label>
               <input value={targetRole} onChange={e => setTargetRole(e.target.value)}
                 placeholder="e.g. Frontend Developer, Data Analyst" className="input-field" />
             </div>
             <div>
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">
+              <label className="text-sm text-ink/70 font-medium mb-1.5 block">
                 <MapPin className="w-3.5 h-3.5 inline mr-1" /> Preferred Location
               </label>
               <input value={location} onChange={e => setLocation(e.target.value)}
                 placeholder="e.g. Bangalore, Mumbai, or leave blank for all" className="input-field" />
             </div>
             <div>
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">Experience Level</label>
+              <label className="text-sm text-ink/70 font-medium mb-1.5 block">Experience Level</label>
               <select value={experienceLevel} onChange={e => setExperienceLevel(e.target.value)} className="input-field">
                 <option value="fresher">Fresher (0 years)</option>
                 <option value="junior">Junior (1-2 years)</option>
@@ -333,20 +333,20 @@ export default function JobsPage() {
               </select>
             </div>
             <div>
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">Work Mode</label>
+              <label className="text-sm text-ink/70 font-medium mb-1.5 block">Work Mode</label>
               <div className="flex gap-3">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={remoteOnly} onChange={e => setRemoteOnly(e.target.checked)}
-                    className="w-4 h-4 rounded border-white/20 bg-white/5 text-primary-500 cursor-pointer" />
-                  <span className="text-white/50 text-sm flex items-center gap-1">
-                    <Wifi className="w-3.5 h-3.5 text-purple-400" /> Remote
+                    className="w-4 h-4 rounded border-primary-300/60 bg-white/70 text-primary-500 cursor-pointer" />
+                  <span className="text-ink/70 text-sm flex items-center gap-1">
+                    <Wifi className="w-3.5 h-3.5 text-primary-500" /> Remote
                   </span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={hybridOnly} onChange={e => setHybridOnly(e.target.checked)}
-                    className="w-4 h-4 rounded border-white/20 bg-white/5 text-primary-500 cursor-pointer" />
-                  <span className="text-white/50 text-sm flex items-center gap-1">
-                    <Building2 className="w-3.5 h-3.5 text-cyan-400" /> Hybrid
+                    className="w-4 h-4 rounded border-primary-300/60 bg-white/70 text-primary-500 cursor-pointer" />
+                  <span className="text-ink/70 text-sm flex items-center gap-1">
+                    <Building2 className="w-3.5 h-3.5 text-primary-500" /> Hybrid
                   </span>
                 </label>
               </div>
@@ -356,7 +356,7 @@ export default function JobsPage() {
             whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
             className="btn-primary w-full flex items-center justify-center gap-2 h-12">
             {loading
-              ? <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Finding best matches...</>
+              ? <><div className="w-5 h-5 border-2 border-primary-400/40 border-t-white rounded-full animate-spin" /> Finding best matches...</>
               : <><Zap className="w-5 h-5" /> Find My Jobs</>
             }
           </motion.button>
@@ -368,31 +368,31 @@ export default function JobsPage() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               {/* Summary */}
               <div className="p-4 rounded-xl bg-primary-500/10 border border-primary-500/20">
-                <p className="text-white/50 text-sm">💡 {result.summary}</p>
+                <p className="text-ink/70 text-sm">💡 {result.summary}</p>
               </div>
 
               {/* Market Insights */}
               {result.marketInsights && (
                 <div className="glass-card p-4">
-                  <h3 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
+                  <h3 className="text-ink font-bold text-sm mb-3 flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-accent-green" /> Market Insights for {targetRole || 'Your Role'}
                   </h3>
                   <div className="grid sm:grid-cols-3 gap-3 text-xs">
                     {result.marketInsights.demandTrend && (
-                      <div className="p-2 rounded-lg bg-white/5 border border-white/8">
-                        <p className="text-white/50">Demand Trend</p>
+                      <div className="p-2 rounded-lg bg-white/70 border border-primary-300/40">
+                        <p className="text-ink/70">Demand Trend</p>
                         <p className="text-accent-green font-semibold mt-0.5">{result.marketInsights.demandTrend}</p>
                       </div>
                     )}
                     {result.marketInsights.avgSalary && (
-                      <div className="p-2 rounded-lg bg-white/5 border border-white/8">
-                        <p className="text-white/50">Avg Salary</p>
-                        <p className="text-white font-semibold mt-0.5">{result.marketInsights.avgSalary}</p>
+                      <div className="p-2 rounded-lg bg-white/70 border border-primary-300/40">
+                        <p className="text-ink/70">Avg Salary</p>
+                        <p className="text-ink font-semibold mt-0.5">{result.marketInsights.avgSalary}</p>
                       </div>
                     )}
                     {result.marketInsights.competitionLevel && (
-                      <div className="p-2 rounded-lg bg-white/5 border border-white/8">
-                        <p className="text-white/50">Competition</p>
+                      <div className="p-2 rounded-lg bg-white/70 border border-primary-300/40">
+                        <p className="text-ink/70">Competition</p>
                         <p className="text-pink-neon font-semibold mt-0.5">{result.marketInsights.competitionLevel}</p>
                       </div>
                     )}
@@ -409,7 +409,7 @@ export default function JobsPage() {
                 ].map(t => (
                   <button key={t.id} onClick={() => setActiveTab(t.id)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all
-                      ${activeTab === t.id ? 'bg-primary-500 text-white' : 'bg-white/5 text-white/50 hover:text-white'}`}>
+                      ${activeTab === t.id ? 'bg-primary-500 text-white' : 'bg-white/70 text-ink/70 hover:text-primary-600'}`}>
                     <t.icon className="w-4 h-4" /> {t.label}
                   </button>
                 ))}
@@ -418,20 +418,20 @@ export default function JobsPage() {
               {/* Job filters */}
               {activeTab === 'jobs' && (
                 <div className="flex gap-2 flex-wrap items-center">
-                  <Filter className="w-4 h-4 text-white/50" />
+                  <Filter className="w-4 h-4 text-ink/70" />
                   {['all', 'full-time', 'remote', 'part-time', 'contract'].map(f => (
                     <button key={f} onClick={() => setFilter(f)}
                       className={`text-xs px-3 py-1.5 rounded-lg capitalize transition-all
-                        ${filter === f ? 'bg-primary-500/30 text-primary-300 border border-primary-500/50' : 'bg-white/5 text-white/50 hover:text-white border border-white/10'}`}>
+                        ${filter === f ? 'bg-primary-500/30 text-primary-600 border border-primary-500/50' : 'bg-white/70 text-ink/70 hover:text-primary-600 border border-primary-300/40'}`}>
                       {f}
                     </button>
                   ))}
                   <div className="flex items-center gap-2 ml-auto">
-                    <label className="flex items-center gap-1.5 cursor-pointer text-xs text-white/50 hover:text-white">
+                    <label className="flex items-center gap-1.5 cursor-pointer text-xs text-ink/70 hover:text-primary-600">
                       <input type="checkbox" checked={remoteOnly} onChange={e => setRemoteOnly(e.target.checked)} className="w-3 h-3" />
                       Remote only
                     </label>
-                    <label className="flex items-center gap-1.5 cursor-pointer text-xs text-white/50 hover:text-white">
+                    <label className="flex items-center gap-1.5 cursor-pointer text-xs text-ink/70 hover:text-primary-600">
                       <input type="checkbox" checked={hybridOnly} onChange={e => setHybridOnly(e.target.checked)} className="w-3 h-3" />
                       Hybrid only
                     </label>
@@ -447,8 +447,8 @@ export default function JobsPage() {
                   ))}
                   {filteredJobs().length === 0 && (
                     <div className="sm:col-span-2 glass-card p-8 text-center">
-                      <Briefcase className="w-10 h-10 text-white/40 mx-auto mb-3" />
-                      <p className="text-white/50">No jobs match your current filters. Try adjusting the filters above.</p>
+                      <Briefcase className="w-10 h-10 text-ink/60 mx-auto mb-3" />
+                      <p className="text-ink/70">No jobs match your current filters. Try adjusting the filters above.</p>
                     </div>
                   )}
                 </div>
@@ -462,9 +462,9 @@ export default function JobsPage() {
                   ))}
                   {!result.internships?.length && (
                     <div className="sm:col-span-2 glass-card p-8 text-center">
-                      <p className="text-white/50">No internships found. Check Internshala and LinkedIn for latest openings.</p>
+                      <p className="text-ink/70">No internships found. Check Internshala and LinkedIn for latest openings.</p>
                       <a href="https://internshala.com/internships/" target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-primary-400 text-sm mt-2 hover:text-primary-300">
+                        className="inline-flex items-center gap-1 text-primary-500 text-sm mt-2 hover:text-primary-600">
                         Browse Internshala <ExternalLink className="w-3 h-3" />
                       </a>
                     </div>
@@ -479,21 +479,21 @@ export default function JobsPage() {
                     <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                       className="glass-card p-5 border-l-4 border-pink-neon/60">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-white font-bold">{item.platform}</h3>
-                        <span className={`text-xs px-2 py-0.5 rounded-full border ${item.demandLevel === 'High' ? 'text-green-400 bg-green-500/10 border-green-500/30' : 'text-pink-neon bg-pink-neon/10 border-pink-neon/30'}`}>
+                        <h3 className="text-ink font-bold">{item.platform}</h3>
+                        <span className={`text-xs px-2 py-0.5 rounded-full border ${item.demandLevel === 'High' ? 'text-green-700 bg-green-500/10 border-green-500/30' : 'text-pink-neon bg-pink-neon/10 border-pink-neon/30'}`}>
                           {item.demandLevel} Demand
                         </span>
                       </div>
-                      <p className="text-white/50 text-sm mb-1">{item.skill}</p>
+                      <p className="text-ink/70 text-sm mb-1">{item.skill}</p>
                       <p className="text-accent-green font-semibold text-sm mb-3">Avg: {item.avgEarning}</p>
                       {item.projectTypes?.length > 0 && (
                         <div className="flex flex-wrap gap-1 mb-3">
                           {item.projectTypes.map(pt => (
-                            <span key={pt} className="text-xs bg-white/5 text-white/50 border border-white/8 px-2 py-0.5 rounded">{pt}</span>
+                            <span key={pt} className="text-xs bg-white/70 text-ink/70 border border-primary-300/40 px-2 py-0.5 rounded">{pt}</span>
                           ))}
                         </div>
                       )}
-                      {item.winRate && <p className="text-xs text-white/50 mb-3">{item.winRate}</p>}
+                      {item.winRate && <p className="text-xs text-ink/70 mb-3">{item.winRate}</p>}
                       <a href={item.link || `https://www.${item.platform?.toLowerCase()}.com`} target="_blank" rel="noopener noreferrer"
                         className="btn-primary w-full flex items-center justify-center gap-2 text-sm py-2">
                         Find Work on {item.platform} <ExternalLink className="w-3 h-3" />
@@ -502,10 +502,10 @@ export default function JobsPage() {
                   ))}
                   {!result.freelanceOpportunities?.length && (
                     <div className="sm:col-span-2 glass-card p-8 text-center">
-                      <p className="text-white/50">
-                        Check <a href="https://www.upwork.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">Upwork</a>,{' '}
-                        <a href="https://www.fiverr.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">Fiverr</a>, and{' '}
-                        <a href="https://www.freelancer.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">Freelancer</a> for gigs.
+                      <p className="text-ink/70">
+                        Check <a href="https://www.upwork.com" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:underline">Upwork</a>,{' '}
+                        <a href="https://www.fiverr.com" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:underline">Fiverr</a>, and{' '}
+                        <a href="https://www.freelancer.com" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:underline">Freelancer</a> for gigs.
                       </p>
                     </div>
                   )}

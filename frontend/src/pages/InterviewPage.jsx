@@ -17,11 +17,11 @@ import { useFaceDetector } from '../hooks/useFaceDetector';
 import useAuthStore from '../store/authStore';
 
 const INTERVIEW_TYPES = [
-  { id: 'hr', label: 'HR Round', desc: 'Behavioral & personal questions', color: 'from-cyan-neon to-emerald-neon' },
-  { id: 'technical', label: 'Technical Round', desc: 'Coding & technical concepts', color: 'from-purple-500 to-primary-500' },
-  { id: 'behavioral', label: 'Behavioral', desc: 'Situational & STAR method', color: 'from-green-500 to-teal-500' },
-  { id: 'coding', label: 'Coding Round', desc: 'Live problem solving', color: 'from-orange-500 to-red-500' },
-  { id: 'mixed', label: 'Full Mock Interview', desc: 'Comprehensive practice session', color: 'from-pink-neon to-purple-neon' }
+  { id: 'hr', label: 'HR Round', desc: 'Behavioral & personal questions', color: 'from-primary-500 to-primary-400' },
+  { id: 'technical', label: 'Technical Round', desc: 'Coding & technical concepts', color: 'from-primary-600 to-primary-400' },
+  { id: 'behavioral', label: 'Behavioral', desc: 'Situational & STAR method', color: 'from-primary-400 to-primary-300' },
+  { id: 'coding', label: 'Coding Round', desc: 'Live problem solving', color: 'from-primary-700 to-primary-500' },
+  { id: 'mixed', label: 'Full Mock Interview', desc: 'Comprehensive practice session', color: 'from-primary-500 to-accent-purple' }
 ];
 
 const DIFFICULTY_OPTIONS = [
@@ -645,14 +645,14 @@ export default function InterviewPage() {
       <!DOCTYPE html><html><head>
       <title>Interview Guide - ${targetRole}</title>
       <style>
-        body{font-family:'Segoe UI',sans-serif;padding:32px;max-width:750px;margin:0 auto;background:#fff;color:#1a1a2e}
-        h1{color:#6366f1;font-size:26px;margin-bottom:4px}
-        h2{color:#4f46e5;font-size:16px;margin:24px 0 8px;border-bottom:2px solid #e0e7ff;padding-bottom:6px}
+        body{font-family:'Segoe UI',sans-serif;padding:32px;max-width:750px;margin:0 auto;background:#fff;color:#1E1042}
+        h1{color:#5B21B6;font-size:26px;margin-bottom:4px}
+        h2{color:#5B21B6;font-size:16px;margin:24px 0 8px;border-bottom:2px solid #EDE9FE;padding-bottom:6px}
         h3{color:#374151;font-size:14px;margin:12px 0 4px}
         p,li{color:#4b5563;font-size:13px;line-height:1.7}
         .tip{background:#f0fdf4;border-left:4px solid #10b981;padding:10px 14px;border-radius:4px;margin:8px 0}
         .warn{background:#fffbeb;border-left:4px solid #f59e0b;padding:10px 14px;border-radius:4px;margin:8px 0}
-        .star{background:#eff6ff;border-left:4px solid #6366f1;padding:10px 14px;border-radius:4px;margin:8px 0}
+        .star{background:#F3EFFF;border-left:4px solid #5B21B6;padding:10px 14px;border-radius:4px;margin:8px 0}
         ul{padding-left:20px}
         .meta{color:#6b7280;font-size:12px;margin-bottom:24px}
         @media print{body{padding:16px}}
@@ -759,20 +759,20 @@ export default function InterviewPage() {
       <!DOCTYPE html><html><head>
       <title>Interview Report - ${targetRole}</title>
       <style>
-        body{font-family:'Segoe UI',sans-serif;padding:32px;max-width:850px;margin:0 auto;background:#fff;color:#1a1a2e}
-        h1{color:#6366f1;font-size:26px;margin-bottom:4px}
-        h2{color:#4f46e5;font-size:16px;margin:24px 0 10px;border-bottom:2px solid #e0e7ff;padding-bottom:6px}
+        body{font-family:'Segoe UI',sans-serif;padding:32px;max-width:850px;margin:0 auto;background:#fff;color:#1E1042}
+        h1{color:#5B21B6;font-size:26px;margin-bottom:4px}
+        h2{color:#5B21B6;font-size:16px;margin:24px 0 10px;border-bottom:2px solid #EDE9FE;padding-bottom:6px}
         .meta{color:#6b7280;font-size:12px;margin-bottom:20px}
         .scores{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
-        .score-card{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;padding:14px 18px;text-align:center;min-width:110px}
-        .score-card .val{font-size:24px;font-weight:800;color:#6366f1}
+        .score-card{background:#FAF9FF;border:1px solid #C7B3FF;border-radius:8px;padding:14px 18px;text-align:center;min-width:110px}
+        .score-card .val{font-size:24px;font-weight:800;color:#5B21B6}
         .score-card .lbl{font-size:11px;color:#6b7280;margin-top:2px}
         .q-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px;margin:8px 0;page-break-inside:avoid}
         .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-        .q-badge{background:#6366f1;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
+        .q-badge{background:#5B21B6;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
         .q-score{font-weight:800;font-size:14px}
         .q-text{font-weight:600;font-size:13px;margin-bottom:6px}
-        .q-feedback{font-size:12px;color:#374151;background:#eff6ff;padding:8px 10px;border-radius:6px}
+        .q-feedback{font-size:12px;color:#374151;background:#F3EFFF;padding:8px 10px;border-radius:6px}
         ul{padding-left:20px} li{font-size:13px;color:#4b5563;line-height:1.7}
         .footnote{color:#9ca3af;font-size:10px;margin-top:24px;text-align:center}
         @media print{body{padding:16px}.q-card{page-break-inside:avoid}}
@@ -830,19 +830,19 @@ export default function InterviewPage() {
             <Mic className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-white">AI HR Interviewer</h1>
-            <p className="text-white/50 text-sm">Live voice interview with adaptive questions & real-time evaluation</p>
+            <h1 className="text-2xl font-black text-ink">AI HR Interviewer</h1>
+            <p className="text-ink/70 text-sm">Live voice interview with adaptive questions & real-time evaluation</p>
           </div>
           {step === 'interview' && (
             <div className="ml-auto flex items-center gap-2">
               <button onClick={toggleVoice} title={voiceEnabled ? 'Mute AI voice' : 'Unmute AI voice'}
-                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/20 transition-all">
+                className="w-10 h-10 rounded-xl bg-white/70 border border-primary-300/40 flex items-center justify-center text-ink/75 hover:text-primary-600 hover:border-primary-400/50 transition-all">
                 {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
               </button>
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
+              <div className="flex items-center gap-2 bg-white/70 border border-primary-300/40 px-4 py-2 rounded-xl">
                 <Clock className="w-4 h-4 text-accent-cyan" />
-                <span className="text-white font-mono font-bold">{formatTime(remainingSeconds)}</span>
-                <span className="text-white/30 text-xs">left</span>
+                <span className="text-ink font-mono font-bold">{formatTime(remainingSeconds)}</span>
+                <span className="text-ink/50 text-xs">left</span>
               </div>
             </div>
           )}
@@ -855,16 +855,16 @@ export default function InterviewPage() {
               <div className="glass-card p-6 space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-white/50 font-medium mb-1.5 block">Target Role</label>
+                    <label className="text-sm text-ink/70 font-medium mb-1.5 block">Target Role</label>
                     <RoleSelect value={targetRole} onChange={(label) => { setTargetRole(label); setSkills([]); }} />
                   </div>
                   <div>
-                    <label className="text-sm text-white/50 font-medium mb-1.5 block">Experience Level</label>
+                    <label className="text-sm text-ink/70 font-medium mb-1.5 block">Experience Level</label>
                     <div className="grid grid-cols-4 gap-2">
                       {EXPERIENCE_LEVELS.map(lvl => (
                         <button key={lvl.value} type="button" onClick={() => setExperienceLevel(lvl.value)}
                           className={`px-2 py-3 rounded-xl border text-center transition-all
-                            ${experienceLevel === lvl.value ? 'border-primary-500/60 bg-primary-500/20 text-white' : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white'}`}>
+                            ${experienceLevel === lvl.value ? 'border-primary-500/60 bg-primary-500/20 text-ink' : 'border-primary-300/40 bg-white/70 text-ink/70 hover:border-primary-400/50 hover:text-primary-600'}`}>
                           <p className="font-bold text-xs">{lvl.label}</p>
                         </button>
                       ))}
@@ -873,22 +873,22 @@ export default function InterviewPage() {
                 </div>
 
                 <div>
-                  <label className="text-sm text-white/50 font-medium mb-1.5 block">Your Skills</label>
+                  <label className="text-sm text-ink/70 font-medium mb-1.5 block">Your Skills</label>
                   <SkillMultiSelect roleLabel={targetRole} value={skills} onChange={setSkills} />
                 </div>
 
                 <div>
-                  <label className="text-sm text-white/50 font-medium mb-3 block">Interview Type</label>
+                  <label className="text-sm text-ink/70 font-medium mb-3 block">Interview Type</label>
                   <div className="grid sm:grid-cols-3 gap-3">
                     {INTERVIEW_TYPES.map(type => (
                       <button key={type.id} onClick={() => setInterviewType(type.id)}
                         className={`p-4 rounded-xl border text-left transition-all
-                          ${interviewType === type.id ? 'border-primary-500/60 bg-primary-500/15' : 'border-white/10 bg-white/5 hover:border-white/20'}`}>
+                          ${interviewType === type.id ? 'border-primary-500/60 bg-primary-500/15' : 'border-primary-300/40 bg-white/70 hover:border-primary-400/50'}`}>
                         <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${type.color} flex items-center justify-center mb-2`}>
                           <Mic className="w-4 h-4 text-white" />
                         </div>
-                        <p className="text-white font-semibold text-sm">{type.label}</p>
-                        <p className="text-white/50 text-xs">{type.desc}</p>
+                        <p className="text-ink font-semibold text-sm">{type.label}</p>
+                        <p className="text-ink/70 text-xs">{type.desc}</p>
                       </button>
                     ))}
                   </div>
@@ -896,24 +896,24 @@ export default function InterviewPage() {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-white/50 font-medium mb-2 block">Difficulty</label>
+                    <label className="text-sm text-ink/70 font-medium mb-2 block">Difficulty</label>
                     <div className="grid grid-cols-3 gap-2">
                       {DIFFICULTY_OPTIONS.map(d => (
                         <button key={d.value} onClick={() => setDifficulty(d.value)}
                           className={`py-2.5 rounded-xl border text-center text-sm font-semibold transition-all
-                            ${difficulty === d.value ? 'border-primary-500/60 bg-primary-500/20 text-white' : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20'}`}>
+                            ${difficulty === d.value ? 'border-primary-500/60 bg-primary-500/20 text-ink' : 'border-primary-300/40 bg-white/70 text-ink/70 hover:border-primary-400/50'}`}>
                           {d.label}
                         </button>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <label className="text-sm text-white/50 font-medium mb-2 block">Duration</label>
+                    <label className="text-sm text-ink/70 font-medium mb-2 block">Duration</label>
                     <div className="grid grid-cols-4 gap-2">
                       {DURATION_OPTIONS.map(d => (
                         <button key={d.value} onClick={() => setDuration(d.value)}
                           className={`py-2.5 rounded-xl border text-center text-sm font-semibold transition-all
-                            ${duration === d.value ? 'border-primary-500/60 bg-primary-500/20 text-white' : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20'}`}>
+                            ${duration === d.value ? 'border-primary-500/60 bg-primary-500/20 text-ink' : 'border-primary-300/40 bg-white/70 text-ink/70 hover:border-primary-400/50'}`}>
                           {d.label}
                         </button>
                       ))}
@@ -936,25 +936,25 @@ export default function InterviewPage() {
 
               {/* Notes to study */}
               <div className="glass-card p-5 border border-accent-cyan/20">
-                <h3 className="text-white font-bold mb-3 flex items-center gap-2">
+                <h3 className="text-ink font-bold mb-3 flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-accent-cyan" /> Quick Study Notes
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/8">
+                  <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40">
                     <p className="text-accent-cyan font-semibold mb-1">STAR Method</p>
-                    <p className="text-white/50 text-xs">Situation → Task → Action → Result. Use for all behavioral questions.</p>
+                    <p className="text-ink/70 text-xs">Situation → Task → Action → Result. Use for all behavioral questions.</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/8">
+                  <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40">
                     <p className="text-accent-green font-semibold mb-1">Body Language</p>
-                    <p className="text-white/50 text-xs">Eye contact, upright posture, smile. Pause before answering.</p>
+                    <p className="text-ink/70 text-xs">Eye contact, upright posture, smile. Pause before answering.</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/8">
+                  <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40">
                     <p className="text-accent-yellow font-semibold mb-1">Technical Tips</p>
-                    <p className="text-white/50 text-xs">Think out loud. Clarify before solving. Start simple, then optimize.</p>
+                    <p className="text-ink/70 text-xs">Think out loud. Clarify before solving. Start simple, then optimize.</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/8">
+                  <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40">
                     <p className="text-accent-purple font-semibold mb-1">HR Tips</p>
-                    <p className="text-white/50 text-xs">Research the company. Prepare 3 questions to ask. Follow up after.</p>
+                    <p className="text-ink/70 text-xs">Research the company. Prepare 3 questions to ask. Follow up after.</p>
                   </div>
                 </div>
               </div>
@@ -969,8 +969,8 @@ export default function InterviewPage() {
             <motion.div key="readiness" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <ReadinessCheck onReady={startInterview} onCancel={() => setStep('setup')} />
               {loading && (
-                <div className="mt-4 flex items-center justify-center gap-2 text-white/50 text-sm">
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="mt-4 flex items-center justify-center gap-2 text-ink/70 text-sm">
+                  <div className="w-4 h-4 border-2 border-primary-400/40 border-t-white rounded-full animate-spin" />
                   Generating your personalized questions...
                 </div>
               )}
@@ -984,10 +984,10 @@ export default function InterviewPage() {
                 {/* Progress */}
                 <div className="glass-card p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white/50 text-sm">Question {currentQ + 1} of {questions.length}</span>
-                    <span className="text-white/30 text-xs">~{Math.max(0, questions.length - currentQ - 1)} remaining</span>
+                    <span className="text-ink/70 text-sm">Question {currentQ + 1} of {questions.length}</span>
+                    <span className="text-ink/50 text-xs">~{Math.max(0, questions.length - currentQ - 1)} remaining</span>
                   </div>
-                  <div className="w-full h-2 bg-white/10 rounded-full">
+                  <div className="w-full h-2 bg-primary-100 rounded-full">
                     <div className="h-full bg-gradient-to-r from-primary-500 to-accent-purple rounded-full transition-all duration-500"
                       style={{ width: `${((currentQ + 1) / questions.length) * 100}%` }} />
                   </div>
@@ -1001,42 +1001,42 @@ export default function InterviewPage() {
                   <div className="flex items-center gap-2 mb-4 flex-wrap">
                     <span className={`text-xs capitalize px-2 py-0.5 rounded-full border
                       ${questions[currentQ]?.category === 'hr' ? 'text-cyan-neon bg-cyan-neon/10 border-cyan-neon/30' :
-                        questions[currentQ]?.category === 'technical' ? 'text-purple-400 bg-purple-500/10 border-purple-500/30' :
-                        'text-green-400 bg-green-500/10 border-green-500/30'}`}>
+                        questions[currentQ]?.category === 'technical' ? 'text-primary-500 bg-purple-500/10 border-purple-500/30' :
+                        'text-green-700 bg-green-500/10 border-green-500/30'}`}>
                       {questions[currentQ]?.category}
                     </span>
                     {questions[currentQ]?.isFollowUp && (
-                      <span className="text-xs px-2 py-0.5 rounded-full border text-amber-300 bg-amber-500/10 border-amber-500/30 flex items-center gap-1">
+                      <span className="text-xs px-2 py-0.5 rounded-full border text-amber-700 bg-amber-500/10 border-amber-500/30 flex items-center gap-1">
                         <Sparkles className="w-3 h-3" /> Adaptive follow-up
                       </span>
                     )}
-                    <span className="text-white/50 text-xs flex items-center gap-1">
+                    <span className="text-ink/70 text-xs flex items-center gap-1">
                       <Clock className="w-3 h-3" /> {questions[currentQ]?.timeLimit}s suggested
                     </span>
                   </div>
 
-                  <h2 className="text-white text-lg font-bold mb-3 leading-relaxed">
+                  <h2 className="text-ink text-lg font-bold mb-3 leading-relaxed">
                     {questions[currentQ]?.question}
                   </h2>
 
                   {questions[currentQ]?.hint && (
-                    <p className="text-white/50 text-xs italic mb-4">💡 Hint: {questions[currentQ].hint}</p>
+                    <p className="text-ink/70 text-xs italic mb-4">💡 Hint: {questions[currentQ].hint}</p>
                   )}
 
                   {speech.supported ? (
                     <>
                       {!reviewing ? (
-                        <div className="rounded-xl border border-white/10 bg-white/5 p-5 mb-4">
+                        <div className="rounded-xl border border-primary-300/40 bg-white/70 p-5 mb-4">
                           <div className="flex items-center gap-3 mb-3">
-                            <span className={`w-3 h-3 rounded-full ${speech.listening ? 'bg-red-500 animate-pulse' : 'bg-white/20'}`} />
-                            <p className="text-white/70 text-sm font-medium">
+                            <span className={`w-3 h-3 rounded-full ${speech.listening ? 'bg-red-500 animate-pulse' : 'bg-primary-200'}`} />
+                            <p className="text-ink/80 text-sm font-medium">
                               {avatarState === 'speaking' ? "Listen — I'm still asking the question..." :
                                avatarState === 'thinking' ? 'Evaluating your answer...' :
                                speech.listening ? "I'm listening — go ahead and answer naturally." : 'Getting the mic ready...'}
                             </p>
                           </div>
-                          <p className="text-white/50 text-sm min-h-[3rem] leading-relaxed">
-                            {interim || answer || <span className="text-white/25 italic">Your words will appear here as you speak...</span>}
+                          <p className="text-ink/70 text-sm min-h-[3rem] leading-relaxed">
+                            {interim || answer || <span className="text-ink/40 italic">Your words will appear here as you speak...</span>}
                           </p>
                           {avatarState === 'listening' && (
                             <button onClick={stopAndReview} disabled={!hasSpokenRef.current}
@@ -1047,8 +1047,8 @@ export default function InterviewPage() {
                         </div>
                       ) : (
                         <div className="rounded-xl border border-primary-500/30 bg-primary-500/10 p-5 mb-4">
-                          <p className="text-primary-300 text-xs font-semibold mb-2 uppercase tracking-wide">Here's what I heard:</p>
-                          <p className="text-white text-sm leading-relaxed mb-4">{answer || <span className="text-white/40 italic">No speech was captured.</span>}</p>
+                          <p className="text-primary-600 text-xs font-semibold mb-2 uppercase tracking-wide">Here's what I heard:</p>
+                          <p className="text-ink text-sm leading-relaxed mb-4">{answer || <span className="text-ink/60 italic">No speech was captured.</span>}</p>
                           <div className="flex gap-2">
                             <button onClick={submitAnswer} disabled={evaluating || !answer.trim()}
                               className="btn-primary flex-1 flex items-center justify-center gap-2">
@@ -1063,7 +1063,7 @@ export default function InterviewPage() {
                     </>
                   ) : (
                     <div className={`relative ${(interviewType === 'coding' || questions[currentQ]?.category === 'technical') ? 'font-mono' : ''}`}>
-                      <p className="text-amber-400/80 text-xs mb-2">Voice recognition isn't supported in this browser, so you can type your answer instead — try Chrome or Edge for the full voice interview.</p>
+                      <p className="text-amber-700 text-xs mb-2">Voice recognition isn't supported in this browser, so you can type your answer instead — try Chrome or Edge for the full voice interview.</p>
                       <textarea
                         ref={textareaRef}
                         value={answer}
@@ -1082,7 +1082,7 @@ export default function InterviewPage() {
                       <motion.button onClick={submitAnswer} disabled={evaluating || !answer.trim() || avatarState === 'speaking' || (speech.supported && !reviewing)}
                         whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
                         className="btn-primary flex items-center gap-2">
-                        {evaluating ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Send className="w-4 h-4" />}
+                        {evaluating ? <div className="w-4 h-4 border-2 border-primary-400/40 border-t-white rounded-full animate-spin" /> : <Send className="w-4 h-4" />}
                         {evaluating ? 'Evaluating...' : 'Submit Answer'}
                       </motion.button>
                     )}
@@ -1090,11 +1090,11 @@ export default function InterviewPage() {
                       {currentQ < questions.length - 1 ? 'Skip' : 'Finish'}
                       <ChevronRight className="w-4 h-4" />
                     </button>
-                    <button onClick={cancelInterview} className="btn-ghost ml-auto text-red-400/70 hover:text-red-400 flex items-center gap-2">
+                    <button onClick={cancelInterview} className="btn-ghost ml-auto text-red-600 hover:text-red-600 flex items-center gap-2">
                       Cancel Interview
                     </button>
                   </div>
-                  <p className="text-white/30 text-xs mt-3">
+                  <p className="text-ink/50 text-xs mt-3">
                     Your score and feedback for each question are saved and revealed together in your final report — just like a real interview.
                   </p>
                 </div>
@@ -1103,38 +1103,38 @@ export default function InterviewPage() {
               {/* Live sidebar */}
               <div className="space-y-3 lg:sticky lg:top-4">
                 <div className="glass-card p-3 overflow-hidden">
-                  <div className="rounded-lg overflow-hidden bg-black/60 aspect-video mb-2 relative">
+                  <div className="rounded-lg overflow-hidden bg-ink/60 aspect-video mb-2 relative">
                     <video ref={monitor.videoRef} muted playsInline className="w-full h-full object-cover" />
                     {monitor.camStatus !== 'active' && (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-black/80">
-                        <VideoOff className="w-5 h-5 text-white/40" />
-                        <span className="text-white/40 text-[11px]">Camera {monitor.camStatus === 'checking' ? 'connecting...' : 'off'}</span>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-ink/80">
+                        <VideoOff className="w-5 h-5 text-ink/60" />
+                        <span className="text-ink/60 text-[11px]">Camera {monitor.camStatus === 'checking' ? 'connecting...' : 'off'}</span>
                       </div>
                     )}
                     {monitor.camStatus === 'active' && (
-                      <span className="absolute top-1.5 right-1.5 text-[10px] px-1.5 py-0.5 rounded bg-red-500/80 text-white font-semibold flex items-center gap-1">
+                      <span className="absolute top-1.5 right-1.5 text-[10px] px-1.5 py-0.5 rounded bg-red-500/90 text-white font-semibold flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" /> REC
                       </span>
                     )}
                   </div>
                   <div className="space-y-1.5 text-xs">
-                    <div className="flex items-center justify-between text-white/60">
+                    <div className="flex items-center justify-between text-ink/75">
                       <span className="flex items-center gap-1.5"><Wifi className="w-3.5 h-3.5" /> Connection</span>
-                      <span className={readinessResult?.connectionQuality === 'Poor' ? 'text-amber-400' : 'text-green-400'}>{readinessResult?.connectionQuality || '—'}</span>
+                      <span className={readinessResult?.connectionQuality === 'Poor' ? 'text-amber-700' : 'text-green-700'}>{readinessResult?.connectionQuality || '—'}</span>
                     </div>
-                    <div className="flex items-center justify-between text-white/60">
+                    <div className="flex items-center justify-between text-ink/75">
                       <span className="flex items-center gap-1.5">{monitor.micStatus === 'active' ? <Mic className="w-3.5 h-3.5" /> : <MicOff className="w-3.5 h-3.5" />} Microphone</span>
-                      <span className={monitor.micStatus === 'active' ? 'text-green-400' : 'text-amber-400'}>{monitor.micStatus === 'active' ? 'Live' : 'Muted'}</span>
+                      <span className={monitor.micStatus === 'active' ? 'text-green-700' : 'text-amber-700'}>{monitor.micStatus === 'active' ? 'Live' : 'Muted'}</span>
                     </div>
-                    <div className="flex items-center justify-between text-white/60">
+                    <div className="flex items-center justify-between text-ink/75">
                       <span className="flex items-center gap-1.5">{monitor.camStatus === 'active' ? <Video className="w-3.5 h-3.5" /> : <VideoOff className="w-3.5 h-3.5" />} Camera</span>
-                      <span className={monitor.camStatus === 'active' ? 'text-green-400' : 'text-amber-400'}>{monitor.camStatus === 'active' ? 'Live' : 'Off'}</span>
+                      <span className={monitor.camStatus === 'active' ? 'text-green-700' : 'text-amber-700'}>{monitor.camStatus === 'active' ? 'Live' : 'Off'}</span>
                     </div>
-                    <div className="flex items-center justify-between text-white/60">
+                    <div className="flex items-center justify-between text-ink/75">
                       <span className="flex items-center gap-1.5"><ScanFace className="w-3.5 h-3.5" /> Face check</span>
                       <span className={
-                        monitor.faceDetect.supported !== true ? 'text-white/30' :
-                        monitor.faceDetect.faceCount === 1 ? 'text-green-400' : 'text-amber-400'
+                        monitor.faceDetect.supported !== true ? 'text-ink/50' :
+                        monitor.faceDetect.faceCount === 1 ? 'text-green-700' : 'text-amber-700'
                       }>
                         {monitor.faceDetect.supported !== true ? 'Unavailable' :
                          monitor.faceDetect.faceCount === 1 ? '1 face' :
@@ -1142,23 +1142,23 @@ export default function InterviewPage() {
                          monitor.faceDetect.faceCount > 1 ? `${monitor.faceDetect.faceCount} faces` : '—'}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between text-white/60">
+                    <div className="flex items-center justify-between text-ink/75">
                       <span className="flex items-center gap-1.5"><Video className="w-3.5 h-3.5" /> Mobile check</span>
                       <span className={
-                        monitor.faceDetect.supported !== true ? 'text-white/30' :
-                        monitor.faceDetect.mobileDetected ? 'text-red-400 font-bold animate-pulse' : 'text-green-400'
+                        monitor.faceDetect.supported !== true ? 'text-ink/50' :
+                        monitor.faceDetect.mobileDetected ? 'text-red-600 font-bold animate-pulse' : 'text-green-700'
                       }>
                         {monitor.faceDetect.supported !== true ? 'Unavailable' :
                          monitor.faceDetect.mobileDetected ? 'Detected' : 'No Phone'}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between text-white/60">
+                    <div className="flex items-center justify-between text-ink/75">
                       <span className="flex items-center gap-1.5">{monitor.estimatedScore >= 80 ? <ShieldCheck className="w-3.5 h-3.5" /> : <ShieldAlert className="w-3.5 h-3.5" />} Integrity</span>
-                      <span className={monitor.estimatedScore >= 80 ? 'text-green-400' : 'text-amber-400'}>{monitor.estimatedScore}%</span>
+                      <span className={monitor.estimatedScore >= 80 ? 'text-green-700' : 'text-amber-700'}>{monitor.estimatedScore}%</span>
                     </div>
                   </div>
                 </div>
-                <div className="glass-card p-3 text-xs text-white/40">
+                <div className="glass-card p-3 text-xs text-ink/60">
                   Please stay on this tab and keep your camera/mic on — switching away, covering the camera, or stepping out of frame is logged for your integrity report (not a claim of detecting other devices).
                 </div>
               </div>
@@ -1170,10 +1170,10 @@ export default function InterviewPage() {
             <motion.div key="result" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="space-y-5">
               {flagged && (
                 <div className="glass-card p-5 border-2 border-red-500/50 bg-red-500/10 flex items-start gap-3">
-                  <ShieldAlert className="w-6 h-6 text-red-400 shrink-0 mt-0.5" />
+                  <ShieldAlert className="w-6 h-6 text-red-600 shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-red-300 font-bold">Interview ended early — integrity check failed</p>
-                    <p className="text-red-200/70 text-sm mt-1">
+                    <p className="text-red-600 font-bold">Interview ended early — integrity check failed</p>
+                    <p className="text-red-600 text-sm mt-1">
                       {monitor.events.some(e => e.type === 'mobile_detected')
                         ? 'This session was stopped automatically because a mobile phone was detected in the camera feed. Use of external devices is strictly prohibited.'
                         : 'This session was stopped automatically after repeated issues your browser could observe (more than one face in frame, or the camera going off/dark). Results below reflect only what was completed before that point.'
@@ -1185,21 +1185,21 @@ export default function InterviewPage() {
               {/* Score Card */}
               <div className="glass-card p-8 text-center">
                 <div className="w-28 h-28 rounded-full bg-gradient-to-br from-primary-500/30 to-accent-purple/20 border-2 border-primary-500/40 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl font-black text-white">{finalResult.overallScore}%</span>
+                  <span className="text-4xl font-black text-ink">{finalResult.overallScore}%</span>
                 </div>
-                <h2 className="text-2xl font-black text-white mb-2">
+                <h2 className="text-2xl font-black text-ink mb-2">
                   {flagged ? '⚠️ Interview Ended Early' :
                    finalResult.overallScore >= 80 ? '🎉 Excellent Performance!' :
                    finalResult.overallScore >= 65 ? '👍 Good Effort!' :
                    finalResult.overallScore >= 50 ? '💪 Decent Attempt!' : '📚 Keep Practicing!'}
                 </h2>
-                <p className="text-white/50 mb-2">Interview completed in {formatTime(timer)}</p>
+                <p className="text-ink/70 mb-2">Interview completed in {formatTime(timer)}</p>
                 {finalResult.performanceLevel && (
                   <span className={`text-sm px-3 py-1 rounded-full border font-semibold ${
-                    finalResult.performanceLevel === 'Excellent' ? 'text-green-400 border-green-500/40 bg-green-500/10' :
+                    finalResult.performanceLevel === 'Excellent' ? 'text-green-700 border-green-500/40 bg-green-500/10' :
                     finalResult.performanceLevel === 'Good' ? 'text-cyan-neon border-cyan-neon/40 bg-cyan-neon/10' :
                     finalResult.performanceLevel === 'Average' ? 'text-pink-neon border-pink-neon/40 bg-pink-neon/10' :
-                    'text-red-400 border-red-500/40 bg-red-500/10'
+                    'text-red-600 border-red-500/40 bg-red-500/10'
                   }`}>
                     {finalResult.performanceLevel}
                   </span>
@@ -1209,38 +1209,38 @@ export default function InterviewPage() {
               {/* Performance Report */}
               {finalResult.report && (
                 <div className="glass-card p-6 border-l-4 border-primary-500">
-                  <h3 className="text-white font-bold mb-3 flex items-center gap-2">
+                  <h3 className="text-ink font-bold mb-3 flex items-center gap-2">
                     <Star className="w-5 h-5 text-pink-neon" /> Performance Report
                   </h3>
-                  <p className="text-white/50 text-sm mb-4">{finalResult.report.summary}</p>
+                  <p className="text-ink/70 text-sm mb-4">{finalResult.report.summary}</p>
 
                   <div className="grid sm:grid-cols-3 gap-3 mb-4">
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/8 text-center">
-                      <div className="text-2xl font-black text-primary-400">{finalResult.answeredCount || 0}/{finalResult.totalQuestions || 0}</div>
-                      <div className="text-xs text-white/50">Questions Answered</div>
+                    <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40 text-center">
+                      <div className="text-2xl font-black text-primary-500">{finalResult.answeredCount || 0}/{finalResult.totalQuestions || 0}</div>
+                      <div className="text-xs text-ink/70">Questions Answered</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/8 text-center">
-                      <div className={`text-2xl font-black ${finalResult.readinessScore >= 70 ? 'text-green-400' : 'text-pink-neon'}`}>{finalResult.readinessScore || 0}%</div>
-                      <div className="text-xs text-white/50">Interview Readiness</div>
+                    <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40 text-center">
+                      <div className={`text-2xl font-black ${finalResult.readinessScore >= 70 ? 'text-green-700' : 'text-pink-neon'}`}>{finalResult.readinessScore || 0}%</div>
+                      <div className="text-xs text-ink/70">Interview Readiness</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/8 text-center">
-                      <div className={`text-2xl font-black ${(finalResult.integrityScore ?? 100) >= 80 ? 'text-green-400' : 'text-amber-400'}`}>{finalResult.integrityScore ?? 100}%</div>
-                      <div className="text-xs text-white/50">Integrity Score</div>
+                    <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40 text-center">
+                      <div className={`text-2xl font-black ${(finalResult.integrityScore ?? 100) >= 80 ? 'text-green-700' : 'text-amber-700'}`}>{finalResult.integrityScore ?? 100}%</div>
+                      <div className="text-xs text-ink/70">Integrity Score</div>
                     </div>
                   </div>
 
                   {finalResult.integrityEvents?.length > 0 && (
-                    <p className="text-white/30 text-xs mb-3">
+                    <p className="text-ink/50 text-xs mb-3">
                       {finalResult.integrityEvents.length} browser-observed event{finalResult.integrityEvents.length > 1 ? 's' : ''} logged during this session (tab switches, camera/mic state) — this is not a claim of detecting other devices.
                     </p>
                   )}
 
                   {finalResult.report.nextSteps?.length > 0 && (
                     <div>
-                      <p className="text-xs text-white/50 font-semibold mb-2">Next Steps:</p>
+                      <p className="text-xs text-ink/70 font-semibold mb-2">Next Steps:</p>
                       {finalResult.report.nextSteps.map((s, i) => (
-                        <div key={i} className="flex items-center gap-2 text-sm text-white/50 mb-1">
-                          <span className="w-5 h-5 rounded-full bg-primary-500/20 text-primary-400 text-xs flex items-center justify-center font-bold flex-shrink-0">{i+1}</span>
+                        <div key={i} className="flex items-center gap-2 text-sm text-ink/70 mb-1">
+                          <span className="w-5 h-5 rounded-full bg-primary-500/20 text-primary-500 text-xs flex items-center justify-center font-bold flex-shrink-0">{i+1}</span>
                           {s}
                         </div>
                       ))}
@@ -1252,30 +1252,30 @@ export default function InterviewPage() {
               {/* Strengths & Improvements */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="glass-card p-5">
-                  <h3 className="text-green-400 font-bold mb-3 flex items-center gap-2">
+                  <h3 className="text-green-700 font-bold mb-3 flex items-center gap-2">
                     <CheckCircle className="w-4 h-4" /> Strengths
                   </h3>
                   {finalResult.session?.strengths?.length > 0 ? finalResult.session.strengths.map((s, i) => (
-                    <p key={i} className="text-white/50 text-sm mb-1.5 flex items-start gap-2">
-                      <span className="text-green-400 flex-shrink-0">•</span> {s}
+                    <p key={i} className="text-ink/70 text-sm mb-1.5 flex items-start gap-2">
+                      <span className="text-green-700 flex-shrink-0">•</span> {s}
                     </p>
-                  )) : <p className="text-white/50 text-sm">Keep practicing to identify strengths.</p>}
+                  )) : <p className="text-ink/70 text-sm">Keep practicing to identify strengths.</p>}
                 </div>
                 <div className="glass-card p-5">
                   <h3 className="text-pink-neon font-bold mb-3 flex items-center gap-2">
                     <AlertCircle className="w-4 h-4" /> Areas to Improve
                   </h3>
                   {finalResult.session?.improvements?.length > 0 ? finalResult.session.improvements.map((s, i) => (
-                    <p key={i} className="text-white/50 text-sm mb-1.5 flex items-start gap-2">
+                    <p key={i} className="text-ink/70 text-sm mb-1.5 flex items-start gap-2">
                       <span className="text-pink-neon flex-shrink-0">•</span> {s}
                     </p>
-                  )) : <p className="text-white/50 text-sm">Great job! Focus on depth in answers.</p>}
+                  )) : <p className="text-ink/70 text-sm">Great job! Focus on depth in answers.</p>}
                 </div>
               </div>
 
               {/* Learning Resources */}
               <div className="glass-card p-5 border border-accent-cyan/20">
-                <h3 className="text-white font-bold mb-3 flex items-center gap-2">
+                <h3 className="text-ink font-bold mb-3 flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-accent-cyan" /> Recommended Resources
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-2">
@@ -1286,13 +1286,13 @@ export default function InterviewPage() {
                     { name: 'Interview Cake', url: 'https://www.interviewcake.com/', desc: 'Structured interview prep' },
                   ].map(r => (
                     <a key={r.name} href={r.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/8 hover:border-primary-500/30 transition-all group">
+                      className="flex items-center gap-2 p-2.5 rounded-xl bg-white/70 border border-primary-300/40 hover:border-primary-500/30 transition-all group">
                       <div className="w-7 h-7 rounded-lg bg-accent-cyan/20 flex items-center justify-center flex-shrink-0">
                         <ExternalLink className="w-3 h-3 text-accent-cyan" />
                       </div>
                       <div>
-                        <p className="text-white text-xs font-medium group-hover:text-primary-300">{r.name}</p>
-                        <p className="text-white/50 text-xs">{r.desc}</p>
+                        <p className="text-ink text-xs font-medium group-hover:text-primary-600">{r.name}</p>
+                        <p className="text-ink/70 text-xs">{r.desc}</p>
                       </div>
                     </a>
                   ))}
@@ -1326,15 +1326,15 @@ function InterviewHistory() {
 
   return (
     <div className="glass-card p-5">
-      <h3 className="text-white font-bold mb-4">Recent Interviews</h3>
+      <h3 className="text-ink font-bold mb-4">Recent Interviews</h3>
       <div className="space-y-3">
         {history.slice(0, 3).map(s => (
-          <div key={s._id} className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+          <div key={s._id} className="flex items-center justify-between p-3 rounded-xl bg-white/70">
             <div>
-              <p className="text-white text-sm font-medium">{s.targetRole}</p>
-              <p className="text-white/50 text-xs capitalize">{s.type} • {new Date(s.createdAt).toLocaleDateString()}</p>
+              <p className="text-ink text-sm font-medium">{s.targetRole}</p>
+              <p className="text-ink/70 text-xs capitalize">{s.type} • {new Date(s.createdAt).toLocaleDateString()}</p>
             </div>
-            <div className={`text-lg font-black ${s.overallScore >= 70 ? 'text-green-400' : s.overallScore >= 50 ? 'text-pink-neon' : 'text-red-400'}`}>
+            <div className={`text-lg font-black ${s.overallScore >= 70 ? 'text-green-700' : s.overallScore >= 50 ? 'text-pink-neon' : 'text-red-600'}`}>
               {s.overallScore}%
             </div>
           </div>

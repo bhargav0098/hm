@@ -37,22 +37,22 @@ export function RoleSelect({ value, onChange, placeholder = 'Select target role'
         onClick={() => setOpen(o => !o)}
         className="input-field flex items-center justify-between text-left cursor-pointer"
       >
-        <span className={value ? 'text-white' : 'text-white/30'}>
+        <span className={value ? 'text-ink' : 'text-ink/50'}>
           {value || placeholder}
         </span>
-        <ChevronDown className={`w-4 h-4 text-white/40 transition-transform shrink-0 ml-2 ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-ink/60 transition-transform shrink-0 ml-2 ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
         <div className="absolute z-30 mt-2 w-full max-h-80 overflow-hidden rounded-xl glass-card border border-purple-500/30 shadow-2xl flex flex-col">
-          <div className="flex items-center gap-2 px-3 py-2 border-b border-white/10 shrink-0">
-            <Search className="w-4 h-4 text-white/30" />
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-primary-300/40 shrink-0">
+            <Search className="w-4 h-4 text-ink/50" />
             <input
               autoFocus
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder="Search roles..."
-              className="bg-transparent outline-none text-sm text-white placeholder-white/30 w-full"
+              className="bg-transparent outline-none text-sm text-ink placeholder-ink-mute/60 w-full"
             />
           </div>
 
@@ -64,21 +64,21 @@ export function RoleSelect({ value, onChange, placeholder = 'Select target role'
                 onClick={() => commit(r.label)}
                 className="w-full text-left px-4 py-2.5 text-sm flex items-center justify-between hover:bg-purple-500/10 transition-colors"
               >
-                <span className={selected?.id === r.id ? 'text-purple-300 font-semibold' : 'text-white/85'}>{r.label}</span>
-                {selected?.id === r.id && <Check className="w-4 h-4 text-purple-400" />}
+                <span className={selected?.id === r.id ? 'text-primary-500 font-semibold' : 'text-ink/90'}>{r.label}</span>
+                {selected?.id === r.id && <Check className="w-4 h-4 text-primary-500" />}
               </button>
             ))}
 
             {filtered.length === 0 && !customMode && (
-              <div className="px-4 py-3 text-sm text-white/40">No matching role.</div>
+              <div className="px-4 py-3 text-sm text-ink/60">No matching role.</div>
             )}
 
-            <div className="border-t border-white/10 mt-1 pt-1">
+            <div className="border-t border-primary-300/40 mt-1 pt-1">
               {!customMode ? (
                 <button
                   type="button"
                   onClick={() => setCustomMode(true)}
-                  className="w-full text-left px-4 py-2.5 text-sm text-cyan-300/90 hover:bg-cyan-500/10 flex items-center gap-2"
+                  className="w-full text-left px-4 py-2.5 text-sm text-primary-500 hover:bg-cyan-500/10 flex items-center gap-2"
                 >
                   <Plus className="w-3.5 h-3.5" /> Other role (specify)
                 </button>
@@ -140,7 +140,7 @@ export function SkillMultiSelect({ roleLabel, value = [], onChange }) {
 
   if (!role) {
     return (
-      <div className="text-sm text-white/40 italic px-1 py-2">
+      <div className="text-sm text-ink/60 italic px-1 py-2">
         Select a target role above to see relevant skill options.
       </div>
     );
@@ -157,8 +157,8 @@ export function SkillMultiSelect({ roleLabel, value = [], onChange }) {
             onClick={() => toggle(skill)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
               active
-                ? 'bg-gradient-to-r from-purple-500/30 to-pink-500/30 border-purple-400/60 text-white'
-                : 'bg-white/5 border-white/15 text-white/50 hover:border-purple-400/40 hover:text-white/80'
+                ? 'bg-gradient-to-r from-primary-400/30 to-primary-400/30 border-purple-400/60 text-ink'
+                : 'bg-white/70 border-primary-300/50 text-ink/70 hover:border-purple-400/40 hover:text-white/80'
             }`}
           >
             {active && <Check className="w-3 h-3 inline mr-1 -mt-0.5" />}
@@ -168,9 +168,9 @@ export function SkillMultiSelect({ roleLabel, value = [], onChange }) {
       })}
 
       {extraSelected.map(skill => (
-        <span key={skill} className="px-3 py-1.5 rounded-full text-xs font-medium border border-cyan-400/50 bg-cyan-500/10 text-cyan-200 flex items-center gap-1.5">
+        <span key={skill} className="px-3 py-1.5 rounded-full text-xs font-medium border border-cyan-400/50 bg-cyan-500/10 text-primary-500 flex items-center gap-1.5">
           {skill}
-          <button type="button" onClick={() => removeExtra(skill)} className="hover:text-white">
+          <button type="button" onClick={() => removeExtra(skill)} className="hover:text-primary-600">
             <X className="w-3 h-3" />
           </button>
         </span>
@@ -180,7 +180,7 @@ export function SkillMultiSelect({ roleLabel, value = [], onChange }) {
         <button
           type="button"
           onClick={() => setCustomOpen(true)}
-          className="px-3 py-1.5 rounded-full text-xs font-medium border border-dashed border-white/25 text-white/50 hover:text-white hover:border-purple-400/50 flex items-center gap-1"
+          className="px-3 py-1.5 rounded-full text-xs font-medium border border-dashed border-primary-300/60 text-ink/70 hover:text-primary-600 hover:border-purple-400/50 flex items-center gap-1"
         >
           <Plus className="w-3 h-3" /> Add other skill
         </button>

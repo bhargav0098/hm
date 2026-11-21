@@ -10,27 +10,27 @@ import { useFaceDetector } from '../../hooks/useFaceDetector';
 
 const StatusRow = ({ icon: Icon, title, status, detail, onRetry }) => {
   const styles = {
-    checking: { color: 'text-white/40', badge: 'Checking...', dot: 'bg-white/30' },
-    good: { color: 'text-green-400', badge: 'Working', dot: 'bg-green-400' },
-    warn: { color: 'text-amber-400', badge: 'Check', dot: 'bg-amber-400' },
-    bad: { color: 'text-red-400', badge: 'Not detected', dot: 'bg-red-400' },
+    checking: { color: 'text-ink/60', badge: 'Checking...', dot: 'bg-primary-300/60' },
+    good: { color: 'text-green-700', badge: 'Working', dot: 'bg-green-400' },
+    warn: { color: 'text-amber-700', badge: 'Check', dot: 'bg-amber-400' },
+    bad: { color: 'text-red-600', badge: 'Not detected', dot: 'bg-red-400' },
   };
   const s = styles[status] || styles.checking;
   return (
-    <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/8">
+    <div className="flex items-start gap-3 p-3 rounded-xl bg-white/70 border border-primary-300/40">
       <Icon className={`w-5 h-5 mt-0.5 shrink-0 ${s.color}`} />
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-white text-sm font-semibold">{title}</p>
+          <p className="text-ink text-sm font-semibold">{title}</p>
           <span className={`text-xs font-medium flex items-center gap-1.5 shrink-0 ${s.color}`}>
             <span className={`w-1.5 h-1.5 rounded-full ${s.dot} ${status === 'checking' ? 'animate-pulse' : ''}`} />
             {s.badge}
           </span>
         </div>
-        {detail && <p className="text-white/40 text-xs mt-0.5">{detail}</p>}
+        {detail && <p className="text-ink/60 text-xs mt-0.5">{detail}</p>}
       </div>
       {status !== 'checking' && status !== 'good' && onRetry && (
-        <button onClick={onRetry} className="text-white/40 hover:text-white shrink-0" title="Retry">
+        <button onClick={onRetry} className="text-ink/60 hover:text-primary-600 shrink-0" title="Retry">
           <RotateCcw className="w-3.5 h-3.5" />
         </button>
       )}
@@ -239,8 +239,8 @@ export default function ReadinessCheck({ onReady, onCancel }) {
   return (
     <div className="glass-card p-6 space-y-5">
       <div>
-        <h2 className="text-white font-bold text-lg">Interview Readiness Check</h2>
-        <p className="text-white/40 text-sm">We check what your browser can actually observe — connection, mic and camera. This isn't cheating-detection software; it just makes sure your setup works before you start.</p>
+        <h2 className="text-ink font-bold text-lg">Interview Readiness Check</h2>
+        <p className="text-ink/60 text-sm">We check what your browser can actually observe — connection, mic and camera. This isn't cheating-detection software; it just makes sure your setup works before you start.</p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
@@ -258,8 +258,8 @@ export default function ReadinessCheck({ onReady, onCancel }) {
             onRetry={startMedia} />
           {mic !== 'checking' && mic !== 'denied' && mic !== 'not-detected' && (
             <div className="px-3 -mt-2">
-              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-cyan-400 to-green-400 transition-all duration-100" style={{ width: `${audioLevel}%` }} />
+              <div className="w-full h-1.5 bg-primary-100 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-primary-400 to-green-400 transition-all duration-100" style={{ width: `${audioLevel}%` }} />
               </div>
             </div>
           )}
@@ -275,16 +275,16 @@ export default function ReadinessCheck({ onReady, onCancel }) {
           )}
         </div>
 
-        <div className="rounded-xl overflow-hidden border border-white/10 bg-black/50 aspect-video flex items-center justify-center relative">
+        <div className="rounded-xl overflow-hidden border border-primary-300/40 bg-ink/50 aspect-video flex items-center justify-center relative">
           <video ref={videoRef} muted playsInline className="w-full h-full object-cover" />
           {camera !== 'active' && (
-            <div className="absolute inset-0 flex items-center justify-center text-white/30 text-sm">
+            <div className="absolute inset-0 flex items-center justify-center text-ink/50 text-sm">
               {camera === 'checking' ? <Loader2 className="w-6 h-6 animate-spin" /> : 'Camera preview unavailable'}
             </div>
           )}
           {camera === 'active' && (
             <span className={`absolute bottom-2 left-2 text-[10px] px-2 py-0.5 rounded-full border flex items-center gap-1 ${
-              motion === 'recent' ? 'text-green-300 border-green-500/40 bg-black/60' : 'text-amber-300 border-amber-500/40 bg-black/60'
+              motion === 'recent' ? 'text-green-700 border-green-500/40 bg-ink/60' : 'text-amber-700 border-amber-500/40 bg-ink/60'
             }`}>
               {motion === 'recent' ? <CheckCircle2 className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
               {motion === 'recent' ? 'Recent movement' : 'No recent movement — please check you are visible'}
@@ -295,8 +295,8 @@ export default function ReadinessCheck({ onReady, onCancel }) {
 
       {/* Browser & environment */}
       <div className="grid sm:grid-cols-2 gap-4">
-        <div className="p-3 rounded-xl bg-white/5 border border-white/8">
-          <p className="text-white text-sm font-semibold mb-2">Browser Compatibility</p>
+        <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40">
+          <p className="text-ink text-sm font-semibold mb-2">Browser Compatibility</p>
           <div className="grid grid-cols-2 gap-1.5 text-xs">
             {[
               ['Camera/Mic API', support.getUserMedia],
@@ -304,19 +304,19 @@ export default function ReadinessCheck({ onReady, onCancel }) {
               ['WebRTC', support.webRTC],
               ['Speech Recognition', support.speechRecognition],
             ].map(([label, ok]) => (
-              <div key={label} className={`flex items-center gap-1.5 ${ok ? 'text-white/60' : 'text-amber-400'}`}>
-                {ok ? <CheckCircle2 className="w-3 h-3 text-green-400 shrink-0" /> : <XCircle className="w-3 h-3 text-amber-400 shrink-0" />}
+              <div key={label} className={`flex items-center gap-1.5 ${ok ? 'text-ink/75' : 'text-amber-700'}`}>
+                {ok ? <CheckCircle2 className="w-3 h-3 text-green-700 shrink-0" /> : <XCircle className="w-3 h-3 text-amber-700 shrink-0" />}
                 {label}{!ok && ' (unsupported)'}
               </div>
             ))}
           </div>
           {!support.speechRecognition && (
-            <p className="text-white/30 text-[11px] mt-2">Voice-to-text won't be available in this browser — you can still type your answers.</p>
+            <p className="text-ink/50 text-[11px] mt-2">Voice-to-text won't be available in this browser — you can still type your answers.</p>
           )}
         </div>
-        <div className="p-3 rounded-xl bg-white/5 border border-white/8">
-          <p className="text-white text-sm font-semibold mb-2">Before You Start</p>
-          <ul className="text-white/40 text-xs space-y-1 list-disc list-inside">
+        <div className="p-3 rounded-xl bg-white/70 border border-primary-300/40">
+          <p className="text-ink text-sm font-semibold mb-2">Before You Start</p>
+          <ul className="text-ink/60 text-xs space-y-1 list-disc list-inside">
             <li>Sit in a quiet room with minimal background noise</li>
             <li>Make sure your face is well lit and visible</li>
             <li>Keep only yourself visible in frame</li>
@@ -333,7 +333,7 @@ export default function ReadinessCheck({ onReady, onCancel }) {
         </button>
       </div>
       {!readyToStart && (mic === 'denied' || camera === 'denied') && (
-        <p className="text-amber-400 text-xs text-center">Camera and microphone access are required to start. Please allow permissions and retry.</p>
+        <p className="text-amber-700 text-xs text-center">Camera and microphone access are required to start. Please allow permissions and retry.</p>
       )}
     </div>
   );

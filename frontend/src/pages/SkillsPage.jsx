@@ -41,16 +41,16 @@ const POPULAR_ROLES = [
 ];
 
 const priorityColors = {
-  high: 'text-red-400 bg-red-500/10 border-red-500/30',
+  high: 'text-red-600 bg-red-500/10 border-red-500/30',
   medium: 'text-pink-neon bg-pink-neon/10 border-pink-neon/30',
-  low: 'text-green-400 bg-green-500/10 border-green-500/30'
+  low: 'text-green-700 bg-green-500/10 border-green-500/30'
 };
 
 const demandColors = {
-  'Very High': 'text-green-400',
-  'High': 'text-emerald-400',
+  'Very High': 'text-green-700',
+  'High': 'text-emerald-700',
   'Medium': 'text-pink-neon',
-  'Low': 'text-red-400'
+  'Low': 'text-red-600'
 };
 
 export default function SkillsPage() {
@@ -169,16 +169,16 @@ export default function SkillsPage() {
     printWindow.document.write(`<!DOCTYPE html><html><head>
       <title>Skill Analysis Report</title>
       <style>
-        body{font-family:'Segoe UI',sans-serif;padding:32px;max-width:800px;margin:0 auto;background:#fff;color:#1a1a2e}
-        h1{color:#6366f1;font-size:26px;margin-bottom:4px}
-        h2{color:#4f46e5;font-size:16px;margin:24px 0 8px;border-bottom:2px solid #e0e7ff;padding-bottom:6px}
+        body{font-family:'Segoe UI',sans-serif;padding:32px;max-width:800px;margin:0 auto;background:#fff;color:#1E1042}
+        h1{color:#5B21B6;font-size:26px;margin-bottom:4px}
+        h2{color:#5B21B6;font-size:16px;margin:24px 0 8px;border-bottom:2px solid #EDE9FE;padding-bottom:6px}
         p,li{color:#4b5563;font-size:13px;line-height:1.7}
         .meta{color:#6b7280;font-size:12px;margin-bottom:20px}
         .skill-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;align-items:center;padding:10px 12px;border-radius:8px;margin:5px 0;font-size:12px;border:1px solid #e5e7eb}
         .skill-row.critical{background:#fef2f2;border-color:#fca5a5}
         .skill-row.high{background:#fffbeb;border-color:#fcd34d}
         .skill-row.medium{background:#f0fdf4;border-color:#86efac}
-        .skill-row.low{background:#eff6ff;border-color:#bfdbfe}
+        .skill-row.low{background:#F3EFFF;border-color:#C7B3FF}
         .skill-name{font-weight:700;color:#111;font-size:13px}
         .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;text-transform:capitalize}
         .badge.critical{background:#fee2e2;color:#dc2626}
@@ -187,7 +187,7 @@ export default function SkillsPage() {
         .badge.low{background:#dbeafe;color:#2563eb}
         .gap-text{color:#6b7280;font-size:11px;margin-top:4px;grid-column:1/-1;font-style:italic}
         .recommendation{padding:8px 14px;background:#f0fdf4;border-left:3px solid #10b981;border-radius:4px;margin:5px 0;font-size:13px;color:#065f46}
-        .header-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:8px 12px;background:#6366f1;color:#fff;border-radius:8px;font-size:11px;font-weight:700;margin-bottom:8px}
+        .header-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:8px 12px;background:#5B21B6;color:#fff;border-radius:8px;font-size:11px;font-weight:700;margin-bottom:8px}
         @media print{body{padding:16px}}
       </style></head><body>
       <h1>🧠 Advanced Skill Gap Analysis</h1>
@@ -209,7 +209,7 @@ export default function SkillsPage() {
           <div class="skill-name">${s.skill}</div>
           <div style="font-size:11px;color:#374151">${s.currentLevel === 'none' ? 'Not Started' : s.currentLevel} → <strong style="color:#059669">${s.requiredLevel}</strong></div>
           <div><span class="badge ${s.priority || 'medium'}">${s.priority || 'medium'}</span></div>
-          <div style="font-weight:700;color:#6366f1">#${s.learningOrder || '-'}</div>
+          <div style="font-weight:700;color:#5B21B6">#${s.learningOrder || '-'}</div>
           <div class="gap-text">${s.gap}</div>
         </div>
       `).join('')}
@@ -237,8 +237,8 @@ export default function SkillsPage() {
             <Brain className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-white">Skill Analysis Agent</h1>
-            <p className="text-white/50 text-sm">AI-powered career gap analysis and personalized learning roadmap</p>
+            <h1 className="text-2xl font-black text-ink">Skill Analysis Agent</h1>
+            <p className="text-ink/70 text-sm">AI-powered career gap analysis and personalized learning roadmap</p>
           </div>
         </motion.div>
 
@@ -246,13 +246,13 @@ export default function SkillsPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="glass-card p-6 space-y-5">
           {/* Skills Input with Auto-suggest */}
           <div>
-            <label className="text-sm text-white/50 font-medium mb-2 block">
-              Your Current Skills <span className="text-white/50">(type any skill — not limited to suggestions)</span>
+            <label className="text-sm text-ink/70 font-medium mb-2 block">
+              Your Current Skills <span className="text-ink/70">(type any skill — not limited to suggestions)</span>
             </label>
             <div ref={suggestRef} className="relative">
               <div className="flex gap-2 mb-3">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink/70" />
                   <input
                     value={inputSkill}
                     onChange={e => handleSkillInput(e.target.value)}
@@ -265,12 +265,12 @@ export default function SkillsPage() {
                     {showSuggestions && suggestions.length > 0 && (
                       <motion.div
                         initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
-                        className="absolute top-full left-0 right-0 z-50 mt-1 bg-dark-700 border border-white/15 rounded-xl shadow-2xl overflow-hidden"
+                        className="absolute top-full left-0 right-0 z-50 mt-1 bg-primary-100 border border-primary-300/50 rounded-xl shadow-2xl overflow-hidden"
                       >
                         {suggestions.map(s => (
                           <button key={s} onClick={() => addSkill(s)}
-                            className="w-full text-left px-4 py-2.5 text-sm text-white/50 hover:bg-primary-500/20 hover:text-white transition-colors flex items-center gap-2">
-                            <Plus className="w-3 h-3 text-primary-400" /> {s}
+                            className="w-full text-left px-4 py-2.5 text-sm text-ink/70 hover:bg-primary-500/20 hover:text-primary-600 transition-colors flex items-center gap-2">
+                            <Plus className="w-3 h-3 text-primary-500" /> {s}
                           </button>
                         ))}
                       </motion.div>
@@ -289,8 +289,8 @@ export default function SkillsPage() {
                   <button key={cat} onClick={() => setActiveCategory(cat)}
                     className={`text-xs px-2.5 py-1 rounded-lg border transition-all ${
                       activeCategory === cat
-                        ? 'bg-primary-500/20 border-primary-500/50 text-primary-300'
-                        : 'bg-white/5 border-white/10 text-white/50 hover:text-white hover:border-white/20'
+                        ? 'bg-primary-500/20 border-primary-500/50 text-primary-600'
+                        : 'bg-white/70 border-primary-300/40 text-ink/70 hover:text-primary-600 hover:border-primary-400/50'
                     }`}>
                     {cat}
                   </button>
@@ -300,7 +300,7 @@ export default function SkillsPage() {
               {/* Search within category */}
               {activeCategory !== 'All' && (
                 <div className="relative mb-3">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/50" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink/70" />
                   <input
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
@@ -314,7 +314,7 @@ export default function SkillsPage() {
               <div className="flex flex-wrap gap-1.5 mb-3 max-h-24 overflow-y-auto">
                 {filteredSkillsForBrowse().slice(0, 30).map(s => (
                   <button key={s} onClick={() => addSkill(s)}
-                    className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-white/50 hover:text-white hover:border-primary-500/50 hover:bg-primary-500/10 transition-all">
+                    className="text-xs px-2.5 py-1 rounded-lg bg-white/70 border border-primary-300/40 text-ink/70 hover:text-primary-600 hover:border-primary-500/50 hover:bg-primary-500/10 transition-all">
                     + {s}
                   </button>
                 ))}
@@ -323,12 +323,12 @@ export default function SkillsPage() {
               {/* Selected skills */}
               {skills.length > 0 && (
                 <div>
-                  <p className="text-xs text-white/50 mb-2">Selected skills ({skills.length}):</p>
+                  <p className="text-xs text-ink/70 mb-2">Selected skills ({skills.length}):</p>
                   <div className="flex flex-wrap gap-2">
                     {skills.map(s => (
-                      <span key={s} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-500/20 border border-primary-500/40 text-primary-300 text-sm">
+                      <span key={s} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-500/20 border border-primary-500/40 text-primary-600 text-sm">
                         {s}
-                        <button onClick={() => removeSkill(s)} className="hover:text-red-400 transition-colors">
+                        <button onClick={() => removeSkill(s)} className="hover:text-red-600 transition-colors">
                           <X className="w-3 h-3" />
                         </button>
                       </span>
@@ -342,7 +342,7 @@ export default function SkillsPage() {
           {/* Target Role & Experience */}
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-white/50 font-medium mb-2 block">Target Role</label>
+              <label className="text-sm text-ink/70 font-medium mb-2 block">Target Role</label>
               <select value={targetRole} onChange={e => setTargetRole(e.target.value)} className="input-field mb-2">
                 <option value="">Select target role...</option>
                 {POPULAR_ROLES.map(r => <option key={r} value={r}>{r}</option>)}
@@ -358,7 +358,7 @@ export default function SkillsPage() {
               )}
             </div>
             <div>
-              <label className="text-sm text-white/50 font-medium mb-2 block">Experience Level</label>
+              <label className="text-sm text-ink/70 font-medium mb-2 block">Experience Level</label>
               <select value={experienceLevel} onChange={e => setExperienceLevel(e.target.value)} className="input-field">
                 {EXPERIENCE_LEVELS.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
               </select>
@@ -371,7 +371,7 @@ export default function SkillsPage() {
             className="btn-primary w-full flex items-center justify-center gap-2"
           >
             {loading ? (
-              <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Analyzing your profile with AI...</>
+              <><div className="w-5 h-5 border-2 border-primary-400/40 border-t-white rounded-full animate-spin" /> Analyzing your profile with AI...</>
             ) : (
               <><Zap className="w-5 h-5" /> Analyze Skills with AI — {skills.length} skill{skills.length !== 1 ? 's' : ''} selected</>
             )}
@@ -394,9 +394,9 @@ export default function SkillsPage() {
               {result.analyzedSkills?.length > 0 && (
                 <div className="glass-card p-6 border-l-4 border-primary-500">
                   <div className="flex items-center gap-3 mb-5">
-                    <Brain className="w-6 h-6 text-primary-400" />
-                    <h2 className="text-white font-bold text-lg">Advanced Skill Gap Analysis</h2>
-                    <span className="text-xs bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded-full border border-primary-500/30">
+                    <Brain className="w-6 h-6 text-primary-500" />
+                    <h2 className="text-ink font-bold text-lg">Advanced Skill Gap Analysis</h2>
+                    <span className="text-xs bg-primary-500/20 text-primary-600 px-2 py-0.5 rounded-full border border-primary-500/30">
                       {result.analyzedSkills.length} skills analyzed
                     </span>
                   </div>
@@ -410,10 +410,10 @@ export default function SkillsPage() {
                         className={`p-4 rounded-xl border ${priorityColors[s.priority] || priorityColors.medium}`}>
                         <div className="flex items-start justify-between gap-3 mb-3 flex-wrap">
                           <div className="flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-xs font-black text-white flex-shrink-0">
+                            <span className="w-8 h-8 rounded-xl bg-primary-100 flex items-center justify-center text-xs font-black text-primary-500 flex-shrink-0">
                               {s.learningOrder || i + 1}
                             </span>
-                            <span className="font-bold text-white">{s.skill}</span>
+                            <span className="font-bold text-ink">{s.skill}</span>
                           </div>
                           <span className={`text-xs capitalize px-2 py-0.5 rounded-full border font-medium ${priorityColors[s.priority]}`}>
                             {s.priority}
@@ -421,25 +421,25 @@ export default function SkillsPage() {
                         </div>
 
                         <div className="grid grid-cols-3 gap-2 mb-3">
-                          <div className="bg-black/20 rounded-lg p-2 text-center">
-                            <p className="text-xs text-white/50 mb-0.5">Your Level</p>
+                          <div className="bg-ink/20 rounded-lg p-2 text-center">
+                            <p className="text-xs text-ink/70 mb-0.5">Your Level</p>
                             <p className={`text-xs font-bold capitalize ${
-                              s.currentLevel === 'none' ? 'text-red-400' :
+                              s.currentLevel === 'none' ? 'text-red-600' :
                               s.currentLevel === 'beginner' ? 'text-pink-neon' :
-                              s.currentLevel === 'intermediate' ? 'text-cyan-neon' : 'text-green-400'
+                              s.currentLevel === 'intermediate' ? 'text-cyan-neon' : 'text-green-700'
                             }`}>{s.currentLevel === 'none' ? 'Not Started' : s.currentLevel}</p>
                           </div>
-                          <div className="bg-black/20 rounded-lg p-2 text-center">
-                            <p className="text-xs text-white/50 mb-0.5">Required</p>
+                          <div className="bg-ink/20 rounded-lg p-2 text-center">
+                            <p className="text-xs text-ink/70 mb-0.5">Required</p>
                             <p className="text-xs font-bold text-accent-green capitalize">{s.requiredLevel}</p>
                           </div>
-                          <div className="bg-black/20 rounded-lg p-2 text-center">
-                            <p className="text-xs text-white/50 mb-0.5">Learn Order</p>
-                            <p className="text-xs font-bold text-primary-400">#{s.learningOrder || i + 1}</p>
+                          <div className="bg-ink/20 rounded-lg p-2 text-center">
+                            <p className="text-xs text-ink/70 mb-0.5">Learn Order</p>
+                            <p className="text-xs font-bold text-primary-500">#{s.learningOrder || i + 1}</p>
                           </div>
                         </div>
 
-                        <p className="text-white/50 text-xs leading-relaxed">{s.gap}</p>
+                        <p className="text-ink/70 text-xs leading-relaxed">{s.gap}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -449,14 +449,14 @@ export default function SkillsPage() {
               {/* Recommendations */}
               {result.recommendations?.length > 0 && (
                 <div className="glass-card p-6 border border-accent-green/20">
-                  <h2 className="text-white font-bold mb-3 flex items-center gap-2">
+                  <h2 className="text-ink font-bold mb-3 flex items-center gap-2">
                     <Lightbulb className="w-5 h-5 text-accent-yellow" /> AI Recommendations
                   </h2>
                   <div className="space-y-2">
                     {result.recommendations.map((step, i) => (
-                      <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+                      <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/70">
                         <span className="w-6 h-6 rounded-full bg-accent-green/20 text-accent-green text-xs flex items-center justify-center font-bold flex-shrink-0">{i + 1}</span>
-                        <span className="text-white/50 text-sm">{step}</span>
+                        <span className="text-ink/70 text-sm">{step}</span>
                       </div>
                     ))}
                   </div>

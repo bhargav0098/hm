@@ -26,12 +26,12 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
       className="glass-card p-5 relative overflow-hidden"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-bold flex items-center gap-2">
+        <h3 className="text-ink font-bold flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-accent-purple" /> AI Resume Auto-Fill
         </h3>
       </div>
 
-      <p className="text-sm text-white/50 mb-4">
+      <p className="text-sm text-ink/70 mb-4">
         Upload your existing resume and let our AI extract your skills, experience, and education to automatically build your profile.
       </p>
 
@@ -39,15 +39,15 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
         <div 
           {...getRootProps()} 
           className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all duration-300 ${
-            isDragActive ? 'border-primary-500 bg-primary-500/10' : 'border-white/20 hover:border-white/40 hover:bg-white/5'
+            isDragActive ? 'border-primary-500 bg-primary-500/10' : 'border-primary-300/60 hover:border-primary-400/60 hover:bg-white/70'
           }`}
         >
           <input {...getInputProps()} />
-          <UploadCloud className={`w-8 h-8 mx-auto mb-3 ${isDragActive ? 'text-primary-400' : 'text-white/50'}`} />
-          <p className="text-white font-medium text-sm mb-1">
+          <UploadCloud className={`w-8 h-8 mx-auto mb-3 ${isDragActive ? 'text-primary-500' : 'text-ink/70'}`} />
+          <p className="text-ink font-medium text-sm mb-1">
             {isDragActive ? 'Drop your resume here...' : 'Click or drag your resume here'}
           </p>
-          <p className="text-xs text-white/50">Supports PDF and DOCX</p>
+          <p className="text-xs text-ink/70">Supports PDF and DOCX</p>
         </div>
       )}
 
@@ -55,11 +55,11 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
         {isParsing && (
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-            className="flex flex-col items-center justify-center p-6 border border-white/10 rounded-xl bg-white/5"
+            className="flex flex-col items-center justify-center p-6 border border-primary-300/40 rounded-xl bg-white/70"
           >
             <Loader2 className="w-8 h-8 text-primary-500 animate-spin mb-3" />
-            <p className="text-white font-medium text-sm">Parsing resume with AI...</p>
-            <p className="text-xs text-white/50 text-center mt-2">Extracting skills, work experience, and structuring your profile.</p>
+            <p className="text-ink font-medium text-sm">Parsing resume with AI...</p>
+            <p className="text-xs text-ink/70 text-center mt-2">Extracting skills, work experience, and structuring your profile.</p>
           </motion.div>
         )}
 
@@ -71,11 +71,11 @@ export default function AIResumeUpload({ onFileSelect, isParsing, parsedData, re
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-accent-green mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-white font-medium text-sm mb-1">Extraction Complete</p>
-                <p className="text-xs text-white/50 mb-2">We found {parsedData.skillsExtracted} skills, {parsedData.experienceParsed} roles, and {parsedData.educationParsed} education entries.</p>
+                <p className="text-ink font-medium text-sm mb-1">Extraction Complete</p>
+                <p className="text-xs text-ink/70 mb-2">We found {parsedData.skillsExtracted} skills, {parsedData.experienceParsed} roles, and {parsedData.educationParsed} education entries.</p>
                 <button 
                   onClick={resetData}
-                  className="text-xs text-primary-400 hover:text-primary-300 font-medium"
+                  className="text-xs text-primary-500 hover:text-primary-600 font-medium"
                 >
                   Upload a different file
                 </button>

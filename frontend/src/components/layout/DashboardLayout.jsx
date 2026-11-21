@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { Suspense, createContext, useContext, useState } from 'react';
+import { Link, useLocation, useNavigate, useOutlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Brain, LayoutDashboard, Briefcase, Mic, BookOpen,
-  Target, MapPin, Settings, User, LogOut, Menu, X,
-  ChevronRight, Zap, Users, FileText
+  Target, MapPin, Settings, User, LogOut, Menu, X, FileText
 } from 'lucide-react';
 import useAuthStore from '../../store/authStore';
 import FloatingAIChatbot from '../dashboard/FloatingAIChatbot';
+import Brand from '../common/Brand';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
@@ -18,149 +18,170 @@ const navItems = [
   { icon: Target, label: 'Career Roadmap', path: '/roadmap' },
   { icon: MapPin, label: 'Local Jobs', path: '/opportunities' },
 ];
-
-const intelligenceItems = [
-  { icon: FileText, label: 'Weekly Report', path: '/weekly-report' },
-];
-
+const intelligenceItems = [{ icon: FileText, label: 'Weekly Report', path: '/weekly-report' }];
 const bottomItems = [
   { icon: Settings, label: 'Settings', path: '/settings' },
   { icon: User, label: 'Profile', path: '/profile' },
 ];
 
-export default function DashboardLayout({ children }) {
+/* When a page renders <DashboardLayout> inside the persistent shell, it just yields its children. */
+const ShellContext = createContext(false);
+
+function NavItem({ item, active, onClick, group }) {
+  return (
+    <Link
+      to={item.path}
+      onClick={onClick}
+      aria-current={active ? 'page' : undefined}
+      className={`group relative flex items-center gap-3 px-4 py-2.5 rounded-full text-sm font-semibold transition-colors duration-200 ${
+        active ? '' : 'hover:bg-primary-100/80'
+      }`}
+    >
+      {active && (
+        <motion.span
+          layoutId={`nav-pill-${group}`}
+          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+          className="absolute inset-0 rounded-full bg-pill-primary shadow-pill"
+        />
+      )}
+      <item.icon className={`relative w-[18px] h-[18px] flex-shrink-0 transition-colors ${active ? 'text-white' : 'text-primary-400 group-hover:text-primary-500'}`} />
+      <span className={`relative flex-1 transition-colors ${active ? 'text-white' : 'text-ink-soft group-hover:text-ink'}`}>{item.label}</span>
+    </Link>
+  );
+}
+
+function NavGroup({ title, items, pathname, onClick, group }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-ink-mute text-xs font-semibold px-4 pb-1">{title}</p>
+      {items.map((item) => (
+        <NavItem key={item.path} item={item} active={pathname === item.path} onClick={onClick} group={group} />
+      ))}
+    </div>
+  );
+}
+
+function SidebarContent({ onClose, group, pathname, user, onLogout }) {
+  return (
+    <div className="flex flex-col h-full">
+      <div className="px-5 pt-6 pb-4">
+        <Brand to="/dashboard" onClick={onClose} subtitle="Employment platform" />
+      </div>
+
+      <nav className="flex-1 px-3 pb-3 space-y-5 overflow-y-auto scrollbar-hide">
+        <NavGroup title="AI agents" items={navItems} pathname={pathname} onClick={onClose} group={group} />
+        <NavGroup title="Intelligence" items={intelligenceItems} pathname={pathname} onClick={onClose} group={group} />
+        <NavGroup title="Account" items={bottomItems} pathname={pathname} onClick={onClose} group={group} />
+      </nav>
+
+      <div className="p-3">
+        <div className="flex items-center gap-3 p-2.5 pr-4 rounded-full bg-primary-100/80 border border-primary-300/40">
+          <img
+            src={user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
+            alt="" className="w-9 h-9 rounded-full bg-white border border-primary-300/60 flex-shrink-0 object-cover"
+          />
+          <div className="flex-1 min-w-0">
+            <p className="text-ink text-sm font-semibold truncate">{user?.fullName || 'Your account'}</p>
+            <p className="text-ink-mute text-xs truncate">{user?.email}</p>
+          </div>
+          <button onClick={onLogout} aria-label="Sign out" title="Sign out"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-ink-mute hover:text-red-600 hover:bg-white transition-colors">
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Shell({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
 
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
-  };
-
-  const NavLink = ({ item, onClick }) => {
-    const active = location.pathname === item.path;
-    return (
-      <Link to={item.path} onClick={onClick}
-        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group
-          ${active
-            ? 'bg-gradient-to-r from-primary-500/20 to-accent-purple/10 text-white border border-primary-500/30'
-            : 'text-white/50 hover:text-white hover:bg-white/8'
-          }`}>
-        <item.icon className={`w-5 h-5 flex-shrink-0 ${active ? 'text-primary-400' : 'group-hover:text-primary-400 transition-colors'}`} />
-        <span className="flex-1">{item.label}</span>
-        {active && <ChevronRight className="w-3.5 h-3.5 text-primary-400" />}
-      </Link>
-    );
-  };
-
-  const SidebarContent = ({ onClose }) => (
-    <div className="flex flex-col h-full">
-      {/* Logo */}
-      <div className="p-5 border-b border-white/8">
-        <Link to="/dashboard" onClick={onClose} className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center shadow-lg shadow-primary-500/30">
-            <Brain className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <p className="font-black text-white text-sm">CareerIQ AI</p>
-            <p className="text-white/50 text-xs">Employment Platform</p>
-          </div>
-        </Link>
-      </div>
-
-
-
-      {/* Main Nav */}
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-        <p className="text-white/40 text-xs font-semibold uppercase tracking-wider px-3 mb-2">AI Agents</p>
-        {navItems.map(item => (
-          <NavLink key={item.path} item={item} onClick={onClose} />
-        ))}
-
-        <div className="pt-4 pb-1">
-          <p className="text-white/40 text-xs font-semibold uppercase tracking-wider px-3 mb-2">Intelligence</p>
-        </div>
-        {intelligenceItems.map(item => (
-          <NavLink key={item.path} item={item} onClick={onClose} />
-        ))}
-
-        <div className="pt-4 pb-1">
-          <p className="text-white/40 text-xs font-semibold uppercase tracking-wider px-3 mb-2">Account</p>
-        </div>
-        {bottomItems.map(item => (
-          <NavLink key={item.path} item={item} onClick={onClose} />
-        ))}
-      </nav>
-
-      {/* User */}
-      <div className="p-4 border-t border-white/8">
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 mb-3">
-          <img
-            src={user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
-            alt="avatar" className="w-8 h-8 rounded-full border border-white/20 flex-shrink-0"
-          />
-          <div className="flex-1 min-w-0">
-            <p className="text-white text-sm font-semibold truncate">{user?.fullName}</p>
-            <p className="text-white/50 text-xs truncate">{user?.email}</p>
-          </div>
-        </div>
-        <button onClick={handleLogout}
-          className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-white/50 hover:text-red-400 hover:bg-red-500/10 text-sm transition-all">
-          <LogOut className="w-4 h-4" /> Sign Out
-        </button>
-      </div>
-    </div>
-  );
+  const handleLogout = async () => { await logout(); navigate('/login'); };
+  const sidebarProps = { pathname, user, onLogout: handleLogout };
 
   return (
-    <div className="min-h-screen flex bg-dark-900">
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-64 flex-col bg-dark-800/80 border-r border-white/8 backdrop-blur-xl fixed inset-y-0 left-0 z-30">
-        <SidebarContent onClose={() => {}} />
-      </aside>
+    <ShellContext.Provider value={true}>
+      <div className="min-h-screen">
+        {/* Desktop: a floating panel, not a wall */}
+        <aside className="hidden lg:flex fixed left-4 top-4 bottom-4 w-64 z-30 flex-col rounded-[28px] bg-white/80 backdrop-blur-xl border border-primary-300/40 shadow-soft-lg">
+          <SidebarContent {...sidebarProps} group="desktop" onClose={() => {}} />
+        </aside>
 
-      {/* Mobile Overlay */}
-      <AnimatePresence>
-        {sidebarOpen && (
-          <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setSidebarOpen(false)}
-              className="fixed inset-0 bg-black/60 z-40 lg:hidden" />
-            <motion.aside
-              initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-0 top-0 bottom-0 w-72 bg-dark-800 border-r border-white/10 z-50 lg:hidden">
-              <button onClick={() => setSidebarOpen(false)} className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
-                <X className="w-5 h-5" />
-              </button>
-              <SidebarContent onClose={() => setSidebarOpen(false)} />
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+        {/* Mobile drawer */}
+        <AnimatePresence>
+          {sidebarOpen && (
+            <>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                onClick={() => setSidebarOpen(false)} className="fixed inset-0 bg-ink/40 backdrop-blur-sm z-40 lg:hidden" />
+              <motion.aside
+                initial={{ x: -300 }} animate={{ x: 0 }} exit={{ x: -300 }}
+                transition={{ type: 'spring', damping: 28, stiffness: 260 }}
+                className="fixed left-3 top-3 bottom-3 w-72 max-w-[85vw] bg-canvas border border-primary-300/50 rounded-[28px] shadow-soft-lg z-50 lg:hidden">
+                <button onClick={() => setSidebarOpen(false)} aria-label="Close menu"
+                  className="absolute top-5 right-4 w-8 h-8 rounded-full flex items-center justify-center text-ink-mute hover:bg-primary-100 transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+                <SidebarContent {...sidebarProps} group="mobile" onClose={() => setSidebarOpen(false)} />
+              </motion.aside>
+            </>
+          )}
+        </AnimatePresence>
 
-      {/* Main Content */}
-      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
-        {/* Mobile Header */}
-        <header className="lg:hidden flex items-center gap-4 px-4 py-4 bg-dark-800/80 backdrop-blur-xl border-b border-white/8 sticky top-0 z-20">
-          <button onClick={() => setSidebarOpen(true)} className="text-white/50 hover:text-white transition-colors">
-            <Menu className="w-6 h-6" />
-          </button>
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
-              <Brain className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-black text-white text-sm">CareerIQ AI</span>
-          </Link>
-        </header>
+        <div className="lg:pl-72 min-h-screen flex flex-col">
+          <header className="lg:hidden sticky top-3 z-20 mx-3 mt-3 flex items-center gap-3 pl-2 pr-4 py-2 rounded-full bg-white/85 backdrop-blur-xl border border-primary-300/40 shadow-soft">
+            <button onClick={() => setSidebarOpen(true)} aria-label="Open menu"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-primary-500 hover:bg-primary-100 transition-colors">
+              <Menu className="w-5 h-5" />
+            </button>
+            <Brand to="/dashboard" size={28} />
+          </header>
 
-        <main className="flex-1 p-4 lg:p-8">
-          {children}
-        </main>
+          <main className="flex-1 p-4 lg:p-8 lg:pl-6">{children}</main>
+        </div>
+        <FloatingAIChatbot />
       </div>
-      <FloatingAIChatbot />
-    </div>
+    </ShellContext.Provider>
   );
+}
+
+const InShellLoader = () => (
+  <div className="py-32 flex justify-center" role="status" aria-label="Loading">
+    <div className="flex gap-1.5">
+      {[0, 1, 2].map((i) => (
+        <motion.span key={i} className="block h-3 w-8 rounded-full bg-primary-300"
+          animate={{ opacity: [0.35, 1, 0.35], scaleX: [0.85, 1, 0.85] }}
+          transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.15 }} />
+      ))}
+    </div>
+  </div>
+);
+
+/** Route element: persistent sidebar + animated page swap. */
+export function AppShell() {
+  const location = useLocation();
+  const outlet = useOutlet();
+  return (
+    <Shell>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Suspense fallback={<InShellLoader />}>{outlet}</Suspense>
+        </motion.div>
+      </AnimatePresence>
+    </Shell>
+  );
+}
+
+export default function DashboardLayout({ children }) {
+  const inShell = useContext(ShellContext);
+  return inShell ? <>{children}</> : <Shell>{children}</Shell>;
 }

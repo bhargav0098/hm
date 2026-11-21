@@ -25,20 +25,20 @@ const NEXT_STEPS = [
 ];
 
 const dayColors = [
-  'from-primary-500 to-accent-purple',
-  'from-accent-cyan to-accent-blue',
-  'from-accent-green to-teal-500',
-  'from-accent-yellow from-pink-neon to-purple-neon',
-  'from-pink-500 to-rose-500',
-  'from-purple-500 to-violet-500',
-  'from-emerald-500 from-cyan-neon to-emerald-neon',
+  'from-primary-500 to-primary-400',
+  'from-primary-600 to-primary-400',
+  'from-primary-700 to-primary-500',
+  'from-primary-500 to-primary-400',
+  'from-primary-600 to-primary-500',
+  'from-primary-400 to-primary-500',
+  'from-primary-700 to-primary-400',
 ];
 
 const priorityColors = {
-  critical: 'border-red-500/40 bg-red-500/10 text-red-400',
+  critical: 'border-red-500/40 bg-red-500/10 text-red-600',
   high: 'border-pink-neon/40 bg-pink-neon/10 text-pink-neon',
   medium: 'border-pink-neon/40 bg-pink-neon/10 text-pink-neon',
-  low: 'border-green-500/40 bg-green-500/10 text-green-400',
+  low: 'border-green-500/40 bg-green-500/10 text-green-700',
 };
 
 export default function RoadmapPage() {
@@ -170,17 +170,17 @@ export default function RoadmapPage() {
       <!DOCTYPE html><html><head>
       <title>Career Roadmap - ${role}</title>
       <style>
-        body{font-family:'Segoe UI',sans-serif;background:#fff;color:#1a1a2e;padding:32px;max-width:900px;margin:0 auto}
-        h1{color:#6366f1;font-size:26px;margin-bottom:4px}
-        h2{color:#4f46e5;font-size:16px;margin:24px 0 10px;border-bottom:2px solid #e0e7ff;padding-bottom:6px}
+        body{font-family:'Segoe UI',sans-serif;background:#fff;color:#1E1042;padding:32px;max-width:900px;margin:0 auto}
+        h1{color:#5B21B6;font-size:26px;margin-bottom:4px}
+        h2{color:#5B21B6;font-size:16px;margin:24px 0 10px;border-bottom:2px solid #EDE9FE;padding-bottom:6px}
         .meta{color:#6b7280;font-size:12px;margin-bottom:20px}
-        .goal{background:#f5f3ff;border-left:4px solid #6366f1;padding:12px 16px;border-radius:6px;margin:16px 0;font-weight:600;color:#4338ca}
+        .goal{background:#FAF9FF;border-left:4px solid #5B21B6;padding:12px 16px;border-radius:6px;margin:16px 0;font-weight:600;color:#4C1B9A}
         .day-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px;margin:8px 0;page-break-inside:avoid}
         .day-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-        .day-badge{background:#6366f1;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;flex-shrink:0}
+        .day-badge{background:#5B21B6;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;flex-shrink:0}
         .day-section{color:#374151;font-size:12px;margin:5px 0;padding:4px 0}
         .day-checkpoint{background:#ecfdf5;border-left:3px solid #10b981;padding:6px 10px;border-radius:4px;margin-top:8px;font-size:12px;color:#065f46}
-        .project-card{background:#eff6ff;border:1px solid #bfdbfe;padding:12px;border-radius:8px;margin:8px 0}
+        .project-card{background:#F3EFFF;border:1px solid #C7B3FF;padding:12px;border-radius:8px;margin:8px 0}
         .outcome{background:#f0fdf4;border:1px solid #86efac;padding:14px;border-radius:8px;margin-top:20px;font-weight:700;color:#166534}
         @media print{body{padding:16px}.day-card{page-break-inside:avoid}}
       </style></head><body>
@@ -200,7 +200,7 @@ export default function RoadmapPage() {
           <div class="project-card">
             <strong>${p.name}</strong> ${p.day ? `<em>— Due by Day ${p.day}</em>` : ''}<br>
             <span style="color:#4b5563;font-size:12px">${p.description}</span><br>
-            <span style="color:#6366f1;font-size:11px">Skills: ${p.skills?.join(', ')}</span><br>
+            <span style="color:#5B21B6;font-size:11px">Skills: ${p.skills?.join(', ')}</span><br>
             <span style="color:#059669;font-size:11px">✓ Deliverable: ${p.deliverable}</span>
           </div>
         `).join('')}
@@ -229,12 +229,12 @@ export default function RoadmapPage() {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent-green to-teal-500 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent-green to-emerald-600 flex items-center justify-center">
             <Target className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-white">Career Roadmap Agent</h1>
-            <p className="text-white/50 text-sm">AI generates a personalized day-by-day plan for your exact target role</p>
+            <h1 className="text-2xl font-black text-ink">Career Roadmap Agent</h1>
+            <p className="text-ink/70 text-sm">AI generates a personalized day-by-day plan for your exact target role</p>
           </div>
         </motion.div>
 
@@ -242,18 +242,18 @@ export default function RoadmapPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="glass-card p-6 space-y-5">
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">Target Role</label>
+              <label className="text-sm text-ink/70 font-medium mb-1.5 block">Target Role</label>
               <RoleSelect value={targetRole} onChange={(label) => { setTargetRole(label); setSkills([]); }} />
             </div>
             <div>
-              <label className="text-sm text-white/50 font-medium mb-1.5 block">Experience Level</label>
+              <label className="text-sm text-ink/70 font-medium mb-1.5 block">Experience Level</label>
               <div className="grid grid-cols-4 gap-2">
                 {EXPERIENCE_LEVELS.map(lvl => (
                   <button key={lvl.value} type="button" onClick={() => setExperienceLevel(lvl.value)}
                     className={`px-2 py-3 rounded-xl border text-center transition-all
                       ${experienceLevel === lvl.value
-                        ? 'border-primary-500/60 bg-primary-500/20 text-white'
-                        : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white'}`}>
+                        ? 'border-primary-500/60 bg-primary-500/20 text-ink'
+                        : 'border-primary-300/40 bg-white/70 text-ink/70 hover:border-primary-400/50 hover:text-primary-600'}`}>
                     <p className="font-bold text-xs">{lvl.label}</p>
                   </button>
                 ))}
@@ -262,20 +262,20 @@ export default function RoadmapPage() {
           </div>
 
           <div>
-            <label className="text-sm text-white/50 font-medium mb-1.5 block">Current Skills</label>
+            <label className="text-sm text-ink/70 font-medium mb-1.5 block">Current Skills</label>
             <SkillMultiSelect roleLabel={targetRole} value={skills} onChange={setSkills} />
           </div>
 
           {/* Duration Selector */}
           <div>
-            <label className="text-sm text-white/50 font-medium mb-3 block">Roadmap Duration</label>
+            <label className="text-sm text-ink/70 font-medium mb-3 block">Roadmap Duration</label>
             <div className="grid grid-cols-5 gap-2">
               {DURATION_OPTIONS.map(opt => (
                 <button key={opt.value} onClick={() => setDuration(opt.value)}
                   className={`p-3 rounded-xl border text-center transition-all
                     ${duration === opt.value
-                      ? 'border-primary-500/60 bg-primary-500/20 text-white'
-                      : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white'}`}>
+                      ? 'border-primary-500/60 bg-primary-500/20 text-ink'
+                      : 'border-primary-300/40 bg-white/70 text-ink/70 hover:border-primary-400/50 hover:text-primary-600'}`}>
                   <p className="font-bold text-sm">{opt.label}</p>
                   <p className="text-xs opacity-70 mt-0.5">{opt.desc}</p>
                 </button>
@@ -287,7 +287,7 @@ export default function RoadmapPage() {
             whileHover={{ scale: loading ? 1 : 1.01 }} whileTap={{ scale: 0.99 }}
             className="btn-primary w-full flex items-center justify-center gap-2 min-h-[48px]">
             {loading
-              ? <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin flex-shrink-0" /><span className="text-sm animate-pulse">{loadingMsg}</span></>
+              ? <><div className="w-5 h-5 border-2 border-primary-400/40 border-t-white rounded-full animate-spin flex-shrink-0" /><span className="text-sm animate-pulse">{loadingMsg}</span></>
               : <><Zap className="w-5 h-5" /> Generate My {duration}-Day AI Roadmap</>}
           </motion.button>
         </motion.div>
@@ -300,9 +300,9 @@ export default function RoadmapPage() {
               <div className="glass-card p-5 border border-primary-500/30">
                 <div className="flex items-start justify-between flex-wrap gap-4">
                   <div>
-                    <h2 className="text-white font-black text-xl">{result.role || targetRole}</h2>
-                    <p className="text-white/50 text-sm">{result.duration} • AI-generated personalized plan</p>
-                    <p className="text-primary-400 text-sm mt-1 font-medium">🎯 {result.goal}</p>
+                    <h2 className="text-ink font-black text-xl">{result.role || targetRole}</h2>
+                    <p className="text-ink/70 text-sm">{result.duration} • AI-generated personalized plan</p>
+                    <p className="text-primary-500 text-sm mt-1 font-medium">🎯 {result.goal}</p>
                   </div>
                   <div className="flex gap-2">
                     <button onClick={downloadPDF} className="btn-ghost flex items-center gap-2 text-sm">
@@ -314,11 +314,11 @@ export default function RoadmapPage() {
                 {/* Progress bar (day-by-day only) */}
                 {isDayByDay && (
                   <div className="mt-4">
-                    <div className="flex items-center justify-between text-xs text-white/50 mb-1">
+                    <div className="flex items-center justify-between text-xs text-ink/70 mb-1">
                       <span>{completedDays.length} / {result.days.length} days completed</span>
                       <span>{progress}%</span>
                     </div>
-                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-primary-100 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
@@ -333,16 +333,16 @@ export default function RoadmapPage() {
               {isDayByDay && (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-white font-bold text-lg flex items-center gap-2">
-                      <Calendar className="w-5 h-5 text-primary-400" /> {result.days.length}-Day Journey
+                    <h2 className="text-ink font-bold text-lg flex items-center gap-2">
+                      <Calendar className="w-5 h-5 text-primary-500" /> {result.days.length}-Day Journey
                     </h2>
                     <div className="flex gap-2">
                       <button onClick={() => setViewMode('timeline')}
-                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'timeline' ? 'border-primary-500 bg-primary-500/20 text-white' : 'border-white/10 text-white/50'}`}>
+                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'timeline' ? 'border-primary-500 bg-primary-500/20 text-ink' : 'border-primary-300/40 text-ink/70'}`}>
                         Full Detail
                       </button>
                       <button onClick={() => setViewMode('compact')}
-                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'compact' ? 'border-primary-500 bg-primary-500/20 text-white' : 'border-white/10 text-white/50'}`}>
+                        className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${viewMode === 'compact' ? 'border-primary-500 bg-primary-500/20 text-ink' : 'border-primary-300/40 text-ink/70'}`}>
                         Compact
                       </button>
                     </div>
@@ -356,7 +356,7 @@ export default function RoadmapPage() {
                           className={`p-3 rounded-xl border text-left transition-all ${
                             completedDays.includes(day.dayNumber)
                               ? 'bg-green-500/10 border-green-500/30'
-                              : 'bg-white/5 border-white/10 hover:border-primary-500/30'
+                              : 'bg-white/70 border-primary-300/40 hover:border-primary-500/30'
                           }`}>
                           <div className="flex items-center gap-2 mb-1">
                             <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0 ${
@@ -364,9 +364,9 @@ export default function RoadmapPage() {
                             }`}>
                               {completedDays.includes(day.dayNumber) ? '✓' : day.dayNumber}
                             </span>
-                            <span className={`text-xs font-semibold truncate ${completedDays.includes(day.dayNumber) ? 'text-green-400 line-through' : 'text-white'}`}>{day.theme}</span>
+                            <span className={`text-xs font-semibold truncate ${completedDays.includes(day.dayNumber) ? 'text-green-700 line-through' : 'text-ink'}`}>{day.theme}</span>
                           </div>
-                          <p className="text-white/50 text-xs truncate">{day.learning}</p>
+                          <p className="text-ink/70 text-xs truncate">{day.learning}</p>
                         </motion.button>
                       ))}
                     </div>
@@ -376,33 +376,33 @@ export default function RoadmapPage() {
                         <motion.div key={idx} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: Math.min(idx * 0.02, 0.5) }}>
                           <div
                             className={`glass-card overflow-hidden border transition-all cursor-pointer ${
-                              completedDays.includes(day.dayNumber) ? 'border-green-500/30 bg-green-500/5' : 'border-white/8 hover:border-primary-500/30'
+                              completedDays.includes(day.dayNumber) ? 'border-green-500/30 bg-green-500/5' : 'border-primary-300/40 hover:border-primary-500/30'
                             }`}>
                             {/* Day header */}
                             <div className="p-4 flex items-center gap-4" onClick={() => setExpandedDay(expandedDay === idx ? null : idx)}>
                               <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${dayColors[idx % dayColors.length]} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                                <span className="text-white text-xs font-black">{day.dayNumber}</span>
+                                <span className="text-ink text-xs font-black">{day.dayNumber}</span>
                               </div>
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-0.5">
-                                  <span className={`font-semibold text-sm ${completedDays.includes(day.dayNumber) ? 'text-green-400' : 'text-white'}`}>{day.theme}</span>
+                                  <span className={`font-semibold text-sm ${completedDays.includes(day.dayNumber) ? 'text-green-700' : 'text-ink'}`}>{day.theme}</span>
                                   {day.dayNumber % 7 === 0 && (
                                     <span className="text-xs px-2 py-0.5 rounded-full bg-accent-yellow/20 text-accent-yellow border border-accent-yellow/30">🏆 Project Day</span>
                                   )}
                                 </div>
-                                <p className="text-white/50 text-xs">{day.learning}</p>
+                                <p className="text-ink/70 text-xs">{day.learning}</p>
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 <button
                                   onClick={e => { e.stopPropagation(); toggleDay(day.dayNumber); }}
                                   className={`text-xs px-3 py-1 rounded-lg border transition-all ${
                                     completedDays.includes(day.dayNumber)
-                                      ? 'border-green-500/40 bg-green-500/20 text-green-400'
-                                      : 'border-white/10 text-white/50 hover:border-green-500/30 hover:text-green-400'
+                                      ? 'border-green-500/40 bg-green-500/20 text-green-700'
+                                      : 'border-primary-300/40 text-ink/70 hover:border-green-500/30 hover:text-green-700'
                                   }`}>
                                   {completedDays.includes(day.dayNumber) ? '✓ Done' : 'Mark Done'}
                                 </button>
-                                <span className="text-white/40 text-xs">{expandedDay === idx ? '▲' : '▼'}</span>
+                                <span className="text-ink/60 text-xs">{expandedDay === idx ? '▲' : '▼'}</span>
                               </div>
                             </div>
 
@@ -410,35 +410,35 @@ export default function RoadmapPage() {
                             <AnimatePresence>
                               {expandedDay === idx && (
                                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                                  className="overflow-hidden border-t border-white/8">
+                                  className="overflow-hidden border-t border-primary-300/40">
                                   <div className="p-4 grid sm:grid-cols-2 gap-3">
                                     <div className="bg-cyan-neon/10 border border-cyan-neon/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
                                         <BookOpen className="w-4 h-4 text-cyan-neon" />
                                         <span className="text-cyan-neon text-xs font-bold uppercase tracking-wider">Learn</span>
                                       </div>
-                                      <p className="text-white/70 text-sm">{day.learning}</p>
+                                      <p className="text-ink/80 text-sm">{day.learning}</p>
                                     </div>
                                     <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
-                                        <BarChart3 className="w-4 h-4 text-purple-400" />
-                                        <span className="text-purple-400 text-xs font-bold uppercase tracking-wider">Practice</span>
+                                        <BarChart3 className="w-4 h-4 text-primary-500" />
+                                        <span className="text-primary-500 text-xs font-bold uppercase tracking-wider">Practice</span>
                                       </div>
-                                      <p className="text-white/70 text-sm">{day.practice}</p>
+                                      <p className="text-ink/80 text-sm">{day.practice}</p>
                                     </div>
                                     <div className="bg-pink-neon/10 border border-pink-neon/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
                                         <Hammer className="w-4 h-4 text-pink-neon" />
                                         <span className="text-pink-neon text-xs font-bold uppercase tracking-wider">Build</span>
                                       </div>
-                                      <p className="text-white/70 text-sm">{day.build}</p>
+                                      <p className="text-ink/80 text-sm">{day.build}</p>
                                     </div>
                                     <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-xl">
                                       <div className="flex items-center gap-2 mb-2">
-                                        <CheckCircle className="w-4 h-4 text-green-400" />
-                                        <span className="text-green-400 text-xs font-bold uppercase tracking-wider">Checkpoint</span>
+                                        <CheckCircle className="w-4 h-4 text-green-700" />
+                                        <span className="text-green-700 text-xs font-bold uppercase tracking-wider">Checkpoint</span>
                                       </div>
-                                      <p className="text-white/70 text-sm">{day.checkpoint}</p>
+                                      <p className="text-ink/80 text-sm">{day.checkpoint}</p>
                                     </div>
                                   </div>
                                 </motion.div>
@@ -455,31 +455,31 @@ export default function RoadmapPage() {
               {/* ── WEEKLY VIEW ── */}
               {isWeekly && (
                 <div className="space-y-4">
-                  <h2 className="text-white font-bold text-lg flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-primary-400" /> {result.weeks.length}-Week Plan
+                  <h2 className="text-ink font-bold text-lg flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-primary-500" /> {result.weeks.length}-Week Plan
                   </h2>
                   {result.weeks.map((w, idx) => (
                     <motion.div key={idx} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.08 }} className="flex gap-4">
                       <div className="flex flex-col items-center">
                         <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${dayColors[idx % dayColors.length]} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                          <span className="text-white text-xs font-black">{idx + 1}</span>
+                          <span className="text-ink text-xs font-black">{idx + 1}</span>
                         </div>
-                        {idx < result.weeks.length - 1 && <div className="w-0.5 h-full mt-2 bg-white/10 min-h-8" />}
+                        {idx < result.weeks.length - 1 && <div className="w-0.5 h-full mt-2 bg-primary-100 min-h-8" />}
                       </div>
                       <div className="flex-1 glass-card p-5 mb-2">
                         <div className="flex items-center justify-between mb-3">
                           <span className={`text-sm font-bold bg-gradient-to-r ${dayColors[idx % dayColors.length]} bg-clip-text text-transparent`}>{w.week}</span>
-                          <span className="text-xs text-white/50 bg-white/5 px-2 py-0.5 rounded-lg">{w.theme}</span>
+                          <span className="text-xs text-ink/70 bg-white/70 px-2 py-0.5 rounded-lg">{w.theme}</span>
                         </div>
                         <div className="flex flex-wrap gap-1 mb-3">
                           {w.skillsToLearn?.map((s, i) => (
-                            <span key={i} className="text-xs bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded">{s}</span>
+                            <span key={i} className="text-xs bg-primary-500/20 text-primary-600 px-2 py-0.5 rounded">{s}</span>
                           ))}
                         </div>
                         <div className="space-y-1.5 mb-3">
                           {w.dailyTasks?.map((t, i) => (
-                            <div key={i} className="flex items-center gap-2 text-sm text-white/50">
-                              <span className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/50 flex-shrink-0">{i+1}</span>
+                            <div key={i} className="flex items-center gap-2 text-sm text-ink/70">
+                              <span className="w-4 h-4 rounded-full bg-primary-100 flex items-center justify-center text-xs text-ink/70 flex-shrink-0">{i+1}</span>
                               {t}
                             </div>
                           ))}
@@ -488,7 +488,7 @@ export default function RoadmapPage() {
                           <p className="text-xs text-pink-neon font-medium">🔨 Weekend Project: {w.weekendProject || w.project}</p>
                         </div>
                         <div className="bg-green-500/10 border border-green-500/20 p-2 rounded-lg mt-2">
-                          <p className="text-xs text-green-400 font-medium">✓ Checkpoint: {w.checkpoint}</p>
+                          <p className="text-xs text-green-700 font-medium">✓ Checkpoint: {w.checkpoint}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -499,35 +499,35 @@ export default function RoadmapPage() {
               {/* ── MONTHLY VIEW ── */}
               {isMonthly && (
                 <div className="space-y-4">
-                  <h2 className="text-white font-bold text-lg flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-primary-400" /> {result.months.length}-Month Career Plan
+                  <h2 className="text-ink font-bold text-lg flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-primary-500" /> {result.months.length}-Month Career Plan
                   </h2>
                   {result.months.map((m, idx) => (
                     <motion.div key={idx} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.1 }} className="glass-card p-5">
                       <div className="flex items-center gap-3 mb-4">
                         <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${dayColors[idx % dayColors.length]} flex items-center justify-center flex-shrink-0`}>
-                          <span className="text-white text-xs font-black">{idx + 1}</span>
+                          <span className="text-ink text-xs font-black">{idx + 1}</span>
                         </div>
                         <div>
                           <span className={`font-bold bg-gradient-to-r ${dayColors[idx % dayColors.length]} bg-clip-text text-transparent`}>{m.month}</span>
-                          <p className="text-white/50 text-xs">{m.theme}</p>
+                          <p className="text-ink/70 text-xs">{m.theme}</p>
                         </div>
                       </div>
                       <div className="grid sm:grid-cols-2 gap-3 mb-3">
-                        <div className="bg-white/5 p-3 rounded-xl">
-                          <p className="text-xs text-white/50 mb-1 font-medium">Skills</p>
-                          <div className="flex flex-wrap gap-1">{m.skills?.map((s, i) => <span key={i} className="text-xs bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded">{s}</span>)}</div>
+                        <div className="bg-white/70 p-3 rounded-xl">
+                          <p className="text-xs text-ink/70 mb-1 font-medium">Skills</p>
+                          <div className="flex flex-wrap gap-1">{m.skills?.map((s, i) => <span key={i} className="text-xs bg-primary-500/20 text-primary-600 px-2 py-0.5 rounded">{s}</span>)}</div>
                         </div>
-                        <div className="bg-white/5 p-3 rounded-xl">
-                          <p className="text-xs text-white/50 mb-1 font-medium">Weekly Focus</p>
-                          <div className="space-y-1">{m.weeklyFocus?.map((wf, i) => <p key={i} className="text-xs text-white/50">{wf}</p>)}</div>
+                        <div className="bg-white/70 p-3 rounded-xl">
+                          <p className="text-xs text-ink/70 mb-1 font-medium">Weekly Focus</p>
+                          <div className="space-y-1">{m.weeklyFocus?.map((wf, i) => <p key={i} className="text-xs text-ink/70">{wf}</p>)}</div>
                         </div>
                       </div>
                       <div className="bg-pink-neon/10 border border-pink-neon/20 p-2 rounded-lg mb-2">
                         <p className="text-xs text-pink-neon font-medium">🔨 Project: {m.project}</p>
                       </div>
                       <div className="bg-green-500/10 border border-green-500/20 p-2 rounded-lg">
-                        <p className="text-xs text-green-400 font-medium">✓ Milestone: {m.milestone}</p>
+                        <p className="text-xs text-green-700 font-medium">✓ Milestone: {m.milestone}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -537,24 +537,24 @@ export default function RoadmapPage() {
               {/* ── PORTFOLIO PROJECTS ── */}
               {result.projects?.length > 0 && (
                 <div className="glass-card p-6">
-                  <h2 className="text-white font-bold mb-4 flex items-center gap-2">
+                  <h2 className="text-ink font-bold mb-4 flex items-center gap-2">
                     <Code className="w-5 h-5 text-accent-cyan" /> Portfolio Projects
                   </h2>
                   <div className="grid sm:grid-cols-3 gap-4">
                     {result.projects.map((p, i) => (
-                      <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/8 hover:border-accent-cyan/30 transition-all">
+                      <div key={i} className="p-4 rounded-xl bg-white/70 border border-primary-300/40 hover:border-accent-cyan/30 transition-all">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-white font-semibold text-sm">{p.name}</span>
-                          {p.day && <span className="text-xs text-white/50">Day {p.day}</span>}
+                          <span className="text-ink font-semibold text-sm">{p.name}</span>
+                          {p.day && <span className="text-xs text-ink/70">Day {p.day}</span>}
                         </div>
-                        <p className="text-white/50 text-xs mb-3">{p.description}</p>
+                        <p className="text-ink/70 text-xs mb-3">{p.description}</p>
                         <div className="flex flex-wrap gap-1 mb-2">
                           {p.skills?.map((s, si) => (
                             <span key={si} className="text-xs bg-accent-cyan/10 text-accent-cyan px-1.5 py-0.5 rounded">{s}</span>
                           ))}
                         </div>
                         <div className="bg-green-500/10 border border-green-500/20 px-2 py-1.5 rounded-lg">
-                          <p className="text-xs text-green-400">✓ {p.deliverable}</p>
+                          <p className="text-xs text-green-700">✓ {p.deliverable}</p>
                         </div>
                       </div>
                     ))}
@@ -567,29 +567,29 @@ export default function RoadmapPage() {
                 <div className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-accent-green flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-white font-bold text-sm mb-1">Final Outcome</p>
-                    <p className="text-white/70 text-sm">{result.finalOutcome}</p>
+                    <p className="text-ink font-bold text-sm mb-1">Final Outcome</p>
+                    <p className="text-ink/80 text-sm">{result.finalOutcome}</p>
                   </div>
                 </div>
               </div>
 
               {/* ── NEXT STEPS GUIDE ── */}
               <div className="glass-card p-6 border border-primary-500/20">
-                <h2 className="text-white font-bold mb-2 flex items-center gap-2">
-                  <ArrowRight className="w-5 h-5 text-primary-400" /> Follow These Steps Next
+                <h2 className="text-ink font-bold mb-2 flex items-center gap-2">
+                  <ArrowRight className="w-5 h-5 text-primary-500" /> Follow These Steps Next
                 </h2>
-                <p className="text-white/50 text-sm mb-4">Your roadmap is ready. Complete each step below to maximize your chances of getting hired.</p>
+                <p className="text-ink/70 text-sm mb-4">Your roadmap is ready. Complete each step below to maximize your chances of getting hired.</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {NEXT_STEPS.map((step) => (
                     <Link key={step.path} to={step.path}>
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                        className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/8 hover:border-primary-500/30 transition-all cursor-pointer group">
+                        className="flex items-center gap-3 p-3 rounded-xl bg-white/70 border border-primary-300/40 hover:border-primary-500/30 transition-all cursor-pointer group">
                         <div className={`w-9 h-9 rounded-xl ${step.color} flex items-center justify-center flex-shrink-0`}>
                           <step.icon className="w-5 h-5 text-white" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-white text-sm font-semibold">{step.label}</p>
-                          <p className="text-white/50 text-xs truncate">{step.desc}</p>
+                          <p className="text-ink text-sm font-semibold">{step.label}</p>
+                          <p className="text-ink/70 text-xs truncate">{step.desc}</p>
                         </div>
                       </motion.div>
                     </Link>

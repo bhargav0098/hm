@@ -44,7 +44,7 @@ function ResumePreview({ resume, template, profilePic }) {
 
   if (template === 'professional') {
     return (
-      <div className="bg-white text-gray-900 text-xs font-sans min-h-[600px] flex">
+      <div className="bg-white text-ink text-xs font-sans min-h-[600px] flex">
         <div className="w-1/3 bg-purple-700 text-white p-4 space-y-4">
           <div className="text-center">
             {profilePic ? (
@@ -57,7 +57,7 @@ function ResumePreview({ resume, template, profilePic }) {
             <h1 className="font-bold text-sm leading-tight">{p.fullName || 'Your Name'}</h1>
           </div>
           <div className="space-y-1">
-            <p className="text-purple-200 font-semibold text-xs uppercase tracking-wide">Contact</p>
+            <p className="text-primary-500 font-semibold text-xs uppercase tracking-wide">Contact</p>
             {p.email && <p className="text-xs break-all">{p.email}</p>}
             {p.phone && <p className="text-xs">{p.phone}</p>}
             {p.location && <p className="text-xs">{p.location}</p>}
@@ -66,7 +66,7 @@ function ResumePreview({ resume, template, profilePic }) {
           </div>
           {resume.skills?.filter(Boolean).length > 0 && (
             <div>
-              <p className="text-purple-200 font-semibold text-xs uppercase tracking-wide mb-1">Skills</p>
+              <p className="text-primary-500 font-semibold text-xs uppercase tracking-wide mb-1">Skills</p>
               <div className="flex flex-wrap gap-1">
                 {resume.skills.filter(Boolean).map((s, i) => (
                   <span key={i} className="bg-purple-600 text-white text-xs px-1.5 py-0.5 rounded">{s}</span>
@@ -76,11 +76,11 @@ function ResumePreview({ resume, template, profilePic }) {
           )}
           {resume.certifications?.filter(c => c.name).length > 0 && (
             <div>
-              <p className="text-purple-200 font-semibold text-xs uppercase tracking-wide mb-1">Certifications</p>
+              <p className="text-primary-500 font-semibold text-xs uppercase tracking-wide mb-1">Certifications</p>
               {resume.certifications.filter(c => c.name).map((c, i) => (
                 <div key={i} className="mb-1">
                   <p className="text-xs font-medium">{c.name}</p>
-                  {c.issuer && <p className="text-purple-300 text-xs">{c.issuer} {c.year ? `(${c.year})` : ''}</p>}
+                  {c.issuer && <p className="text-primary-500 text-xs">{c.issuer} {c.year ? `(${c.year})` : ''}</p>}
                 </div>
               ))}
             </div>
@@ -90,7 +90,7 @@ function ResumePreview({ resume, template, profilePic }) {
           {resume.summary && (
             <div>
               <h2 className="text-purple-700 font-bold text-xs uppercase tracking-wide border-b border-purple-200 pb-1 mb-1">Profile</h2>
-              <p className="text-gray-600 text-xs leading-relaxed">{resume.summary}</p>
+              <p className="text-ink-mute text-xs leading-relaxed">{resume.summary}</p>
             </div>
           )}
           {resume.experience?.filter(e => e.company || e.role).length > 0 && (
@@ -98,9 +98,9 @@ function ResumePreview({ resume, template, profilePic }) {
               <h2 className="text-purple-700 font-bold text-xs uppercase tracking-wide border-b border-purple-200 pb-1 mb-2">Experience</h2>
               {resume.experience.filter(e => e.company || e.role).map((exp, i) => (
                 <div key={i} className="mb-2">
-                  <div className="flex justify-between"><span className="font-semibold text-xs">{exp.role}</span><span className="text-gray-500 text-xs">{exp.duration}</span></div>
+                  <div className="flex justify-between"><span className="font-semibold text-xs">{exp.role}</span><span className="text-ink-mute text-xs">{exp.duration}</span></div>
                   <p className="text-purple-600 text-xs">{exp.company}</p>
-                  {exp.description && <p className="text-gray-600 text-xs mt-0.5">{exp.description}</p>}
+                  {exp.description && <p className="text-ink-mute text-xs mt-0.5">{exp.description}</p>}
                 </div>
               ))}
             </div>
@@ -110,8 +110,8 @@ function ResumePreview({ resume, template, profilePic }) {
               <h2 className="text-purple-700 font-bold text-xs uppercase tracking-wide border-b border-purple-200 pb-1 mb-2">Education</h2>
               {resume.education.filter(e => e.degree || e.institution).map((edu, i) => (
                 <div key={i} className="mb-1">
-                  <div className="flex justify-between"><span className="font-semibold text-xs">{edu.degree}</span><span className="text-gray-500 text-xs">{edu.year}</span></div>
-                  <p className="text-gray-600 text-xs">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p>
+                  <div className="flex justify-between"><span className="font-semibold text-xs">{edu.degree}</span><span className="text-ink-mute text-xs">{edu.year}</span></div>
+                  <p className="text-ink-mute text-xs">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p>
                 </div>
               ))}
             </div>
@@ -122,7 +122,7 @@ function ResumePreview({ resume, template, profilePic }) {
               {resume.projects.filter(p => p.name).map((proj, i) => (
                 <div key={i} className="mb-1">
                   <span className="font-semibold text-xs">{proj.name}</span>
-                  {proj.description && <p className="text-gray-600 text-xs">{proj.description}</p>}
+                  {proj.description && <p className="text-ink-mute text-xs">{proj.description}</p>}
                 </div>
               ))}
             </div>
@@ -134,12 +134,12 @@ function ResumePreview({ resume, template, profilePic }) {
 
   if (template === 'minimal') {
     return (
-      <div className="bg-white text-gray-900 text-xs font-sans p-5 min-h-[600px]">
-        <div className="border-b-2 border-space-border pb-3 mb-3 flex items-start gap-3">
-          {profilePic && <img src={profilePic} alt="profile" className="w-12 h-12 rounded-full object-cover border border-white/10" />}
+      <div className="bg-white text-ink text-xs font-sans p-5 min-h-[600px]">
+        <div className="border-b-2 border-primary-300/40 pb-3 mb-3 flex items-start gap-3">
+          {profilePic && <img src={profilePic} alt="profile" className="w-12 h-12 rounded-full object-cover border border-primary-300/40" />}
           <div>
-            <h1 className="text-lg font-bold text-gray-900">{p.fullName || 'Your Name'}</h1>
-            <div className="flex flex-wrap gap-2 text-gray-500 text-xs mt-1">
+            <h1 className="text-lg font-bold text-ink">{p.fullName || 'Your Name'}</h1>
+            <div className="flex flex-wrap gap-2 text-ink-mute text-xs mt-1">
               {p.email && <span>{p.email}</span>}
               {p.phone && <span>| {p.phone}</span>}
               {p.location && <span>| {p.location}</span>}
@@ -148,51 +148,51 @@ function ResumePreview({ resume, template, profilePic }) {
             </div>
           </div>
         </div>
-        {resume.summary && <div className="mb-3"><p className="text-gray-600 text-xs leading-relaxed">{resume.summary}</p></div>}
+        {resume.summary && <div className="mb-3"><p className="text-ink-mute text-xs leading-relaxed">{resume.summary}</p></div>}
         {resume.experience?.filter(e => e.company || e.role).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">EXPERIENCE</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-ink-mute mb-1">EXPERIENCE</h2>
             {resume.experience.filter(e => e.company || e.role).map((exp, i) => (
               <div key={i} className="mb-2">
-                <div className="flex justify-between"><span className="font-semibold">{exp.role} — {exp.company}</span><span className="text-gray-500">{exp.duration}</span></div>
-                {exp.description && <p className="text-gray-600 mt-0.5">{exp.description}</p>}
+                <div className="flex justify-between"><span className="font-semibold">{exp.role} — {exp.company}</span><span className="text-ink-mute">{exp.duration}</span></div>
+                {exp.description && <p className="text-ink-mute mt-0.5">{exp.description}</p>}
               </div>
             ))}
           </div>
         )}
         {resume.education?.filter(e => e.degree).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">EDUCATION</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-ink-mute mb-1">EDUCATION</h2>
             {resume.education.filter(e => e.degree).map((edu, i) => (
               <div key={i} className="flex justify-between mb-1">
                 <span className="font-semibold">{edu.degree}, {edu.institution}</span>
-                <span className="text-gray-500">{edu.year}</span>
+                <span className="text-ink-mute">{edu.year}</span>
               </div>
             ))}
           </div>
         )}
         {resume.skills?.filter(Boolean).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">SKILLS</h2>
-            <p className="text-gray-600">{resume.skills.filter(Boolean).join(' · ')}</p>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-ink-mute mb-1">SKILLS</h2>
+            <p className="text-ink-mute">{resume.skills.filter(Boolean).join(' · ')}</p>
           </div>
         )}
         {resume.projects?.filter(p => p.name).length > 0 && (
           <div className="mb-3">
-            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">PROJECTS</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-ink-mute mb-1">PROJECTS</h2>
             {resume.projects.filter(p => p.name).map((proj, i) => (
               <div key={i} className="mb-1">
                 <span className="font-semibold">{proj.name}</span>
-                {proj.description && <span className="text-gray-600"> — {proj.description}</span>}
+                {proj.description && <span className="text-ink-mute"> — {proj.description}</span>}
               </div>
             ))}
           </div>
         )}
         {resume.certifications?.filter(c => c.name).length > 0 && (
           <div>
-            <h2 className="font-bold text-xs uppercase tracking-widest text-gray-500 mb-1">CERTIFICATIONS</h2>
+            <h2 className="font-bold text-xs uppercase tracking-widest text-ink-mute mb-1">CERTIFICATIONS</h2>
             {resume.certifications.filter(c => c.name).map((c, i) => (
-              <p key={i} className="text-gray-600 text-xs">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}{c.year ? ` (${c.year})` : ''}</p>
+              <p key={i} className="text-ink-mute text-xs">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}{c.year ? ` (${c.year})` : ''}</p>
             ))}
           </div>
         )}
@@ -202,18 +202,18 @@ function ResumePreview({ resume, template, profilePic }) {
 
   // Modern (default)
   return (
-    <div className="bg-white text-gray-900 text-xs font-sans min-h-[600px]">
-      <div className="bg-gradient-to-r from-purple-600 to-purple-600 text-white p-5">
+    <div className="bg-white text-ink text-xs font-sans min-h-[600px]">
+      <div className="bg-gradient-to-r from-primary-500 to-primary-500 text-white p-5">
         <div className="flex items-center gap-4">
-          {profilePic && <img src={profilePic} alt="profile" className="w-16 h-16 rounded-full object-cover border-2 border-white/40 flex-shrink-0" />}
+          {profilePic && <img src={profilePic} alt="profile" className="w-16 h-16 rounded-full object-cover border-2 border-primary-400/50 flex-shrink-0" />}
           <div>
             <h1 className="text-xl font-bold">{p.fullName || 'Your Name'}</h1>
-            <div className="flex flex-wrap gap-3 mt-1 text-purple-100 text-xs">
+            <div className="flex flex-wrap gap-3 mt-1 text-primary-500 text-xs">
               {p.email && <span>{p.email}</span>}
               {p.phone && <span>{p.phone}</span>}
               {p.location && <span>{p.location}</span>}
             </div>
-            <div className="flex flex-wrap gap-3 mt-1 text-purple-200 text-xs">
+            <div className="flex flex-wrap gap-3 mt-1 text-primary-500 text-xs">
               {p.linkedin && <span>{p.linkedin}</span>}
               {p.github && <span>{p.github}</span>}
               {p.website && <span>{p.website}</span>}
@@ -225,7 +225,7 @@ function ResumePreview({ resume, template, profilePic }) {
         {resume.summary && (
           <div>
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-1">Professional Summary</h2>
-            <p className="text-gray-600 leading-relaxed">{resume.summary}</p>
+            <p className="text-ink-mute leading-relaxed">{resume.summary}</p>
           </div>
         )}
         {resume.experience?.filter(e => e.company || e.role).length > 0 && (
@@ -234,10 +234,10 @@ function ResumePreview({ resume, template, profilePic }) {
             {resume.experience.filter(e => e.company || e.role).map((exp, i) => (
               <div key={i} className="mb-3 pl-3 border-l-2 border-purple-200">
                 <div className="flex justify-between items-start">
-                  <div><p className="font-bold text-gray-800">{exp.role}</p><p className="text-purple-500">{exp.company}</p></div>
-                  <span className="text-gray-500 text-xs whitespace-nowrap ml-2">{exp.duration}</span>
+                  <div><p className="font-bold text-ink">{exp.role}</p><p className="text-primary-500">{exp.company}</p></div>
+                  <span className="text-ink-mute text-xs whitespace-nowrap ml-2">{exp.duration}</span>
                 </div>
-                {exp.description && <p className="text-gray-600 mt-1 leading-relaxed">{exp.description}</p>}
+                {exp.description && <p className="text-ink-mute mt-1 leading-relaxed">{exp.description}</p>}
               </div>
             ))}
           </div>
@@ -247,8 +247,8 @@ function ResumePreview({ resume, template, profilePic }) {
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-2">Education</h2>
             {resume.education.filter(e => e.degree || e.institution).map((edu, i) => (
               <div key={i} className="flex justify-between mb-1">
-                <div><p className="font-semibold">{edu.degree}</p><p className="text-gray-600">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p></div>
-                <span className="text-gray-500 text-xs">{edu.year}</span>
+                <div><p className="font-semibold">{edu.degree}</p><p className="text-ink-mute">{edu.institution}{edu.grade ? ` · ${edu.grade}` : ''}</p></div>
+                <span className="text-ink-mute text-xs">{edu.year}</span>
               </div>
             ))}
           </div>
@@ -268,8 +268,8 @@ function ResumePreview({ resume, template, profilePic }) {
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-2">Projects</h2>
             {resume.projects.filter(p => p.name).map((proj, i) => (
               <div key={i} className="mb-2">
-                <p className="font-semibold text-gray-800">{proj.name}{proj.link ? <a href={proj.link} className="text-purple-400 ml-2 text-xs" target="_blank" rel="noopener noreferrer">↗</a> : ''}</p>
-                {proj.description && <p className="text-gray-600 leading-relaxed">{proj.description}</p>}
+                <p className="font-semibold text-ink">{proj.name}{proj.link ? <a href={proj.link} className="text-primary-500 ml-2 text-xs" target="_blank" rel="noopener noreferrer">↗</a> : ''}</p>
+                {proj.description && <p className="text-ink-mute leading-relaxed">{proj.description}</p>}
               </div>
             ))}
           </div>
@@ -279,8 +279,8 @@ function ResumePreview({ resume, template, profilePic }) {
             <h2 className="text-purple-600 font-bold text-xs uppercase tracking-wide mb-2">Certifications</h2>
             {resume.certifications.filter(c => c.name).map((c, i) => (
               <div key={i} className="flex justify-between mb-1">
-                <span className="font-semibold text-gray-800">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}</span>
-                <span className="text-gray-500 text-xs">{c.year}</span>
+                <span className="font-semibold text-ink">{c.name}{c.issuer ? ` — ${c.issuer}` : ''}</span>
+                <span className="text-ink-mute text-xs">{c.year}</span>
               </div>
             ))}
           </div>
@@ -487,7 +487,7 @@ export default function ResumePage() {
     setTimeout(() => { printWindow.print(); printWindow.close(); }, 600);
   };
 
-  const scoreColor = atsScore >= 75 ? 'text-green-400' : atsScore >= 50 ? 'text-pink-neon' : 'text-red-400';
+  const scoreColor = atsScore >= 75 ? 'text-green-700' : atsScore >= 50 ? 'text-pink-neon' : 'text-red-600';
   const scoreBg = atsScore >= 75 ? 'bg-green-500' : atsScore >= 50 ? 'bg-pink-neon' : 'bg-red-500';
 
   return (
@@ -501,16 +501,16 @@ export default function ResumePage() {
               <BookOpen className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-black text-white">Resume Builder Agent</h1>
-              <p className="text-white/50 text-sm">AI-powered ATS-optimized resume with live preview</p>
+              <h1 className="text-2xl font-black text-ink">Resume Builder Agent</h1>
+              <p className="text-ink/70 text-sm">AI-powered ATS-optimized resume with live preview</p>
             </div>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
             {atsScore !== null && (
-              <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/70 border border-primary-300/40">
                 <div className={`w-2 h-2 rounded-full ${scoreBg}`} />
                 <span className={`font-black text-lg ${scoreColor}`}>{atsScore}%</span>
-                <span className="text-white/50 text-sm">ATS Score</span>
+                <span className="text-ink/70 text-sm">ATS Score</span>
               </div>
             )}
             <button onClick={handleSave} disabled={saving} className="btn-ghost flex items-center gap-2 py-2">
@@ -524,8 +524,8 @@ export default function ResumePage() {
 
         {/* Resume Mode Selector */}
         <div className="glass-card p-4">
-          <p className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
-            <FileText className="w-4 h-4 text-primary-400" /> Resume Mode
+          <p className="text-ink font-semibold text-sm mb-3 flex items-center gap-2">
+            <FileText className="w-4 h-4 text-primary-500" /> Resume Mode
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
             {RESUME_MODES.map(mode => (
@@ -533,10 +533,10 @@ export default function ResumePage() {
                 className={`p-2.5 rounded-xl border text-left transition-all ${
                   resumeMode === mode.id
                     ? 'border-primary-500/60 bg-primary-500/15'
-                    : 'border-white/10 bg-white/5 hover:border-white/20'
+                    : 'border-primary-300/40 bg-white/70 hover:border-primary-400/50'
                 }`}>
-                <p className={`font-semibold text-xs ${resumeMode === mode.id ? 'text-white' : 'text-white/50'}`}>{mode.label}</p>
-                <p className="text-white/50 text-xs mt-0.5">{mode.desc}</p>
+                <p className={`font-semibold text-xs ${resumeMode === mode.id ? 'text-ink' : 'text-ink/70'}`}>{mode.label}</p>
+                <p className="text-ink/70 text-xs mt-0.5">{mode.desc}</p>
               </button>
             ))}
           </div>
@@ -550,7 +550,7 @@ export default function ResumePage() {
         {/* Template + Upload Row */}
         <div className="glass-card p-4">
           <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
-            <p className="text-white font-semibold text-sm">Template</p>
+            <p className="text-ink font-semibold text-sm">Template</p>
             <div className="flex items-center gap-3">
               {/* Profile picture upload */}
               <label className="flex items-center gap-2 text-sm text-accent-cyan cursor-pointer hover:text-accent-blue transition-colors">
@@ -561,7 +561,7 @@ export default function ResumePage() {
               {profilePic && (
                 <div className="flex items-center gap-2">
                   <img src={profilePic} alt="profile" className="w-7 h-7 rounded-full object-cover border border-primary-500/40" />
-                  <button onClick={() => setProfilePic('')} className="text-xs text-red-400 hover:text-red-300">Remove</button>
+                  <button onClick={() => setProfilePic('')} className="text-xs text-red-600 hover:text-red-600">Remove</button>
                 </div>
               )}
             </div>
@@ -570,13 +570,13 @@ export default function ResumePage() {
             {TEMPLATES.map(t => (
               <button key={t.id} onClick={() => setTemplate(t.id)}
                 className={`p-3 rounded-xl border text-left transition-all ${
-                  template === t.id ? 'border-primary-500/60 bg-primary-500/15' : 'border-white/10 bg-white/5 hover:border-white/20'
+                  template === t.id ? 'border-primary-500/60 bg-primary-500/15' : 'border-primary-300/40 bg-white/70 hover:border-primary-400/50'
                 }`}>
                 <div className="flex items-center gap-2 mb-1">
-                  <t.icon className={`w-4 h-4 ${template === t.id ? 'text-primary-400' : 'text-white/50'}`} />
-                  <span className={`font-semibold text-sm ${template === t.id ? 'text-white' : 'text-white/50'}`}>{t.label}</span>
+                  <t.icon className={`w-4 h-4 ${template === t.id ? 'text-primary-500' : 'text-ink/70'}`} />
+                  <span className={`font-semibold text-sm ${template === t.id ? 'text-ink' : 'text-ink/70'}`}>{t.label}</span>
                 </div>
-                <p className="text-xs text-white/50">{t.desc}</p>
+                <p className="text-xs text-ink/70">{t.desc}</p>
               </button>
             ))}
           </div>
@@ -596,7 +596,7 @@ export default function ResumePage() {
               {TABS.map((t, i) => (
                 <button key={t} onClick={() => setTab(i)}
                   className={`flex-1 min-w-max px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                    tab === i ? 'bg-primary-500 text-white shadow-lg' : 'text-white/50 hover:text-white'
+                    tab === i ? 'bg-primary-500 text-white shadow-lg' : 'text-ink/70 hover:text-primary-600'
                   }`}>
                   {t}
                 </button>
@@ -609,7 +609,7 @@ export default function ResumePage() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   {Object.keys(resume.personalInfo).map(key => (
                     <div key={key}>
-                      <label className="text-xs text-white/50 capitalize mb-1 block">
+                      <label className="text-xs text-ink/70 capitalize mb-1 block">
                         {key.replace(/([A-Z])/g, ' $1').replace('_', ' ')}
                       </label>
                       <input
@@ -628,22 +628,22 @@ export default function ResumePage() {
               {tab === 1 && (
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm text-white/50 font-medium mb-2 block">Target Role</label>
+                    <label className="text-sm text-ink/70 font-medium mb-2 block">Target Role</label>
                     <input value={targetRole} onChange={e => setTargetRole(e.target.value)}
                       placeholder="e.g. Frontend Developer, Data Analyst" className="input-field text-sm" />
                   </div>
                   <div>
-                    <label className="text-sm text-white/50 font-medium mb-2 block">Professional Summary</label>
+                    <label className="text-sm text-ink/70 font-medium mb-2 block">Professional Summary</label>
                     <textarea value={resume.summary} onChange={e => updateField('summary', e.target.value)}
                       placeholder="Write a compelling 2-3 sentence summary highlighting your key skills and goals..."
                       rows={5} className="input-field resize-none w-full" />
                   </div>
                   {aiResult?.improvedSummary && (
                     <div className="p-3 rounded-xl bg-primary-500/10 border border-primary-500/30">
-                      <p className="text-xs text-primary-400 font-semibold mb-1">✨ AI Improved Summary:</p>
-                      <p className="text-white/50 text-sm">{aiResult.improvedSummary}</p>
+                      <p className="text-xs text-primary-500 font-semibold mb-1">✨ AI Improved Summary:</p>
+                      <p className="text-ink/70 text-sm">{aiResult.improvedSummary}</p>
                       <button onClick={() => updateField('summary', aiResult.improvedSummary)}
-                        className="mt-2 text-xs text-primary-400 hover:text-primary-300 font-medium border border-primary-500/30 px-3 py-1 rounded-lg">
+                        className="mt-2 text-xs text-primary-500 hover:text-primary-600 font-medium border border-primary-500/30 px-3 py-1 rounded-lg">
                         Use this summary →
                       </button>
                     </div>
@@ -655,12 +655,12 @@ export default function ResumePage() {
               {tab === 2 && (
                 <div className="space-y-4">
                   {resume.experience.map((exp, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/8 space-y-3">
+                    <div key={i} className="p-4 rounded-xl bg-white/70 border border-primary-300/40 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-white/50 font-medium">Experience {i + 1}</span>
+                        <span className="text-sm text-ink/70 font-medium">Experience {i + 1}</span>
                         {resume.experience.length > 1 && (
                           <button onClick={() => setResume(prev => ({ ...prev, experience: prev.experience.filter((_, j) => j !== i) }))}
-                            className="text-red-400 hover:text-red-300"><Trash2 className="w-4 h-4" /></button>
+                            className="text-red-600 hover:text-red-600"><Trash2 className="w-4 h-4" /></button>
                         )}
                       </div>
                       <div className="grid sm:grid-cols-2 gap-3">
@@ -687,12 +687,12 @@ export default function ResumePage() {
               {tab === 3 && (
                 <div className="space-y-4">
                   {resume.education.map((edu, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/8 space-y-3">
+                    <div key={i} className="p-4 rounded-xl bg-white/70 border border-primary-300/40 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-white/50 font-medium">Education {i + 1}</span>
+                        <span className="text-sm text-ink/70 font-medium">Education {i + 1}</span>
                         {resume.education.length > 1 && (
                           <button onClick={() => setResume(prev => ({ ...prev, education: prev.education.filter((_, j) => j !== i) }))}
-                            className="text-red-400"><Trash2 className="w-4 h-4" /></button>
+                            className="text-red-600"><Trash2 className="w-4 h-4" /></button>
                         )}
                       </div>
                       <div className="grid sm:grid-cols-2 gap-3">
@@ -713,22 +713,22 @@ export default function ResumePage() {
               {/* Tab 4: Skills */}
               {tab === 4 && (
                 <div className="space-y-4">
-                  <label className="text-sm text-white/50 font-medium block">Technical & Professional Skills</label>
+                  <label className="text-sm text-ink/70 font-medium block">Technical & Professional Skills</label>
                   <div className="flex flex-wrap gap-2">
                     {resume.skills.map((s, i) => (
                       <div key={i} className="flex items-center gap-1 bg-primary-500/20 border border-primary-500/30 rounded-xl px-3 py-1.5">
                         <input value={s} onChange={e => {
                           const next = [...resume.skills]; next[i] = e.target.value;
                           setResume(prev => ({ ...prev, skills: next }));
-                        }} className="bg-transparent text-primary-300 text-sm outline-none w-24" placeholder="Skill" />
+                        }} className="bg-transparent text-primary-600 text-sm outline-none w-24" placeholder="Skill" />
                         <button onClick={() => setResume(prev => ({ ...prev, skills: prev.skills.filter((_, j) => j !== i) }))}
-                          className="text-red-400 hover:text-red-300 ml-1">
+                          className="text-red-600 hover:text-red-600 ml-1">
                           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                         </button>
                       </div>
                     ))}
                     <button onClick={() => setResume(prev => ({ ...prev, skills: [...prev.skills, ''] }))}
-                      className="flex items-center gap-1 text-sm text-white/50 hover:text-white border border-dashed border-white/20 px-3 py-1.5 rounded-xl hover:border-primary-500/50 transition-all">
+                      className="flex items-center gap-1 text-sm text-ink/70 hover:text-primary-600 border border-dashed border-primary-300/60 px-3 py-1.5 rounded-xl hover:border-primary-500/50 transition-all">
                       <Plus className="w-3 h-3" /> Add Skill
                     </button>
                   </div>
@@ -738,7 +738,7 @@ export default function ResumePage() {
                       <div className="flex flex-wrap gap-1">
                         {aiResult.keywordSuggestions.map(kw => (
                           <button key={kw} onClick={() => { if (!resume.skills.includes(kw)) setResume(prev => ({ ...prev, skills: [...prev.skills, kw] })); }}
-                            className="text-xs bg-white/5 text-white/50 px-2 py-0.5 rounded hover:bg-primary-500/20 hover:text-primary-300 transition-all border border-white/10">
+                            className="text-xs bg-white/70 text-ink/70 px-2 py-0.5 rounded hover:bg-primary-500/20 hover:text-primary-600 transition-all border border-primary-300/40">
                             + {kw}
                           </button>
                         ))}
@@ -746,8 +746,8 @@ export default function ResumePage() {
                     </div>
                   )}
                   {/* Certifications in skills tab */}
-                  <div className="pt-3 border-t border-white/10">
-                    <label className="text-sm text-white/50 font-medium block mb-3">Certifications</label>
+                  <div className="pt-3 border-t border-primary-300/40">
+                    <label className="text-sm text-ink/70 font-medium block mb-3">Certifications</label>
                     {resume.certifications?.map((cert, i) => (
                       <div key={i} className="grid sm:grid-cols-3 gap-2 mb-2 items-center">
                         <input value={cert.name || ''} onChange={e => updateField(`certifications.${i}.name`, e.target.value)}
@@ -759,7 +759,7 @@ export default function ResumePage() {
                             placeholder="Year" className="input-field text-sm py-2 flex-1" />
                           {(resume.certifications?.length || 0) > 1 && (
                             <button onClick={() => setResume(prev => ({ ...prev, certifications: prev.certifications.filter((_, j) => j !== i) }))}
-                              className="text-red-400 hover:text-red-300"><Trash2 className="w-4 h-4" /></button>
+                              className="text-red-600 hover:text-red-600"><Trash2 className="w-4 h-4" /></button>
                           )}
                         </div>
                       </div>
@@ -776,12 +776,12 @@ export default function ResumePage() {
               {tab === 5 && (
                 <div className="space-y-4">
                   {resume.projects.map((proj, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/8 space-y-3">
+                    <div key={i} className="p-4 rounded-xl bg-white/70 border border-primary-300/40 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-white/50 font-medium">Project {i + 1}</span>
+                        <span className="text-sm text-ink/70 font-medium">Project {i + 1}</span>
                         {resume.projects.length > 1 && (
                           <button onClick={() => setResume(prev => ({ ...prev, projects: prev.projects.filter((_, j) => j !== i) }))}
-                            className="text-red-400"><Trash2 className="w-4 h-4" /></button>
+                            className="text-red-600"><Trash2 className="w-4 h-4" /></button>
                         )}
                       </div>
                       <input value={proj.name || ''} onChange={e => updateField(`projects.${i}.name`, e.target.value)}
@@ -812,7 +812,7 @@ export default function ResumePage() {
                   className="glass-card p-6 border-cyan-neon relative overflow-hidden flex flex-col items-center justify-center text-center min-h-[160px]">
                   <div className="absolute inset-0 bg-matrix-sm opacity-30" />
                   <div className="absolute inset-0 bg-cyan-neon/10 animate-pulse" />
-                  <div className="w-10 h-10 border-2 border-cyan-neon/30 border-t-cyan-neon rounded-full animate-spin mb-3 relative z-10 shadow-[0_0_15px_#22D3EE]" />
+                  <div className="w-10 h-10 border-2 border-cyan-neon/30 border-t-cyan-neon rounded-full animate-spin mb-3 relative z-10 shadow-[0_0_15px_rgba(139,92,246,0.5)]" />
                   <p className="text-cyan-neon font-bold text-sm tracking-widest uppercase relative z-10 text-glow-cyan">Holographic Scan in Progress...</p>
                 </motion.div>
               ) : (
@@ -823,10 +823,10 @@ export default function ResumePage() {
                   {/* Floating ATS Banner if analyzed */}
                   {aiResult ? (
                     <div className="space-y-4 relative z-10">
-                      <div className="flex items-center justify-between pb-4 border-b border-white/5">
-                        <div className={`px-3 py-1.5 rounded-full text-xs font-black tracking-widest flex items-center gap-2 ${aiResult.atsScore >= 70 ? 'bg-green-500 shadow-[0_0_15px_#10B981]' : aiResult.atsScore >= 50 ? 'bg-pink-neon shadow-[0_0_15px_#EC4899]' : 'bg-red-500'}`}>
+                      <div className="flex items-center justify-between pb-4 border-b border-primary-300/30">
+                        <div className={`px-3 py-1.5 rounded-full text-xs font-black tracking-widest flex items-center gap-2 ${aiResult.atsScore >= 70 ? 'bg-green-500 shadow-[0_0_15px_rgba(11,138,95,0.35)]' : aiResult.atsScore >= 50 ? 'bg-pink-neon shadow-[0_0_15px_#EC4899]' : 'bg-red-500'}`}>
                           <Sparkles className="w-3.5 h-3.5 text-white" />
-                          <span className="text-white">ATS OPTIMIZATION: {aiResult.atsScore}%</span>
+                          <span className="text-ink">ATS OPTIMIZATION: {aiResult.atsScore}%</span>
                         </div>
                         <motion.button onClick={handleAnalyze} whileHover={{ scale: 1.05 }} className="text-cyan-neon text-xs font-bold flex items-center gap-1 text-glow-cyan">
                           <Zap className="w-3 h-3" /> Rescan
@@ -836,14 +836,14 @@ export default function ResumePage() {
                       {/* Score Breakdown */}
                       {aiResult.atsBreakdown && (
                         <div className="space-y-2">
-                          <p className="text-xs text-white/50 font-semibold">Breakdown:</p>
+                          <p className="text-xs text-ink/70 font-semibold">Breakdown:</p>
                           {Object.entries(aiResult.atsBreakdown).map(([k, v]) => (
                             <div key={k}>
                               <div className="flex justify-between text-[10px] mb-0.5">
-                                <span className="text-white/50 uppercase tracking-wide">{k.replace(/([A-Z])/g, ' $1')}</span>
-                                <span className={`font-bold ${v >= 70 ? 'text-green-400' : v >= 50 ? 'text-pink-neon' : 'text-red-400'}`}>{v}%</span>
+                                <span className="text-ink/70 uppercase tracking-wide">{k.replace(/([A-Z])/g, ' $1')}</span>
+                                <span className={`font-bold ${v >= 70 ? 'text-green-700' : v >= 50 ? 'text-pink-neon' : 'text-red-600'}`}>{v}%</span>
                               </div>
-                              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                              <div className="w-full h-1 bg-primary-100 rounded-full overflow-hidden">
                                 <div className={`h-full rounded-full transition-all duration-700 ${v >= 70 ? 'bg-green-500' : v >= 50 ? 'bg-pink-neon' : 'bg-red-500'}`} style={{ width: `${v}%` }} />
                               </div>
                             </div>
@@ -860,7 +860,7 @@ export default function ResumePage() {
                           </h4>
                           <div className="space-y-1.5 relative z-10">
                             {aiResult.suggestions.map((s, i) => (
-                              <div key={i} className="flex items-start gap-2 text-[10px] text-white/60 p-2 rounded bg-space-black border border-cyan-neon/20 hover:border-cyan-neon/60 transition-colors">
+                              <div key={i} className="flex items-start gap-2 text-[10px] text-ink/75 p-2 rounded bg-canvas border border-cyan-neon/20 hover:border-cyan-neon/60 transition-colors">
                                 <Lightbulb className="w-3 h-3 text-cyan-neon flex-shrink-0 mt-0.5" />
                                 <span>{s}</span>
                               </div>
@@ -870,12 +870,12 @@ export default function ResumePage() {
                       )}
                       
                       {aiResult.hiringProbability !== undefined && (
-                        <div className="flex items-center justify-between p-3 rounded-xl bg-space-black border border-white/8 mt-2">
+                        <div className="flex items-center justify-between p-3 rounded-xl bg-canvas border border-primary-300/40 mt-2">
                           <div>
-                            <p className="text-white text-xs font-bold uppercase tracking-wider">Hiring Probability</p>
+                            <p className="text-ink text-xs font-bold uppercase tracking-wider">Hiring Probability</p>
                             {aiResult.salaryPrediction && <p className="text-cyan-neon text-[10px] font-semibold mt-0.5">{aiResult.salaryPrediction}</p>}
                           </div>
-                          <div className={`text-2xl font-black drop-shadow-lg ${aiResult.hiringProbability >= 70 ? 'text-green-400' : aiResult.hiringProbability >= 50 ? 'text-pink-neon' : 'text-red-400'}`}>
+                          <div className={`text-2xl font-black drop-shadow-lg ${aiResult.hiringProbability >= 70 ? 'text-green-700' : aiResult.hiringProbability >= 50 ? 'text-pink-neon' : 'text-red-600'}`}>
                             {aiResult.hiringProbability}%
                           </div>
                         </div>
@@ -884,8 +884,8 @@ export default function ResumePage() {
                   ) : (
                     <div className="space-y-4 relative z-10">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-white font-black text-sm flex items-center gap-2">
-                          <Brain className="w-4 h-4 text-purple-400" /> AI Optimization Engine
+                        <h3 className="text-ink font-black text-sm flex items-center gap-2">
+                          <Brain className="w-4 h-4 text-primary-500" /> AI Optimization Engine
                         </h3>
                       </div>
                       <motion.button onClick={handleAnalyze} disabled={analyzing} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="btn-primary w-full flex items-center justify-center gap-2 text-sm ai-glow">
@@ -901,17 +901,17 @@ export default function ResumePage() {
             <div className="glass-card p-0 overflow-hidden relative border-purple-500/30 shadow-[0_8px_32px_rgba(0,0,0,0.5),_inset_0_0_20px_rgba(139,92,246,0.1)]">
               {/* Glowing Edge Header */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-neon via-pink-neon to-cyan-neon z-20" />
-              <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 bg-space-black/80 backdrop-blur-md relative z-20">
-                <p className="text-white font-semibold text-xs tracking-widest uppercase flex items-center gap-2">
-                  <Layout className="w-3.5 h-3.5 text-purple-400" /> Live Resume Preview
+              <div className="flex items-center justify-between px-5 py-3 border-b border-primary-300/40 bg-canvas/80 backdrop-blur-md relative z-20">
+                <p className="text-ink font-semibold text-xs tracking-widest uppercase flex items-center gap-2">
+                  <Layout className="w-3.5 h-3.5 text-primary-500" /> Live Resume Preview
                 </p>
-                <button onClick={downloadPDF} className="text-[10px] uppercase font-bold text-cyan-neon hover:text-white transition-colors flex items-center gap-1">
+                <button onClick={downloadPDF} className="text-[10px] uppercase font-bold text-cyan-neon hover:text-primary-600 transition-colors flex items-center gap-1">
                   <Download className="w-3 h-3" /> Export PDF
                 </button>
               </div>
               
               {/* Document Wrapper rendering existing ResumePreview component */}
-              <div className="overflow-y-auto max-h-[600px] bg-[#E2E8F0] relative z-10 p-2 shadow-[inset_0_0_50px_rgba(0,0,0,0.2)]">
+              <div className="overflow-y-auto max-h-[600px] bg-[#E2E8F0] relative z-10 p-2 shadow-[inset_0_0_40px_rgba(91,33,182,0.12)]">
                 <div className="shadow-2xl mx-auto bg-white" style={{ maxWidth: '800px', transform: 'scale(0.95)', transformOrigin: 'top center' }}>
                   <ResumePreview resume={resume} template={template} profilePic={profilePic} />
                 </div>
